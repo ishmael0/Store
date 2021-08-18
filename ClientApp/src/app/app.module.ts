@@ -1,0 +1,37 @@
+import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { AppComponent } from './app.component';
+import { WebSelectorComponent } from '../../../../Core/ClientApp/src/app/components/web-selector/web-selector.component';
+import { LoginComponent } from '../../../../Core/ClientApp/src/app/components/login/login.component';
+import { SharedModule } from '../../../../Core/ClientApp/src/app/shared.module';
+
+
+
+const routes: Routes = [
+  { path: '', redirectTo: 'webselector', pathMatch: 'full' },
+  {
+    path: 'myaccstore', loadChildren: () => import('../../../../Core/ClientApp/src/app/myacc/myacc.module').then(m => m.MyAcc),
+    data: {
+      key: 'myAccstore', label: 'مدیریت کاربران', isAcc: true
+    }
+  },
+  {
+    path: 'storedb', loadChildren: () => import('./store.module').then(m => m.StoreModule),
+    data: { key: 'StoreDB', label: ' مدیریت وب سایت' }
+  },
+  { path: 'webselector', component: WebSelectorComponent },
+  { path: 'login', component: LoginComponent }
+];
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    RouterModule.forRoot(routes),
+    SharedModule.forRoot(),
+  ],
+  bootstrap: [AppComponent]
+})
+export class AppModule {
+}
