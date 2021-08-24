@@ -56,6 +56,8 @@ namespace Store.Models
             modelBuilder.Entity<Product>().Property(e => e.ProductTypes).HasConversion(v => JsonConvert.SerializeObject(v), v => JsonConvert.DeserializeObject<List<ProductType>>(v));
             modelBuilder.Entity<Product>().Property(e => e.ProductLabels).HasConversion(v => JsonConvert.SerializeObject(v), v => JsonConvert.DeserializeObject<List<ProductLabel>>(v));
             modelBuilder.Entity<Product>().Property(e => e.ProductImages).HasConversion(v => JsonConvert.SerializeObject(v), v => JsonConvert.DeserializeObject<List<ProductImages>>(v));
+            modelBuilder.Entity<Product>().Property(e => e.RelatedProduct).HasConversion(v => JsonConvert.SerializeObject(v), v => JsonConvert.DeserializeObject<List<int>>(v));
+            modelBuilder.Entity<Product>().Property(e => e.KeyWords).HasConversion(v => JsonConvert.SerializeObject(v), v => JsonConvert.DeserializeObject<List<string>>(v));
 
         }
     }

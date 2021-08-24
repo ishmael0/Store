@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
-import { buildPath, TemplateModule } from '../../../../Core/ClientApp/src/app/template/template.module';
+import { buildPath, TemplateModule } from '../../../../Santel/Core/ClientApp/src/app/template/template.module';
 import { RouterModule, Routes } from '@angular/router';
-import { ComponentTypes, EntityConfiguration, PropertyConfiguration, WebSitesConfiguration } from '../../../../Core/ClientApp/src/app/services/utils';
-import { AuthService } from '../../../../Core/ClientApp/src/app/services/auth.service';
-import { WebSiteService } from '../../../../Core/ClientApp/src/app/services/website.service';
+import { ComponentTypes, EntityConfiguration, PropertyConfiguration, WebSitesConfiguration } from '../../../../Santel/Core/ClientApp/src/app/services/utils';
+import { AuthService } from '../../../../Santel/Core/ClientApp/src/app/services/auth.service';
+import { WebSiteService } from '../../../../Santel/Core/ClientApp/src/app/services/website.service';
 import { CategoryComponent, ColorComponent, ProductComponent, SizeComponent } from './pages/pages.component';
-import { defaultPropertyWithTitleConfiguration, filesEntity } from '../../../../Core/ClientApp/src/app/services/properties';
+import { defaultPropertyWithTitleConfiguration, filesEntity } from '../../../../Santel/Core/ClientApp/src/app/services/properties';
 import { Validators } from '@angular/forms';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
-import { FileManagerComponent } from '../../../../Core/ClientApp/src/app/template/components/file-manager/file-manager.component';
+import { FileManagerComponent } from '../../../../Santel/Core/ClientApp/src/app/template/components/file-manager/file-manager.component';
 
 
-export const config: WebSitesConfiguration = new WebSitesConfiguration('StoreDB', 'مدیریت وب سایت ', 'http://newsroom.tasnimnews.com',
+export const config: WebSitesConfiguration = new WebSitesConfiguration('StoreDB', 'مدیریت وب سایت ', ' ',
   [
     new EntityConfiguration(CategoryComponent, 'Category', "دسته بندی", {
       componentType: ComponentTypes.tree,

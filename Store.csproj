@@ -6,6 +6,9 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.7">
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Santel\Core\Core.csproj" />
+  </ItemGroup>
 </Project>
 
 <!--

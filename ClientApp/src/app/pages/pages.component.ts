@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy, Injector } from '@angular/core';
-import { toTreeHelper } from '../../../../../Core/ClientApp/src/app/services/utils';
-import { BaseComponent } from '../../../../../Core/ClientApp/src/app/template/base/base.component';
+import { toTreeHelper } from '../../../../../Santel/Core/ClientApp/src/app/services/utils';
+import { BaseComponent } from '../../../../../Santel/Core/ClientApp/src/app/template/base/base.component';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { FormGroup } from '@angular/forms';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
