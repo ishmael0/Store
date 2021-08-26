@@ -4,6 +4,7 @@ import { BaseComponent } from '../../../../../Santel/Core/ClientApp/src/app/temp
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { FormGroup } from '@angular/forms';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { NzTreeNode } from 'ng-zorro-antd/tree';
 
 
 @Component({
@@ -31,6 +32,18 @@ export class ColorComponent extends BaseComponent {
 
   }
 }
+@Component({
+  selector: 'app-keyword',
+  templateUrl: './keyword.component.html',
+  styles: [
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class KeywordComponent extends BaseComponent {
+  constructor(public injector: Injector) {
+    super(injector, 'Keyword');
+  }
+}
 
 
 
@@ -50,6 +63,42 @@ export class CategoryComponent extends BaseComponent {
     language: 'fa'
   }
   Editor = ClassicEditor;
+  imageModal = false;
+  dropImage(event: any, item: FormGroup): void {
+    let x = item.controls.Images.value;
+    moveItemInArray(x, event.previousIndex, event.currentIndex);
+  }
+  async addImage(e) {
+    this.imageModal = false;
+    let x: any[] = this.selectedForm().controls.Images.value;
+    x.push({ Path: e, Description: '' });
+    this.selectedForm().controls.Images.markAsDirty();
+    this.selectedForm().controls.Images.updateValueAndValidity();
+  }
+  addFirst(item) {
+    item.controls.TreeNodes.setValue([{ key: 1, Name: '' }]);
+    let max = item.controls.DetailsNodeValuesMaxId.value + 1;
+    item.controls.DetailsNodeValuesMaxId.setValue(max);
+
+    this.makeItDirty(item);
+  }
+  removeNode(item: FormGroup, e: NzTreeNode) {
+    e.remove();
+    this.makeItDirty(item);
+  }
+
+  addNode(item: FormGroup, e: NzTreeNode) {
+    if (!e.children) {
+      e.children = [];
+    }
+    let max = item.controls.DetailsNodeValuesMaxId.value + 1;
+    item.controls.DetailsNodeValuesMaxId.setValue(max);
+    e.addChildren([{ key: max, Name: '' }]);
+    e.isExpanded = true;
+    e.setExpanded(true);
+
+    this.makeItDirty(item);
+  }
 }
 
 @Component({
@@ -67,15 +116,26 @@ export class ProductComponent extends BaseComponent {
     language: 'fa'
   }
   imageModal = false;
+  relatedModal = false;
   Editor = ClassicEditor;
   categoryTree: any;
+  categories: any[];
   async ngOnInit() {
     await super.ngOnInit();
     this.categoryTree = toTreeHelper(this.dataManager.loadedData.Categories, "Id", "ParentCategoryId", null);
+    this.categories = this.dataManager.loadedData["Categories"];
   }
-
+  async onGet(m: string, d: any) {
+    super.onGet(m, d);
+    this.dataManager.ViewRecords.forEach(c => {
+      let mycat = this.categories.find(d => d.Id == c.CategoryId);
+      c.Category_ = mycat.Title;
+      if (!c.DetailsNodeValues) c.DetailsNodeValues = {};
+      c.DetailsNodeValuesLength = Object.keys(c.DetailsNodeValues).length;
+    })
+  }
   addType(item: FormGroup) {
-    let x = item.controls.ProductTypes.value;
+    let x = item.controls.Types.value;
     x.push({
       Price: 0,
       Off: 0,
@@ -83,30 +143,34 @@ export class ProductComponent extends BaseComponent {
       Amount: 0,
       Sells: 0,
     });
-    item.controls.ProductTypes.setValue(x);
+    item.controls.Types.setValue(x);
     this.cdr.detectChanges();
   }
   delType(item: FormGroup, t: any) {
-    let x = item.controls.ProductTypes.value.filter(c => c != t);
-    item.controls.ProductTypes.setValue(x);
+    let x = item.controls.Types.value.filter(c => c != t);
+    item.controls.Types.setValue(x);
     this.cdr.detectChanges();
   }
-  dropType(event: any, item: FormGroup): void {
-    let x = item.controls.ProductTypes.value;
-    moveItemInArray(x, event.previousIndex, event.currentIndex);
+ 
+  relatedProductSelected(e: any) {
+    let item = this.selectedForm();
+    if (!item.controls.Related.value?.some(c => c.Id == e.Id)) {
+      item.controls.Related.setValue([...item.controls.Related.value, { Id: e.Id, Title: e.Title }]);
+      this.makeItDirty(item);
+      
+    }
   }
-
-  dropImage(event: any, item: FormGroup): void {
-    let x = item.controls.ProductImages.value;
-    moveItemInArray(x, event.previousIndex, event.currentIndex);
-  }
-
   async addImage(e) {
     this.imageModal = false;
-    let x: any[] = this.selectedForm().controls.ProductImages.value;
+    let x: any[] = this.selectedForm().controls.Images.value;
     x.push({ Path: e, Description: '' });
-    this.selectedForm().controls.ProductImages.markAsDirty();
-    this.selectedForm().controls.ProductImages.updateValueAndValidity();
+    this.selectedForm().controls.Images.markAsDirty();
+    this.selectedForm().controls.Images.updateValueAndValidity();
+  }
+
+
+  getCatNodes(id: number) {
+    return this.categories.find(c => c.Id == id).TreeNodes;
   }
 
 }

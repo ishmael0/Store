@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Store.Models;
 
 namespace Store.StoreDBMigration
 {
     [DbContext(typeof(StoreDB))]
-    partial class StoreDBModelSnapshot : ModelSnapshot
+    [Migration("20210825054718__4")]
+    partial class _4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -159,10 +161,7 @@ namespace Store.StoreDBMigration
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("DetailsNodeValuesMaxId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Images")
+                    b.Property<string>("Logo")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("ParentCategoryId")
@@ -176,9 +175,6 @@ namespace Store.StoreDBMigration
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TreeNodes")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -213,28 +209,6 @@ namespace Store.StoreDBMigration
                     b.ToTable("Colors");
                 });
 
-            modelBuilder.Entity("Store.Models.Keyword", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime?>("Create")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Keywords");
-                });
-
             modelBuilder.Entity("Store.Models.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -251,19 +225,22 @@ namespace Store.StoreDBMigration
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("DetailsNodeValues")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Images")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("KeyWords")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Labels")
+                    b.Property<string>("Logo")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Related")
+                    b.Property<string>("ProductImages")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProductLabels")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProductTypes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RelatedProduct")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Status")
@@ -274,9 +251,6 @@ namespace Store.StoreDBMigration
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Types")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
