@@ -16,16 +16,6 @@
 
 
 
-    <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Title">مقدار</nz-form-label>
-      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="مقدار را وارد کنید">
-        <input type="color" nz-input formControlName="Value" />
-      </nz-form-control>
-    </nz-form-item>
-
-
-
-
 
 
   </form>
@@ -48,12 +38,15 @@
   <td>{{ item.Title }}</td>
   <td>{{ item.Create_}}</td>
   <td>{{ item.Status }}</td>
-  <td>
-    <div class="colordiv" [style.background-color]="item.Value">
-      {{ item.Value }}
-    </div>
-  </td>
 </ng-template>
+
+<ng-template #tableBodyPicker let-item="item">
+  <td>{{ item.Id }}</td>
+  <td>{{ item.Title }}</td>
+  <td>{{ item.Create_}}</td>
+  <td>{{ item.Status }}</td>
+</ng-template>
+
 
 
 

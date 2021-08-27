@@ -61,7 +61,7 @@ namespace Store.Models
             modelBuilder.Entity<Product>().Property(e => e.Labels).HasConversion(v => JsonConvert.SerializeObject(v), v => JsonConvert.DeserializeObject<List<ProductLabel>>(v));
             modelBuilder.Entity<Product>().Property(e => e.Images).HasConversion(v => JsonConvert.SerializeObject(v), v => JsonConvert.DeserializeObject<List<Images>>(v));
             modelBuilder.Entity<Product>().Property(e => e.Related).HasConversion(v => JsonConvert.SerializeObject(v), v => JsonConvert.DeserializeObject<List<ProductIdTitleHelper>>(v));
-            modelBuilder.Entity<Product>().Property(e => e.KeyWords).HasConversion(v => JsonConvert.SerializeObject(v), v => JsonConvert.DeserializeObject<List<int>>(v));
+            modelBuilder.Entity<Product>().Property(e => e.KeyWords).HasConversion(v => JsonConvert.SerializeObject(v), v => JsonConvert.DeserializeObject<List<ProductIdTitleHelper>>(v));
             modelBuilder.Entity<Category>().Property(e => e.TreeNodes).HasConversion(v => JsonConvert.SerializeObject(v), v => JsonConvert.DeserializeObject<List<TreeNode>>(v));
             modelBuilder.Entity<Category>().Property(e => e.Images).HasConversion(v => JsonConvert.SerializeObject(v), v => JsonConvert.DeserializeObject<List<Images>>(v));
 
@@ -117,6 +117,21 @@ namespace Store.Models
                             }
                     }
                 }
+
+                ids = x.Item2.Where(c => c.KeyWords != null).SelectMany(c => c.KeyWords).Select(c => c.Id).Distinct().ToList();
+                if (ids.Count > 0)
+                {
+                    var titles = await _context.Keywords.Where(c => ids.Contains(c.Id)).Select(c => new { c.Title, c.Id }).ToListAsync();
+                    foreach (var i in x.Item2)
+                    {
+                        if (i.KeyWords != null)
+                            foreach (var r in i.KeyWords)
+                            {
+                                r.Title = titles.FirstOrDefault(c => c.Id == r.Id)?.Title;
+                            }
+                    }
+                }
+
             }
 
             return JR(StatusCodes.Status200OK, data: new { Records = x.Item2, TotalRecords = x.Item1, Model = currentItem });
@@ -145,7 +160,7 @@ namespace Store.Models
         public List<Images> Images { set; get; }
         public Dictionary<int, string> DetailsNodeValues { set; get; }
         public List<ProductIdTitleHelper> Related { set; get; }
-        public List<int> KeyWords { set; get; }
+        public List<ProductIdTitleHelper> KeyWords { set; get; }
     }
 
     public class ProductLabel

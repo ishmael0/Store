@@ -86,12 +86,12 @@
                            [nzLabel]="c.Title + ' ' + c.Value"></nz-option>
               </nz-select>
             </td>
-            <td>       <nz-input-number (ngModelChange)="makeItDirty(item)"  [(ngModel)]="t.Decription" [nzMin]="0" [nzMax]="100" [nzStep]="1"></nz-input-number>   </td>
-            <td>       <nz-input-number (ngModelChange)="makeItDirty(item)"  [(ngModel)]="t.Price" [nzMin]="0" [nzMax]="100" [nzStep]="1"></nz-input-number>   </td>
-            <td>       <nz-input-number (ngModelChange)="makeItDirty(item)"  [(ngModel)]="t.Off" [nzMin]="0" [nzMax]="100" [nzStep]="1"></nz-input-number>   </td>
-            <td>       <nz-input-number (ngModelChange)="makeItDirty(item)"  [(ngModel)]="t.TotalPriceAfterOff" [nzMin]="0" [nzMax]="1000000000" [nzStep]="1"></nz-input-number>   </td>
-            <td>       <nz-input-number (ngModelChange)="makeItDirty(item)"  [(ngModel)]="t.Supply" [nzMin]="0" [nzMax]="10000" [nzStep]="1"></nz-input-number>   </td>
-            <td>       <nz-input-number (ngModelChange)="makeItDirty(item)"  [(ngModel)]="t.Sells" [nzMin]="0" [nzMax]="10000" [nzStep]="1"></nz-input-number>   </td>
+            <td>       <nz-input-number (ngModelChange)="makeItDirty(item)" [(ngModel)]="t.Decription" [nzMin]="0" [nzMax]="100" [nzStep]="1"></nz-input-number>   </td>
+            <td>       <nz-input-number (ngModelChange)="makeItDirty(item)" [(ngModel)]="t.Price" [nzMin]="0" [nzMax]="100" [nzStep]="1"></nz-input-number>   </td>
+            <td>       <nz-input-number (ngModelChange)="makeItDirty(item)" [(ngModel)]="t.Off" [nzMin]="0" [nzMax]="100" [nzStep]="1"></nz-input-number>   </td>
+            <td>       <nz-input-number (ngModelChange)="makeItDirty(item)" [(ngModel)]="t.TotalPriceAfterOff" [nzMin]="0" [nzMax]="1000000000" [nzStep]="1"></nz-input-number>   </td>
+            <td>       <nz-input-number (ngModelChange)="makeItDirty(item)" [(ngModel)]="t.Supply" [nzMin]="0" [nzMax]="10000" [nzStep]="1"></nz-input-number>   </td>
+            <td>       <nz-input-number (ngModelChange)="makeItDirty(item)" [(ngModel)]="t.Sells" [nzMin]="0" [nzMax]="10000" [nzStep]="1"></nz-input-number>   </td>
             <td>
               <button nz-button nz-col nzType="dashed" nzDanger (click)="delType(item,t)">حذف</button>
             </td>
@@ -110,22 +110,23 @@
     <nz-tab nzTitle=" تصاویر  ({{item.controls.Images.value.length}})">
       <nz-alert nzType="info" class="alertInTopOfTable" nzMessage=" اولین تصویر، تصویر اصلی، دومین تصویر تصویر فرعی محسوب میشوند"></nz-alert>
       <nz-alert nzType="info" class="alertInTopOfTable" nzMessage=" میتوانید با کشیدن و رها کردن ترتیب تصاویر را تغییر دهید"></nz-alert>
-  <br />
+      <br />
       <div nz-row cdkDropList (cdkDropListDropped)="dropAndDrop_DropHandler($event, item,'Images')">
-        <nz-card *ngFor="let pic of item.controls.Images.value" nz-col [nzSm]="6" [nzXs]="24" cdkDrag>
-          <img style="width:100%" [src]="'/front'+pic.Path" />
+        <nz-card *ngFor="let r of item.controls.Images.value" nz-col [nzSm]="6" [nzXs]="24" cdkDrag>
+          <img style="width:100%" [src]="'/front'+r.Path" />
           <br />
-          <input type="text" nz-input style="width:100%" placeholder="توضیحات" [(ngModel)]="pic.Description" />
+          <input type="text" nz-input style="width:100%" placeholder="توضیحات" [(ngModel)]="r.Description" />Path
+          <i nz-icon (click)="deleteFromList(item, 'Images',r.Path,'Path' )"
+             style="color: #F93154;"
+             class="larger"
+             [innerHtml]="icons['delete']"></i>
         </nz-card>
-
       </div>
-
     </nz-tab>
-    <nz-tab nzTitle=" ویژگی ها  ">
 
+    <nz-tab nzTitle=" ویژگی ها  ">
       <nz-alert nzType="info" class="alertInTopOfTable" nzMessage="برای انتخاب ویژگی ها حتما باید دسته بندی انتخاب شده باشد"></nz-alert>
       <br />
-
       <nz-tree *ngIf="item.controls.CategoryId.value" [nzData]="getCatNodes(item.controls.CategoryId.value)" nzBlockNode [nzTreeTemplate]="nzTreeTemplate">
         <ng-template #nzTreeTemplate let-node let-origin="origin">
           <nz-tag [nzColor]="'magenta'" style="width:30px"> {{origin.key}}</nz-tag>
@@ -135,30 +136,26 @@
       </nz-tree>
 
       <button nz-button nz-col [nzSm]="4" nzType="dashed" (click)="imageModal = true ">اضافه کردن</button>
-
     </nz-tab>
+
     <nz-tab nzTitle=" محصولات مشابه ({{item.controls.Related.value.length}})">
       <nz-alert nzType="info" class="alertInTopOfTable" nzMessage=" میتوانید با کشیدن و رها کردن ترتیب محصولات مشابه را تغییر دهید"></nz-alert>
-
-      <button nz-button nz-col [nzSm]="4" nzType="dashed" (click)="relatedModal = true ">اضافه کردن</button>
-
-      <div nz-row cdkDropList (cdkDropListDropped)="dropAndDrop_DropHandler($event, item,'Related')">
-        <nz-card *ngFor="let r of item.controls.Related.value" nz-col [nzSm]="6" [nzXs]="24" cdkDrag>
-          {{r.Id}}
-          {{r.Title}}
-        </nz-card>
+      <div cdkDropList (cdkDropListDropped)="dropAndDrop_DropHandler($event, item,'Related')">
+        <nz-tag class="largeTag" [nzColor]="'magenta'" nzMode="closeable" (nzOnClose)="deleteFromList(item, 'Related',r.Id )" *ngFor="let r of item.controls.Related.value" cdkDrag>
+          ({{r.Id}})- {{r.Title}}
+        </nz-tag>
       </div>
-
-
+      <button nz-button nz-col [nzSm]="4" nzType="dashed" (click)="relatedModal = true ">اضافه کردن محصولات مشابه</button>
     </nz-tab>
+
     <nz-tab nzTitle=" کلمات کلیدی ({{item.controls.KeyWords.value?.length}})">
-
-      <nz-select nzMode="tags" nzPlaceHolder="Tag Mode" (ngModelChange)="makeItDirty(item)" [(ngModel)]="item.controls.KeyWords.value">
-      </nz-select>
-
-
+      <div cdkDropList (cdkDropListDropped)="dropAndDrop_DropHandler($event, item,'KeyWords')">
+        <nz-tag class="largeTag" [nzColor]="'magenta'" nzMode="closeable" (nzOnClose)="deleteFromList(item, 'KeyWords',r.Id )" *ngFor="let r of item.controls.KeyWords.value" cdkDrag>
+          ({{r.Id}})- {{r.Title}}
+        </nz-tag>
+      </div>
+      <button nz-button nz-col [nzSm]="4" nzType="dashed" (click)="keywordModal = true ">اضافه کردن کلیدواژه</button>
     </nz-tab>
-
   </nz-tabset>
 
 
@@ -196,23 +193,28 @@
 
 
 <app-template *ngIf="ok" [com]="this"></app-template>
+<ng-template #modalFooter>
+</ng-template>
 
-
-<nz-modal [(nzVisible)]="imageModal" [nzFooter]="modalFooter" nzTitle="افزودن تصویر" (nzOnCancel)="imageModal = false" (nzOnOk)="imageModal = false">
+<nz-modal [(nzVisible)]="imageModal" [nzFooter]="modalFooter" nzTitle="افزودن تصویر">
   <ng-container *nzModalContent>
     <app-image-uploader-card key="StoreDB/Product" Id="1" (onOk)="addImage($event)"></app-image-uploader-card>
+    <button style="float:left" nz-button nzType="primary" (click)="imageModal = false">تایید </button>
   </ng-container>
-  <ng-template #modalFooter>
-    <button nz-button nzType="default" (click)="imageModal = false">انصراف </button>
-  </ng-template>
 </nz-modal>
 
 
-<nz-modal [nzWidth]="'80%'" [(nzVisible)]="relatedModal" [nzFooter]="modalFooter" nzTitle="افزودن محصولات مشابه" (nzOnCancel)="relatedModal = false" (nzOnOk)="relatedModal = false">
+<nz-modal [nzWidth]="'80%'" [(nzVisible)]="relatedModal" [nzFooter]="modalFooter" nzTitle="افزودن محصولات مشابه">
   <ng-container *nzModalContent>
     <app-product (select)="relatedProductSelected($event)"></app-product>
+    <button style="float:left" nz-button nzType="primary" (click)="relatedModal = false">تایید </button>
   </ng-container>
-  <ng-template #modalFooter>
-    <button nz-button nzType="default" (click)="relatedModal = false">انصراف </button>
-  </ng-template>
+</nz-modal>
+
+
+<nz-modal [nzWidth]="'80%'" [(nzVisible)]="keywordModal" [nzFooter]="modalFooter" nzTitle="افزودن  کلیدواژه">
+  <ng-container *nzModalContent>
+    <app-keyword (select)="keywordSelected($event)"></app-keyword>
+    <button style="float:left" nz-button nzType="primary" (click)="keywordModal = false">تایید </button>
+  </ng-container>
 </nz-modal>

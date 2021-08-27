@@ -116,6 +116,7 @@ export class ProductComponent extends BaseComponent {
     language: 'fa'
   }
   imageModal = false;
+  keywordModal = false;
   relatedModal = false;
   Editor = ClassicEditor;
   categoryTree: any;
@@ -151,13 +152,25 @@ export class ProductComponent extends BaseComponent {
     item.controls.Types.setValue(x);
     this.cdr.detectChanges();
   }
- 
+  deleteFromList(item: FormGroup, controlName: string, keyValue: any, key = 'Id') {
+    let x = item.controls[controlName].value.filter(c => c[key] != keyValue);
+    item.controls.Types.setValue(x);
+    this.makeItDirty(item);
+  }
   relatedProductSelected(e: any) {
     let item = this.selectedForm();
     if (!item.controls.Related.value?.some(c => c.Id == e.Id)) {
       item.controls.Related.setValue([...item.controls.Related.value, { Id: e.Id, Title: e.Title }]);
       this.makeItDirty(item);
-      
+
+    }
+  }
+
+  keywordSelected(e: any) {
+    let item = this.selectedForm();
+    if (!item.controls.KeyWords.value?.some(c => c.Id == e.Id)) {
+      item.controls.KeyWords.setValue([...item.controls.KeyWords.value, { Id: e.Id, Title: e.Title }]);
+      this.makeItDirty(item);
     }
   }
   async addImage(e) {
