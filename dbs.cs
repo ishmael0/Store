@@ -71,7 +71,7 @@ namespace Store.Models
     public class Color : BaseModelWithTitle
     {
         public string Value { set; get; }
-    } 
+    }
     public class Keyword : BaseModelWithTitle
     {
     }
@@ -97,6 +97,13 @@ namespace Store.Models
     {
         public ProductController(StoreDB dbContext, UserPermissionManager upm) : base(dbContext, upm)
         {
+        }
+        public override async Task<JsonResult> Set([FromQuery] IDictionary<string, string> param, [FromBody] Product t)
+        {
+            if (t.Types != null && t.Types.Count > 0)
+                t.Supply = t.Types.Sum(c => c.Supply);
+            else t.Supply = 0;
+            return await base.Set(param, t);
         }
         [NonAction]
         public override async Task<JsonResult> GetHandler([FromQuery] IDictionary<string, string> param, Product currentItem)
@@ -143,15 +150,8 @@ namespace Store.Models
         [ForeignKey("CategoryId")]
         public Category Category { set; get; }
         public int CategoryId { set; get; }
-        [NotMapped]
-        public int Supply
-        {
-            get
-            {
-                if (Types == null) return 0;
-                return Types.Sum(c => c.Supply);
-            }
-        }
+        //[NotMapped]
+        public int Supply { set; get; }
         //public string Logo { set; get; }
         public string Summary { set; get; }
         public string Description { set; get; }
