@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { buildPath, TemplateModule } from '../../../../Santel/Core/ClientApp/src/app/template/template.module';
 import { RouterModule, Routes } from '@angular/router';
-import { ComponentTypes, EntityConfiguration, PropertyConfiguration, WebSitesConfiguration } from '../../../../Santel/Core/ClientApp/src/app/services/utils';
+import { ComponentTypes, EntityConfiguration, PropertyConfiguration, WebSiteConfiguration } from '../../../../Santel/Core/ClientApp/src/app/services/utils';
 import { AuthService } from '../../../../Santel/Core/ClientApp/src/app/services/auth.service';
 import { WebSiteService } from '../../../../Santel/Core/ClientApp/src/app/services/website.service';
 import { CategoryComponent, ColorComponent, KeywordComponent, ProductComponent, SizeComponent } from './pages/pages.component';
@@ -14,18 +14,20 @@ import { IconsComponent } from '../../../../Santel/Core/ClientApp/src/app/templa
 //import { IconsComponent } from '../../../../Santel/Core/ClientApp/src/app/template/components/icons/icons.component';
 
 
-export const config: WebSitesConfiguration = new WebSitesConfiguration('StoreDB', 'مدیریت وب سایت ', ' ',
+
+
+export const config: WebSiteConfiguration = new WebSiteConfiguration('StoreDB', 'مدیریت وب سایت ', ' ',
   [
     new EntityConfiguration(CategoryComponent, 'Category', "دسته بندی", {
       componentType: ComponentTypes.tree,
-      icon: '',
+      icon: 'shape',
+      useDefaultIDStatusForm:false,
       treeParentKey: "ParentCategoryId",
       propertiesConfigurations: [
         ...defaultPropertyWithTitleConfiguration,
         new PropertyConfiguration('ParentCategoryId', '  دسته بندی    ', {
           Validators: []
         }),
-        new PropertyConfiguration('Logo', 'لوگو ', { Validators: [], InTable: true }),
         new PropertyConfiguration('Summary', 'خلاصه ', { Validators: [], InTable: true }),
         new PropertyConfiguration('Description', 'شرح  ', { Validators: [], InTable: true }),
         new PropertyConfiguration('Images', 'تصاویر  ', { Validators: [], InTable: true }),
@@ -36,24 +38,25 @@ export const config: WebSitesConfiguration = new WebSitesConfiguration('StoreDB'
     new EntityConfiguration(ProductComponent, 'Product', "محصولات", {
       neededData: { Categories: "Category", Colors: "Color", Sizes: "Size"},
       componentType: ComponentTypes.lazytable,
-      icon: '',
+      icon: 'archive-check-outline',
+      useDefaultIDStatusForm: false,
       propertiesConfigurations: [
         ...defaultPropertyWithTitleConfiguration,
-        new PropertyConfiguration('CategoryId', 'دسته بندی', { Validators: [Validators.required], InTable: true, InPicker: true }),
-        new PropertyConfiguration('Supply', 'تعداد موجودی ', { Validators: [], InTable: true, InPicker: true }),
+        new PropertyConfiguration('CategoryId', 'دسته بندی', { Type: 'custom', Validators: [Validators.required], InTable: true, InPicker: true }),
+        new PropertyConfiguration('Supply', 'تعداد موجودی ', { Type: 'number', Validators: [], InTable: true, InPicker: true }),
         new PropertyConfiguration('Images', 'تصاویر  ', { value: [], Validators: [], InTable: true }),
-        new PropertyConfiguration('Summary', 'خلاصه ', { Validators: [], InTable: false }),
-        new PropertyConfiguration('Description', 'شرح  ', { Validators: [], InTable: false }),
-        new PropertyConfiguration('Labels', 'لیبل ها  ', { value: [], Validators: [], InTable: false }),
-        new PropertyConfiguration('Related', 'مرتبط  ', { value: [], Validators: [], InTable: false }),
-        new PropertyConfiguration('Types', 'انواع  ', { value: [], Validators: [], InTable: false }),
-        new PropertyConfiguration('DetailsNodeValues', 'ویژگی ها', { value: {}, Validators: [], InTable: false }),
-        new PropertyConfiguration('KeyWords', ' کلید واژه ها', { value: [], Validators: [], InTable: false   }),
+        new PropertyConfiguration('Summary', 'خلاصه ', { Type: 'string', Validators: [], InTable: false }),
+        new PropertyConfiguration('Description', 'شرح  ', { Type: 'string', Validators: [], InTable: false }),
+        new PropertyConfiguration('Labels', 'لیبل ها  ', { Type: 'custom',value: [], Validators: [], InTable: false }),
+        new PropertyConfiguration('Related', 'مرتبط  ', { Type: 'custom',value: [], Validators: [], InTable: false }),
+        new PropertyConfiguration('Types', 'انواع  ', { Type: 'custom', value: [], Validators: [], InTable: false }),
+        new PropertyConfiguration('DetailsNodeValues', 'ویژگی ها', { Type: 'custom', value: {}, Validators: [], InTable: false }),
+        new PropertyConfiguration('KeyWords', ' کلید واژه ها', { Type: 'custom', value: [], Validators: [], InTable: false }),
       ]
     }),
     new EntityConfiguration(ColorComponent, 'Color', "رنگ", {
       componentType: ComponentTypes.table,
-      icon: '',
+      icon: 'palette',
       propertiesConfigurations: [
         ...defaultPropertyWithTitleConfiguration,
         new PropertyConfiguration('Value', 'مقدار', { Type: 'color', Validators: [Validators.required], InTable: true }),
@@ -61,22 +64,22 @@ export const config: WebSitesConfiguration = new WebSitesConfiguration('StoreDB'
     }),
     new EntityConfiguration(KeywordComponent, 'Keyword', "کلیدواژه", {
       componentType: ComponentTypes.lazytable,
-      icon: '',
+      icon: 'signature-text',
       propertiesConfigurations: [
         ...defaultPropertyWithTitleConfiguration
       ]
     }),
     new EntityConfiguration(SizeComponent, 'Size', "سایز بندی", {
       componentType: ComponentTypes.table,
-      icon: '',
+      icon: 'resize-bottom-right',
       propertiesConfigurations: [
         ...defaultPropertyWithTitleConfiguration,
         new PropertyConfiguration('Value', 'مقدار', { Type: 'string', Validators: [Validators.required], InTable: true   }),
       ]
     }),
     filesEntity,
-    new EntityConfiguration(FileManagerComponent, 'FileManager', 'FileManager'),
-    new EntityConfiguration(IconsComponent, 'Icons', 'Icons')
+    new EntityConfiguration(FileManagerComponent, 'FileManager', 'FileManager', { icon: 'folder' }),
+    new EntityConfiguration(IconsComponent, 'Icons', 'Icons', { icon:'format-list-checkbox' })
   ]
 );
 const routes: Routes = [

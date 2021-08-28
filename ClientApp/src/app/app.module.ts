@@ -4,6 +4,7 @@ import { AppComponent } from './app.component';
 import { WebSelectorComponent } from '../../../../Santel/Core/ClientApp/src/app/components/web-selector/web-selector.component';
 import { LoginComponent } from '../../../../Santel/Core/ClientApp/src/app/components/login/login.component';
 import { SharedModule } from '../../../../Santel/Core/ClientApp/src/app/shared.module';
+import { WebSiteService } from '../../../../Santel/Core/ClientApp/src/app/services/website.service';
 
 
 
@@ -34,4 +35,11 @@ const routes: Routes = [
   bootstrap: [AppComponent]
 })
 export class AppModule {
+  constructor(wss: WebSiteService) {
+    wss.appConfig = {
+      description: '',
+      fullName: '',
+      logInDesc: 'فروشگاه اینترنتی ...'
+    }
+  }
 }

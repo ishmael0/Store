@@ -185,5 +185,7 @@ export class ProductComponent extends BaseComponent {
   getCatNodes(id: number) {
     return this.categories.find(c => c.Id == id).TreeNodes;
   }
-
+  countNodes(item: FormGroup, controlName: string) {
+    return Object.keys(item.controls[controlName].value).length
+  }
 }

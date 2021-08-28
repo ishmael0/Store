@@ -5,6 +5,31 @@
   <nz-tabset [nzAnimated]="false">
     <nz-tab nzTitle="محتوای اصلی">
       <form nz-form [formGroup]="item">
+
+
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Id">شناسه</nz-form-label>
+          <nz-tag [nzColor]="'#f50'">{{item.controls.Id.value}}</nz-tag>
+          <nz-form-control [nzSm]="4" [nzXs]="24" nzErrorTip="وضعیت معتبر نیست">
+            <nz-select formControlName="Status" nzPlaceHolder="Select OS" nzShowSearch nzAllowClear [nzCustomTemplate]="statusTemplate">
+              <nz-option *ngFor="let item of cs.Statuses" [nzValue]="item.title" nzCustomContent>
+                {{item.label}}
+                <i [style.color]="item.color" nz-icon [innerHtml]="icons[item.icon]"></i>
+              </nz-option>
+            </nz-select>
+            <ng-template #statusTemplate let-selected>
+              <ng-container *ngFor="let item of cs.Statuses">
+                <div *ngIf="selected.nzValue==item.title">
+                  {{item.label}}
+                  <i nz-icon [style.color]="item.color" [innerHtml]="icons[item.icon]"></i>
+                </div>
+              </ng-container>
+            </ng-template>
+          </nz-form-control>
+        </nz-form-item>
+
+
+
         <nz-form-item>
           <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Title">عنوان</nz-form-label>
           <nz-form-control [nzSm]="6" [nzXs]="24" nzErrorTip="عنوان را وارد کنید">
@@ -115,7 +140,7 @@
         <nz-card *ngFor="let r of item.controls.Images.value" nz-col [nzSm]="6" [nzXs]="24" cdkDrag>
           <img style="width:100%" [src]="'/front'+r.Path" />
           <br />
-          <input type="text" nz-input style="width:100%" placeholder="توضیحات" [(ngModel)]="r.Description" />Path
+          <input type="text" nz-input style="width:100%" placeholder="توضیحات" [(ngModel)]="r.Description" />
           <i nz-icon (click)="deleteFromList(item, 'Images',r.Path,'Path' )"
              style="color: #F93154;"
              class="larger"
@@ -124,7 +149,7 @@
       </div>
     </nz-tab>
 
-    <nz-tab nzTitle=" ویژگی ها  ">
+    <nz-tab nzTitle=" ویژگی ها  ({{countNodes(item, 'DetailsNodeValues')}})">
       <nz-alert nzType="info" class="alertInTopOfTable" nzMessage="برای انتخاب ویژگی ها حتما باید دسته بندی انتخاب شده باشد"></nz-alert>
       <br />
       <nz-tree *ngIf="item.controls.CategoryId.value" [nzData]="getCatNodes(item.controls.CategoryId.value)" nzBlockNode [nzTreeTemplate]="nzTreeTemplate">
@@ -134,25 +159,44 @@
           <input (change)="makeItDirty(item)" [(ngModel)]="item.controls.DetailsNodeValues.value[origin.key]" />
         </ng-template>
       </nz-tree>
-
-      <button nz-button nz-col [nzSm]="4" nzType="dashed" (click)="imageModal = true ">اضافه کردن</button>
-    </nz-tab>
+     </nz-tab>
 
     <nz-tab nzTitle=" محصولات مشابه ({{item.controls.Related.value.length}})">
       <nz-alert nzType="info" class="alertInTopOfTable" nzMessage=" میتوانید با کشیدن و رها کردن ترتیب محصولات مشابه را تغییر دهید"></nz-alert>
       <div cdkDropList (cdkDropListDropped)="dropAndDrop_DropHandler($event, item,'Related')">
-        <nz-tag class="largeTag" [nzColor]="'magenta'" nzMode="closeable" (nzOnClose)="deleteFromList(item, 'Related',r.Id )" *ngFor="let r of item.controls.Related.value" cdkDrag>
-          ({{r.Id}})- {{r.Title}}
-        </nz-tag>
+        <nz-card *ngFor="let r of item.controls.Related.value" nz-col [nzSm]="6" [nzXs]="24" cdkDrag>
+          <nz-tag class="largeTag" [nzColor]="'magenta'">
+            {{r.Id}}
+          </nz-tag>
+          {{r.Title}}
+          <i nz-icon (click)="deleteFromList(item, 'Related',r.Id  )"
+             style="color: #F93154;"
+             class="larger"
+             [innerHtml]="icons['delete']"></i>
+        </nz-card>
+
+
       </div>
       <button nz-button nz-col [nzSm]="4" nzType="dashed" (click)="relatedModal = true ">اضافه کردن محصولات مشابه</button>
     </nz-tab>
 
     <nz-tab nzTitle=" کلمات کلیدی ({{item.controls.KeyWords.value?.length}})">
       <div cdkDropList (cdkDropListDropped)="dropAndDrop_DropHandler($event, item,'KeyWords')">
-        <nz-tag class="largeTag" [nzColor]="'magenta'" nzMode="closeable" (nzOnClose)="deleteFromList(item, 'KeyWords',r.Id )" *ngFor="let r of item.controls.KeyWords.value" cdkDrag>
-          ({{r.Id}})- {{r.Title}}
-        </nz-tag>
+   
+
+        <nz-card *ngFor="let r of item.controls.KeyWords.value" nz-col [nzSm]="6" [nzXs]="24" cdkDrag>
+          <nz-tag class="largeTag" [nzColor]="'magenta'">
+            {{r.Id}}
+          </nz-tag>
+          {{r.Title}}
+          <i nz-icon (click)="deleteFromList(item, 'KeyWords',r.Id  )"
+             style="color: #F93154;"
+             class="larger"
+             [innerHtml]="icons['delete']"></i>
+        </nz-card>
+
+
+
       </div>
       <button nz-button nz-col [nzSm]="4" nzType="dashed" (click)="keywordModal = true ">اضافه کردن کلیدواژه</button>
     </nz-tab>
@@ -196,7 +240,7 @@
 <ng-template #modalFooter>
 </ng-template>
 
-<nz-modal [(nzVisible)]="imageModal" [nzFooter]="modalFooter" nzTitle="افزودن تصویر">
+<nz-modal [(nzVisible)]="imageModal" [nzFooter]="modalFooter" nzTitle="افزودن تصویر" (nzOnCancel)="imageModal = false" >
   <ng-container *nzModalContent>
     <app-image-uploader-card key="StoreDB/Product" Id="1" (onOk)="addImage($event)"></app-image-uploader-card>
     <button style="float:left" nz-button nzType="primary" (click)="imageModal = false">تایید </button>
@@ -204,7 +248,7 @@
 </nz-modal>
 
 
-<nz-modal [nzWidth]="'80%'" [(nzVisible)]="relatedModal" [nzFooter]="modalFooter" nzTitle="افزودن محصولات مشابه">
+<nz-modal [nzWidth]="'80%'" [(nzVisible)]="relatedModal" [nzFooter]="modalFooter" nzTitle="افزودن محصولات مشابه" (nzOnCancel)="relatedModal = false" >
   <ng-container *nzModalContent>
     <app-product (select)="relatedProductSelected($event)"></app-product>
     <button style="float:left" nz-button nzType="primary" (click)="relatedModal = false">تایید </button>
@@ -212,7 +256,7 @@
 </nz-modal>
 
 
-<nz-modal [nzWidth]="'80%'" [(nzVisible)]="keywordModal" [nzFooter]="modalFooter" nzTitle="افزودن  کلیدواژه">
+<nz-modal [nzWidth]="'80%'" [(nzVisible)]="keywordModal" [nzFooter]="modalFooter" nzTitle="افزودن  کلیدواژه" (nzOnCancel)="keywordModal = false" >
   <ng-container *nzModalContent>
     <app-keyword (select)="keywordSelected($event)"></app-keyword>
     <button style="float:left" nz-button nzType="primary" (click)="keywordModal = false">تایید </button>
