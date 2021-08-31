@@ -1,0 +1,152 @@
+
+
+<ng-template #form let-item="item">
+
+  <nz-tabset [nzAnimated]="false">
+    <nz-tab nzTitle="محتوای اصلی">
+      <form nz-form [formGroup]="item">
+
+
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Id">شناسه</nz-form-label>
+          <nz-tag [nzColor]="'#f50'">{{item.controls.Id.value}}</nz-tag>
+          <nz-form-control [nzSm]="4" [nzXs]="24" nzErrorTip="وضعیت معتبر نیست">
+            <nz-select formControlName="Status" nzPlaceHolder="Select OS" nzShowSearch nzAllowClear [nzCustomTemplate]="statusTemplate">
+              <nz-option *ngFor="let item of cs.Statuses" [nzValue]="item.title" nzCustomContent>
+                {{item.label}}
+                <i [style.color]="item.color" nz-icon [innerHtml]="icons[item.icon]"></i>
+              </nz-option>
+            </nz-select>
+            <ng-template #statusTemplate let-selected>
+              <ng-container *ngFor="let item of cs.Statuses">
+                <div *ngIf="selected.nzValue==item.title">
+                  {{item.label}}
+                  <i nz-icon [style.color]="item.color" [innerHtml]="icons[item.icon]"></i>
+                </div>
+              </ng-container>
+            </ng-template>
+          </nz-form-control>
+        </nz-form-item>
+
+
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Title">عنوان</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="عنوان را وارد کنید">
+            <input nz-input formControlName="Title" />
+          </nz-form-control>
+        </nz-form-item>
+
+
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="email"> دسته بندی والد</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid E-mail!">
+            <nz-tree-select [nzNodes]="dataManager.ViewRecords"
+                            nzShowSearch
+                            nzPlaceHolder="لطفا دسته بندی والد را انتخاب نمایید"
+                            formControlName="ParentCategoryId">
+            </nz-tree-select>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Summary">شرح خلاصه</nz-form-label>
+          <nz-form-control [nzSm]="6" [nzXs]="24" nzErrorTip="شرح خلاصه را وارد کنید">
+            <input nz-input formControlName="Summary" />
+          </nz-form-control>
+        </nz-form-item>
+
+
+
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Description">شرح </nz-form-label>
+          <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="شرح  را وارد کنید">
+            <ckeditor [editor]="Editor" tagName="textarea" [config]="config" formControlName="Description"></ckeditor>
+          </nz-form-control>
+        </nz-form-item>
+
+
+
+        <div nz-row cdkDropList (cdkDropListDropped)="dropImage($event, item)">
+          <nz-card *ngFor="let pic of item.controls.Images.value" nz-col [nzSm]="6" [nzXs]="24" cdkDrag>
+            <img style="width:100%" [src]="'/front'+pic.Path" />
+            <br />
+            <input type="text" nz-input style="width:100%" placeholder="توضیحات" [(ngModel)]="pic.Description" />
+          </nz-card>
+
+        </div>
+        <button nz-button nz-col [nzSm]="4" nzType="dashed" (click)="imageModal = true ">اضافه کردن</button>
+
+
+
+      </form>
+    </nz-tab>
+    <nz-tab nzTitle=" جزییات محصولات در این دسته بندی">
+
+
+
+
+
+
+
+
+      <span (click)="addFirst(item)">ایجاد</span>
+      <nz-tree *ngIf="item.controls.TreeNodes.value" [nzData]="item.controls.TreeNodes.value" nzDraggable nzBlockNode [nzTreeTemplate]="nzTreeTemplate">
+
+        <ng-template #nzTreeTemplate let-node let-origin="origin">
+          <nz-tag [nzColor]="'magenta'" style="width:30px"> {{origin.key}}</nz-tag>
+          <input (change)="makeItDirty(item)" [(ngModel)]="origin.name" />
+          <button (click)="removeNode(item, node)" nz-button nzDanger nzType="primary">
+            <i nz-icon
+               [innerHtml]="icons['delete']"></i>
+          </button>
+
+          <button (click)="addNode(item, node)" nz-button nzType="primary">
+            <i nz-icon
+               [innerHtml]="icons['plus-thick']"></i>
+          </button>
+        </ng-template>
+
+      </nz-tree>
+
+
+
+
+
+
+    </nz-tab>
+  </nz-tabset>
+
+</ng-template>
+
+<ng-template #viewMessage>
+  آیدی: 012331323
+</ng-template>
+<ng-template #search>
+
+</ng-template>
+
+<ng-template #tableBodyPicker let-item="item">
+
+</ng-template>
+
+<ng-template #tableBody let-item="item">
+  <td>{{ item.Id }}</td>
+  <td>{{ item.Title }}</td>
+  <td>{{ item.Create_}}</td>
+  <td>{{ item.Status }}</td>
+</ng-template>
+
+
+
+
+<app-template *ngIf="ok" [com]="this"></app-template>
+
+
+<nz-modal [(nzVisible)]="imageModal" [nzFooter]="modalFooter" nzTitle="The first Modal" (nzOnCancel)="imageModal = false" (nzOnOk)="imageModal = false">
+  <ng-container *nzModalContent>
+    <app-image-uploader-card key="StoreDB/Category" Id="1" (onOk)="addImage($event)"></app-image-uploader-card>
+  </ng-container>
+  <ng-template #modalFooter>
+    <button nz-button nzType="default" (click)="imageModal = false">انصراف </button>
+  </ng-template>
+</nz-modal>

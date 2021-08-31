@@ -1,12 +1,13 @@
-using Core.Models;
+﻿using Core.Models;
 using Core.StartUp;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Store.Models;
 
+
 namespace Store
 {
-    public class Program
+    public partial class Program
     {
         public static void Main(string[] args)
         {
@@ -14,8 +15,9 @@ namespace Store
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) => Host.CreateDefaultBuilder(args).ConfigureWebHostDefaults(webBuilder =>
-        { 
-            webBuilder.UseStartup<BaseStartup<MyAccStore, BaseApplicationUser, BaseApplicationRole>>(); 
+        {
+            //seed();
+            webBuilder.UseStartup<BaseStartup<MyAccStore, BaseApplicationUser, BaseApplicationRole>>();
         });
     }
 }

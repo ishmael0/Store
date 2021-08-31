@@ -26,6 +26,9 @@
   <ItemGroup>
     <ProjectReference Include="..\Santel\Core\Core.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ClientApp\src\app\front\" />
+  </ItemGroup>
 </Project>
 
 <!--

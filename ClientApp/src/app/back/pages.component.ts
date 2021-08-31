@@ -7,6 +7,68 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { NzTreeNode } from 'ng-zorro-antd/tree';
 
 
+
+@Component({
+  selector: 'app-invoice',
+  templateUrl: './invoice.component.html',
+  styles: [
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class InvoiceComponent extends BaseComponent {
+  constructor(public injector: Injector) {
+    super(injector, 'Invoice');
+  }
+  provinces: any[];
+  Cities: any[];
+   fill() {
+    this.provinces = this.dataManager.loadedData["Provinces"];
+    this.Cities = this.dataManager.loadedData["Cities"];
+  }
+  customerIdModal = false;
+  customerIdModalSelected(e: any) {
+    let item = this.selectedForm();
+    item.controls.CustomerId.setValue(e.Id);
+    item.controls.LastName.setValue(e.LastName);
+    item.controls.FirstName.setValue(e.FirstName);
+    this.customerIdModal = false;
+  }
+}
+@Component({
+  selector: 'app-province',
+  templateUrl: './province.component.html',
+  styles: [
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class ProvinceComponent extends BaseComponent {
+  constructor(public injector: Injector) {
+    super(injector, 'Province');
+  }
+}
+@Component({
+  selector: 'app-city',
+  templateUrl: './city.component.html',
+  styles: [
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class CityComponent extends BaseComponent {
+  constructor(public injector: Injector) {
+    super(injector, 'City');
+  }
+  provinces: any[];
+  fill() {
+    this.provinces = this.dataManager.loadedData["Provinces"];
+  }
+  async onGet(m: string, d: any) {
+    super.onGet(m, d);
+    this.dataManager.ViewRecords.forEach(c => {
+      let t = this.provinces.find(d => d.Id == c.ProvinceId);
+      c.ProvinceId_ = t.Title;
+    })
+  }
+}
 @Component({
   selector: 'app-size',
   templateUrl: './size.component.html',
@@ -44,10 +106,6 @@ export class KeywordComponent extends BaseComponent {
     super(injector, 'Keyword');
   }
 }
-
-
-
-
 @Component({
   selector: 'app-category',
   templateUrl: './category.component.html',
@@ -100,7 +158,6 @@ export class CategoryComponent extends BaseComponent {
     this.makeItDirty(item);
   }
 }
-
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
@@ -121,8 +178,7 @@ export class ProductComponent extends BaseComponent {
   Editor = ClassicEditor;
   categoryTree: any;
   categories: any[];
-  async ngOnInit() {
-    await super.ngOnInit();
+  fill() {
     this.categoryTree = toTreeHelper(this.dataManager.loadedData.Categories, "Id", "ParentCategoryId", null);
     this.categories = this.dataManager.loadedData["Categories"];
   }
@@ -137,13 +193,17 @@ export class ProductComponent extends BaseComponent {
   }
   addType(item: FormGroup) {
     let x = item.controls.Types.value;
+    let id = Number(item.controls.MaxTypeId.value) + 1;
     x.push({
+      Id: id,
       Price: 0,
       Off: 0,
       TotalPriceAfterOff: 0,
       Amount: 0,
       Sells: 0,
+      MaxAllowedBuy: 0,
     });
+    item.controls.MaxTypeId.setValue(id);
     item.controls.Types.setValue(x);
     this.cdr.detectChanges();
   }
@@ -159,8 +219,8 @@ export class ProductComponent extends BaseComponent {
   }
   relatedProductSelected(e: any) {
     let item = this.selectedForm();
-    if (!item.controls.Related.value?.some(c => c.Id == e.Id)) {
-      item.controls.Related.setValue([...item.controls.Related.value, { Id: e.Id, Title: e.Title }]);
+    if (!item.controls.Relateds.value?.some(c => c.Id == e.Id)) {
+      item.controls.Relateds.setValue([...item.controls.Relateds.value, { Id: e.Id, Title: e.Title }]);
       this.makeItDirty(item);
 
     }
@@ -187,5 +247,21 @@ export class ProductComponent extends BaseComponent {
   }
   countNodes(item: FormGroup, controlName: string) {
     return Object.keys(item.controls[controlName].value).length
+  }
+}
+
+
+ 
+ 
+@Component({
+  selector: 'app-customer',
+  templateUrl: './customer.component.html',
+  styles: [
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class CustomerComponent extends BaseComponent {
+  constructor(public injector: Injector) {
+    super(injector, 'Customer');
   }
 }

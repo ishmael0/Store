@@ -9,7 +9,10 @@ import { WebSiteService } from '../../../../Santel/Core/ClientApp/src/app/servic
 
 
 const routes: Routes = [
-  { path: '', redirectTo: 'webselector', pathMatch: 'full' },
+  {
+    path: '', loadChildren: () => import('./front/front.module').then(m => m.FromModule),
+  },
+  //{ path: '', redirectTo: 'shopify', pathMatch: 'full' },
   {
     path: 'myaccstore', loadChildren: () => import('../../../../Santel/Core/ClientApp/src/app/myacc/myacc.module').then(m => m.MyAcc),
     data: {
@@ -17,9 +20,10 @@ const routes: Routes = [
     }
   },
   {
-    path: 'storedb', loadChildren: () => import('./store.module').then(m => m.StoreModule),
+    path: 'storedb', loadChildren: () => import('./back/back.module').then(m => m.BackModule), 
     data: { key: 'StoreDB', label: ' مدیریت وب سایت' }
   },
+
   { path: 'webselector', component: WebSelectorComponent },
   { path: 'login', component: LoginComponent }
 ];

@@ -68,10 +68,11 @@
 
     </nz-tab>
 
-    <nz-tab nzTitle="انواع محصولات ({{item.controls.Types.value.length}})">
+    <nz-tab nzTitle="انواع محصولات ({{item.controls.Types.value?.length}})">
       <nz-table>
         <thead>
           <tr>
+            <th width="20%">شناسه</th>
             <th width="20%">عنوان</th>
             <th width="10%">رنگ</th>
             <th width="10%">سایز</th>
@@ -81,11 +82,15 @@
             <th width="10%"> قیمت کل </th>
             <th width="10%">    تعداد موجودی  </th>
             <th width="10%">     تعداد فروش  </th>
+            <th width="10%">      حداکثر تعداد مجاز خرید  </th>
             <th width="10%">        </th>
           </tr>
         </thead>
         <tbody cdkDropList (cdkDropListDropped)="dropAndDrop_DropHandler($event, item,'Types')">
           <tr *ngFor="let t of item.controls.Types.value" cdkDrag>
+            <td>
+              <nz-tag [nzColor]="'cyan'" style="width:30px"> {{t.Id}}</nz-tag>
+            </td>
             <td>       <input nz-input [(ngModel)]="t.Title" />     </td>
             <td>
               <nz-select [(ngModel)]="t.Color"
@@ -117,6 +122,7 @@
             <td>       <nz-input-number (ngModelChange)="makeItDirty(item)" [(ngModel)]="t.TotalPriceAfterOff" [nzMin]="0" [nzMax]="1000000000" [nzStep]="1"></nz-input-number>   </td>
             <td>       <nz-input-number (ngModelChange)="makeItDirty(item)" [(ngModel)]="t.Supply" [nzMin]="0" [nzMax]="10000" [nzStep]="1"></nz-input-number>   </td>
             <td>       <nz-input-number (ngModelChange)="makeItDirty(item)" [(ngModel)]="t.Sells" [nzMin]="0" [nzMax]="10000" [nzStep]="1"></nz-input-number>   </td>
+            <td>       <nz-input-number (ngModelChange)="makeItDirty(item)" [(ngModel)]="t.MaxAllowedBuy" [nzMin]="0" [nzMax]="10000" [nzStep]="1"></nz-input-number>   </td>
             <td>
               <button nz-button nz-col nzType="dashed" nzDanger (click)="delType(item,t)">حذف</button>
             </td>
@@ -132,7 +138,7 @@
 
 
     </nz-tab>
-    <nz-tab nzTitle=" تصاویر  ({{item.controls.Images.value.length}})">
+    <nz-tab nzTitle=" تصاویر  ({{item.controls.Images.value?.length}})">
       <nz-alert nzType="info" class="alertInTopOfTable" nzMessage=" اولین تصویر، تصویر اصلی، دومین تصویر تصویر فرعی محسوب میشوند"></nz-alert>
       <nz-alert nzType="info" class="alertInTopOfTable" nzMessage=" میتوانید با کشیدن و رها کردن ترتیب تصاویر را تغییر دهید"></nz-alert>
       <br />
@@ -161,15 +167,15 @@
       </nz-tree>
      </nz-tab>
 
-    <nz-tab nzTitle=" محصولات مشابه ({{item.controls.Related.value.length}})">
+    <nz-tab nzTitle=" محصولات مشابه ({{item.controls.Relateds.value?.length}})">
       <nz-alert nzType="info" class="alertInTopOfTable" nzMessage=" میتوانید با کشیدن و رها کردن ترتیب محصولات مشابه را تغییر دهید"></nz-alert>
-      <div cdkDropList (cdkDropListDropped)="dropAndDrop_DropHandler($event, item,'Related')">
-        <nz-card *ngFor="let r of item.controls.Related.value" nz-col [nzSm]="6" [nzXs]="24" cdkDrag>
+      <div cdkDropList (cdkDropListDropped)="dropAndDrop_DropHandler($event, item,'Relateds')">
+        <nz-card *ngFor="let r of item.controls.Relateds.value" nz-col [nzSm]="6" [nzXs]="24" cdkDrag>
           <nz-tag class="largeTag" [nzColor]="'magenta'">
             {{r.Id}}
           </nz-tag>
           {{r.Title}}
-          <i nz-icon (click)="deleteFromList(item, 'Related',r.Id  )"
+          <i nz-icon (click)="deleteFromList(item, 'Relateds',r.Id  )"
              style="color: #F93154;"
              class="larger"
              [innerHtml]="icons['delete']"></i>
