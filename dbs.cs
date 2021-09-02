@@ -52,6 +52,7 @@ namespace Store.Models
         public DbSet<City> Cities { set; get; }
         public DbSet<Customer> Customers { set; get; }
         public DbSet<Invoice> Invoices { set; get; }
+        public DbSet<OrderedList> OrderedLists { set; get; }
         public StoreDB(DbContextOptions<StoreDB> options) : base(options)
         {
 
@@ -64,13 +65,14 @@ namespace Store.Models
             modelBuilder.Entity<Product>().Property(e => e.Types).HasConversion(v => JsonConvert.SerializeObject(v), v => JsonConvert.DeserializeObject<List<ProductType>>(v));
             modelBuilder.Entity<Product>().Property(e => e.Labels).HasConversion(v => JsonConvert.SerializeObject(v), v => JsonConvert.DeserializeObject<List<ProductLabel>>(v));
             modelBuilder.Entity<Product>().Property(e => e.Images).HasConversion(v => JsonConvert.SerializeObject(v), v => JsonConvert.DeserializeObject<List<Images>>(v));
-            modelBuilder.Entity<Product>().Property(e => e.Relateds).HasConversion(v => JsonConvert.SerializeObject(v), v => JsonConvert.DeserializeObject<List<ProductIdTitleHelper>>(v));
-            modelBuilder.Entity<Product>().Property(e => e.KeyWords).HasConversion(v => JsonConvert.SerializeObject(v), v => JsonConvert.DeserializeObject<List<ProductIdTitleHelper>>(v));
+            modelBuilder.Entity<Product>().Property(e => e.Relateds).HasConversion(v => JsonConvert.SerializeObject(v.Select(c=>c.Id)), v => JsonConvert.DeserializeObject<List<int>>(v).Select(c=> new ProductIdTitleHelper() {Id = c }));
+            modelBuilder.Entity<Product>().Property(e => e.KeyWords).HasConversion(v => JsonConvert.SerializeObject(v.Select(c=>c.Id)), v => JsonConvert.DeserializeObject<List<int>>(v).Select(c=> new ProductIdTitleHelper() {Id = c }));
             modelBuilder.Entity<Category>().Property(e => e.TreeNodes).HasConversion(v => JsonConvert.SerializeObject(v), v => JsonConvert.DeserializeObject<List<TreeNode>>(v));
             modelBuilder.Entity<Category>().Property(e => e.Images).HasConversion(v => JsonConvert.SerializeObject(v), v => JsonConvert.DeserializeObject<List<Images>>(v));
             modelBuilder.Entity<Customer>().Property(e => e.Addresses).HasConversion(v => JsonConvert.SerializeObject(v), v => JsonConvert.DeserializeObject<List<Address>>(v));
             modelBuilder.Entity<Invoice>().Property(e => e.Address).HasConversion(v => JsonConvert.SerializeObject(v), v => JsonConvert.DeserializeObject<Address>(v));
             modelBuilder.Entity<Invoice>().Property(e => e.ProductTypes).HasConversion(v => JsonConvert.SerializeObject(v), v => JsonConvert.DeserializeObject<List<ProductTypeForInvoice>>(v));
+            modelBuilder.Entity<OrderedList>().Property(e => e.Products).HasConversion(v => JsonConvert.SerializeObject(v.Select(c => c.Id)), v => JsonConvert.DeserializeObject<List<int>>(v).Select(c => new ProductIdTitleHelper() { Id = c }));
 
         }
     }
@@ -105,20 +107,6 @@ namespace Store.Models
         public ProductController(StoreDB dbContext, UserPermissionManager upm) : base(dbContext, upm)
         {
         }
-        public override async Task<JsonResult> Set([FromQuery] IDictionary<string, string> param, [FromBody] Product t)
-        {
-            if (t.Types != null && t.Types.Count > 0)
-            {
-                t.SupplyCount = t.Types.Sum(c => c.SupplyCount);
-                t.PurchasesCount = t.Types.Sum(c => c.PurchasesCount);
-            }
-            else
-            {
-                t.SupplyCount = 0;
-                t.PurchasesCount = 0;
-            }
-            return await base.Set(param, t);
-        }
         [NonAction]
         public override async Task<JsonResult> GetHandler([FromQuery] IDictionary<string, string> param, Product currentItem)
         {
@@ -129,28 +117,30 @@ namespace Store.Models
                 if (ids.Count > 0)
                 {
                     var titles = await _context.Products.Where(c => ids.Contains(c.Id)).Select(c => new { c.Title, c.Id }).ToListAsync();
-                    foreach (var i in x.Item2)
+                    x.Item2.ForEach(c =>
                     {
-                        if (i.Relateds != null)
-                            foreach (var r in i.Relateds)
-                            {
-                                r.Title = titles.FirstOrDefault(c => c.Id == r.Id)?.Title;
-                            }
-                    }
+                        c.Relateds.ToList().ForEach(r =>
+                        {
+                            r.Title = titles.FirstOrDefault(t => t.Id == r.Id)?.Title;
+                        });
+
+                    });
                 }
 
                 ids = x.Item2.Where(c => c.KeyWords != null).SelectMany(c => c.KeyWords).Select(c => c.Id).Distinct().ToList();
                 if (ids.Count > 0)
                 {
                     var titles = await _context.Keywords.Where(c => ids.Contains(c.Id)).Select(c => new { c.Title, c.Id }).ToListAsync();
-                    foreach (var i in x.Item2)
+                    x.Item2.ForEach(c =>
                     {
-                        if (i.KeyWords != null)
-                            foreach (var r in i.KeyWords)
-                            {
-                                r.Title = titles.FirstOrDefault(c => c.Id == r.Id)?.Title;
-                            }
-                    }
+                        c.KeyWords.ToList().ForEach(r =>
+                        {
+                            r.Title = titles.FirstOrDefault(t => t.Id == r.Id)?.Title;
+                        });
+
+                    });
+
+
                 }
 
             }
@@ -164,8 +154,8 @@ namespace Store.Models
         [ForeignKey("CategoryId")]
         public Category Category { set; get; }
         public int CategoryId { set; get; }
-        //[NotMapped]
-        public int SupplyCount { set; get; }
+        public int SupplyCount { set { } get { return Types?.Sum(c => c.SupplyCount) ?? 0; } }
+        public int SoldCount { set { } get { return Types?.Sum(c => c.SoldCount) ?? 0; } }
         public int PurchasesCount { set; get; }
         public int MaxTypeId { set; get; }
         public int Weight { set; get; }
@@ -175,8 +165,8 @@ namespace Store.Models
         public List<ProductType> Types { set; get; }
         public List<Images> Images { set; get; }
         public Dictionary<int, string> DetailsNodeValues { set; get; }
-        public List<ProductIdTitleHelper> Relateds { set; get; }
-        public List<ProductIdTitleHelper> KeyWords { set; get; }
+        public IEnumerable<ProductIdTitleHelper> Relateds { set; get; }
+        public IEnumerable<ProductIdTitleHelper> KeyWords { set; get; }
     }
 
     public class ProductLabel
@@ -217,6 +207,7 @@ namespace Store.Models
     public class ProductType : ProductTypeBase
     {
         public int SupplyCount { set; get; }
+        public int SoldCount { set; get; }
         public int PurchasesCount { set; get; }
         public int MaxAllowedBuy { set; get; }
     }
@@ -235,7 +226,7 @@ namespace Store.Models
         public int PostPrice { set; get; }
         public int Price { set; get; }
         public bool IsPaid { set; get; }
-        //public bool Description { set; get; }
+        public string Description { set; get; }
         public List<ProductTypeForInvoice> ProductTypes { set; get; }
     }
 
@@ -269,4 +260,12 @@ namespace Store.Models
         public string Latitude { set; get; }
         public string Longitude { set; get; }
     }
+
+    [SafeToGetAll]
+    public class OrderedList:BaseModelWithTitle
+    {
+        public IEnumerable<ProductIdTitleHelper> Products{ set; get; }
+        public string Color { set; get; }
+    }
+
 }
