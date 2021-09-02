@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ComponentTypes, EntityConfiguration, PropertyConfiguration, WebSiteConfiguration } from '../../../../../Santel/Core/ClientApp/src/app/services/utils';
 import { AuthService } from '../../../../../Santel/Core/ClientApp/src/app/services/auth.service';
 import { WebSiteService } from '../../../../../Santel/Core/ClientApp/src/app/services/website.service';
-import { CategoryComponent, CityComponent, ColorComponent, CustomerComponent, InvoiceComponent, KeywordComponent, ProductComponent, ProvinceComponent, SizeComponent } from './pages.component';
+import { CategoryComponent, CityComponent, ColorComponent, CustomerComponent, InvoiceComponent, KeywordComponent, OrderedListComponent, ProductComponent, ProvinceComponent, SizeComponent } from './pages.component';
 import { defaultPropertyConfiguration, defaultPropertyWithTitleConfiguration, filesEntity } from '../../../../../Santel/Core/ClientApp/src/app/services/properties';
 import { Validators } from '@angular/forms';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
@@ -119,7 +119,7 @@ export const config: WebSiteConfiguration = new WebSiteConfiguration('StoreDB', 
         new PropertyConfiguration('ProductTypes', '', { value: [], Type: 'custom', Validators: [], InTable: false }),
       ]
     }),
-    new EntityConfiguration(CustomerComponent, 'Customer', "مشتری ها ", {
+    new EntityConfiguration(CustomerComponent, 'Customer', "مشتری  ", {
       getTitle: (item: FormGroup) => {
         let x = (item.controls.FirstName.value ? item.controls.FirstName.value : "") + " " + (item.controls.LastName.value ? item.controls.LastName.value : "")
         if (x && x != " ") return x;
@@ -138,6 +138,15 @@ export const config: WebSiteConfiguration = new WebSiteConfiguration('StoreDB', 
       ]
     }),
 
+    new EntityConfiguration(OrderedListComponent, 'OrderedList', "چیدمان ", {
+      componentType: ComponentTypes.table,
+      icon: 'order-alphabetical-ascending',
+      propertiesConfigurations: [
+        ...defaultPropertyWithTitleConfiguration,
+        new PropertyConfiguration('Products', 'محصولات', { value:[], Type: 'custom', Validators: [], InTable: true }),
+        new PropertyConfiguration('Color', 'رنگ', { Type: 'color', Validators: [], InTable: false }),
+      ]
+    }),
 
     filesEntity,
     new EntityConfiguration(FileManagerComponent, 'FileManager', 'FileManager', { icon: 'folder' }),
@@ -152,7 +161,7 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     CategoryComponent, ProductComponent, SizeComponent, KeywordComponent, CityComponent,
-    ProvinceComponent, InvoiceComponent, ColorComponent, CustomerComponent
+    ProvinceComponent, InvoiceComponent, ColorComponent, CustomerComponent, OrderedListComponent
   ],
   imports: [
     TemplateModule, CKEditorModule,

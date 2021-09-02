@@ -1,9 +1,9 @@
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
-import { WebSelectorComponent } from '../../../../Santel/Core/ClientApp/src/app/components/web-selector/web-selector.component';
-import { LoginComponent } from '../../../../Santel/Core/ClientApp/src/app/components/login/login.component';
-import { SharedModule } from '../../../../Santel/Core/ClientApp/src/app/shared.module';
+import { WebSelectorComponent } from '../../../../Santel/Core/ClientApp/src/app/shared/components/web-selector/web-selector.component';
+import { LoginComponent } from '../../../../Santel/Core/ClientApp/src/app/shared/components/login/login.component';
+import { SharedModule } from '../../../../Santel/Core/ClientApp/src/app/shared/shared.module';
 import { WebSiteService } from '../../../../Santel/Core/ClientApp/src/app/services/website.service';
 
 
@@ -14,7 +14,7 @@ const routes: Routes = [
   },
   //{ path: '', redirectTo: 'shopify', pathMatch: 'full' },
   {
-    path: 'myaccstore', loadChildren: () => import('../../../../Santel/Core/ClientApp/src/app/myacc/myacc.module').then(m => m.MyAcc),
+    path: 'myaccstore', loadChildren: () => import('../../../../Santel/Core/ClientApp/src/app/account-manager/account-manager.module').then(m => m.AccManagerModule),
     data: {
       key: 'myAccstore', label: 'مدیریت کاربران', isAcc: true
     }

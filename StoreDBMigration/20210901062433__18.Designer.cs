@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Store.Models;
 
 namespace Store.StoreDBMigration
 {
     [DbContext(typeof(StoreDB))]
-    partial class StoreDBModelSnapshot : ModelSnapshot
+    [Migration("20210901062433__18")]
+    partial class _18
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -368,7 +370,7 @@ namespace Store.StoreDBMigration
 
                     b.HasKey("Id");
 
-                    b.ToTable("OrderedLists");
+                    b.ToTable("OrderedList");
                 });
 
             modelBuilder.Entity("Store.Models.Product", b =>

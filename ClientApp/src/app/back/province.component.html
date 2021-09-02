@@ -34,11 +34,11 @@
   <td>{{ item.Id }}</td>
   <td>{{ item.Title }}</td>
   <td>{{ item.Create_}}</td>
-  <td>{{ item.Status }}</td>
+  <ng-container *ngTemplateOutlet="mainTemplate?.statusView;context:{value:statusView(item.Status)}"></ng-container>
 </ng-template>
 
 
 
 
-<app-template *ngIf="ok" [com]="this"></app-template>
+<app-template #mainTemplate *ngIf="ok" [com]="this"></app-template>
 

@@ -212,17 +212,11 @@ export class ProductComponent extends BaseComponent {
     item.controls.Types.setValue(x);
     this.cdr.detectChanges();
   }
-  deleteFromList(item: FormGroup, controlName: string, keyValue: any, key = 'Id') {
-    let x = item.controls[controlName].value.filter(c => c[key] != keyValue);
-    item.controls.Types.setValue(x);
-    this.makeItDirty(item);
-  }
   relatedProductSelected(e: any) {
     let item = this.selectedForm();
     if (!item.controls.Relateds.value?.some(c => c.Id == e.Id)) {
       item.controls.Relateds.setValue([...item.controls.Relateds.value, { Id: e.Id, Title: e.Title }]);
       this.makeItDirty(item);
-
     }
   }
 
@@ -264,4 +258,18 @@ export class CustomerComponent extends BaseComponent {
   constructor(public injector: Injector) {
     super(injector, 'Customer');
   }
+}
+
+@Component({
+  selector: 'app-ordered-list',
+  templateUrl: './ordered-list.component.html',
+  styles: [
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class OrderedListComponent extends BaseComponent {
+  constructor(public injector: Injector) {
+    super(injector, 'OrderedList');
+  }
+  relatedModal = false;
 }

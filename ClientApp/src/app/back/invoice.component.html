@@ -79,10 +79,10 @@
   <td>{{ item.LastName }}</td>
   <td>{{ item.Title }}</td>
   <td>{{ item.Create_}}</td>
-  <td>{{ item.Status }}</td>
+  <ng-container *ngTemplateOutlet="mainTemplate?.statusView;context:{value:statusView(item.Status)}"></ng-container>
   <td>{{ item.ProvinceId_ }}</td>
 </ng-template>
-<app-template *ngIf="ok" [com]="this"></app-template>
+<app-template #mainTemplate *ngIf="ok" [com]="this"></app-template>
 
 
 <nz-modal [nzWidth]="'80%'" [(nzVisible)]="customerIdModal" [nzFooter]="modalFooter" nzTitle="افزودن  کلیدواژه" (nzOnCancel)="customerIdModal = false">
