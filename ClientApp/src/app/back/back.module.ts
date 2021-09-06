@@ -43,7 +43,7 @@ export const config: WebSiteConfiguration = new WebSiteConfiguration('StoreDB', 
       useDefaultIDStatusForm: false,
       propertiesConfigurations: [
         ...defaultPropertyWithTitleConfiguration,
-        new PropertyConfiguration('CategoryId', 'دسته بندی', { Type: 'custom', Validators: [Validators.required], InTable: true, InPicker: true }),
+        new PropertyConfiguration('Categories', 'دسته بندی', { Type: 'custom', value:[], Validators: [Validators.required], InTable: true, InPicker: true }),
         new PropertyConfiguration('Supply', 'تعداد موجودی ', { Type: 'number', Validators: [], InTable: true, InPicker: true }),
         new PropertyConfiguration('Images', 'تصاویر  ', { value: [], Validators: [], InTable: true }),
         new PropertyConfiguration('Summary', 'خلاصه ', { Type: 'string', Validators: [], InTable: false }),

@@ -73,65 +73,69 @@
         <thead>
           <tr>
             <th rowspan="2" width="5%">شناسه</th>
-            <th  >عنوان</th>
-            <th  >توضیحات</th>
-            <th  >قیمت</th>
-            <th  >تخفیف</th>
-            <th  > قیمت کل </th>
-            <th  >        </th>
+            <th>عنوان</th>
+            <th>قیمت</th>
+            <th>%تخفیف</th>
+            <th> قیمت کل </th>
+            <th>توضیحات</th>
+
+
           </tr>
           <tr>
-            <th  >رنگ</th>
-            <th  >سایز</th>
-            <th  >    تعداد موجودی  </th>
-            <th  >     تعداد فروش  </th>
-            <th  >      حداکثر تعداد مجاز خرید  </th>
+            <th>رنگ</th>
+            <th>سایز</th>
+            <th>    تعداد موجودی  </th>
+            <th>     تعداد فروش  </th>
+            <th>      حداکثر تعداد مجاز خرید  </th>
           </tr>
+
+
         </thead>
         <tbody cdkDropList (cdkDropListDropped)="dropAndDrop_DropHandler($event, item,'Types')">
-          <ng-container *ngFor="let t of typesTable.data">
-            <!--cdkDrag-->
-            <tr>
-              <td rowspan="2">
-                <nz-tag [nzColor]="'cyan'" style="width:30px"> {{t.Id}}</nz-tag>
-              </td>
-              <td>       <input nz-input [(ngModel)]="t.Title" />     </td>
-              <td>
-                <nz-select [(ngModel)]="t.Color"
-                           [nzCustomTemplate]="colorSelectedTemplate">
-                  <nz-option *ngFor="let c of dataManager.loadedData.Colors"
-                             nzCustomContent
-                             [nzValue]="c.Value"
-                             [nzLabel]="c.Title">
-                    <i [style.background-color]="c.Value" style="padding-left:23px;margin-left:5px"> </i>{{c.Title}}
-                  </nz-option>
-
-                  <ng-template #colorSelectedTemplate let-selected>
-                    <i [style.background-color]="selected.nzValue" style="padding-left:23px;margin-left:5px">      </i>{{ selected.nzLabel }}
-
-                  </ng-template>
-                </nz-select>
-
-              </td>
-              <td>
-                <nz-select [(ngModel)]="t.Size">
-                  <nz-option *ngFor="let c of dataManager.loadedData.Sizes"
-                             [nzValue]="c.Value"
-                             [nzLabel]="c.Title + ' ' + c.Value"></nz-option>
-                </nz-select>
-              </td>
-              <td>       <nz-input-number (ngModelChange)="makeItDirty(item)" [(ngModel)]="t.Decription" [nzMin]="0" [nzMax]="100" [nzStep]="1"></nz-input-number>   </td>
-              <td>       <nz-input-number (ngModelChange)="makeItDirty(item)" [(ngModel)]="t.Price" [nzMin]="0" [nzMax]="100" [nzStep]="1"></nz-input-number>   </td>
-              <td>       <nz-input-number (ngModelChange)="makeItDirty(item)" [(ngModel)]="t.Off" [nzMin]="0" [nzMax]="100" [nzStep]="1"></nz-input-number>   </td>
-              <td>       <nz-input-number (ngModelChange)="makeItDirty(item)" [(ngModel)]="t.TotalPriceAfterOff" [nzMin]="0" [nzMax]="1000000000" [nzStep]="1"></nz-input-number>   </td>
-              <td>       <nz-input-number (ngModelChange)="makeItDirty(item)" [(ngModel)]="t.Supply" [nzMin]="0" [nzMax]="10000" [nzStep]="1"></nz-input-number>   </td>
-              <td>       <nz-input-number (ngModelChange)="makeItDirty(item)" [(ngModel)]="t.Sells" [nzMin]="0" [nzMax]="10000" [nzStep]="1"></nz-input-number>   </td>
-              <td>       <nz-input-number (ngModelChange)="makeItDirty(item)" [(ngModel)]="t.MaxAllowedBuy" [nzMin]="0" [nzMax]="10000" [nzStep]="1"></nz-input-number>   </td>
-              <td>
-                <button nz-button nz-col nzType="dashed" nzDanger (click)="delType(item,t)">حذف</button>
-              </td>
-            </tr>
-          </ng-container>
+          <tr *ngFor="let t of typesTable.data" cdkDrag>
+            <td>
+              <nz-tag [nzColor]="'cyan'" style="width:30px"> {{t.Id}}</nz-tag>
+            </td>
+            <td>
+              <input nz-input [(ngModel)]="t.Title" placeholder="عنوان" />
+              <nz-select [(ngModel)]="t.Color"  nzPlaceHolder="رنگ"
+                         [nzCustomTemplate]="colorSelectedTemplate">
+                <nz-option *ngFor="let c of dataManager.loadedData.Colors"
+                           nzCustomContent
+                           [nzValue]="c.Value"
+                           [nzLabel]="c.Title">
+                  <i [style.background-color]="c.Value" style="padding-left:23px;margin-left:5px"> </i>{{c.Title}}
+                </nz-option>
+                <ng-template #colorSelectedTemplate let-selected>
+                  <i [style.background-color]="selected.nzValue" style="padding-left:23px;margin-left:5px">      </i>{{ selected.nzLabel }}
+                </ng-template>
+              </nz-select>
+            </td>
+            <td>
+              <nz-input-number (ngModelChange)="makeItDirty(item)" placeholder="قیمت"  [(ngModel)]="t.Price" [nzMin]="0" [nzMax]="100" [nzStep]="1"></nz-input-number>
+              <nz-select [(ngModel)]="t.Size"  nzPlaceHolder="سایز">
+                <nz-option *ngFor="let c of dataManager.loadedData.Sizes"
+                           [nzValue]="c.Value"
+                           [nzLabel]="c.Title + ' ' + c.Value"></nz-option>
+              </nz-select>
+            </td>
+            <td>
+              <nz-input-number nzPlaceHolder="تخفیف%"(ngModelChange)="makeItDirty(item)" [(ngModel)]="t.Off" [nzMin]="0" [nzMax]="100" [nzStep]="1"></nz-input-number>
+              <nz-input-number nzPlaceHolder="قیمت کل"(ngModelChange)="makeItDirty(item)" [(ngModel)]="t.TotalPriceAfterOff" [nzMin]="0" [nzMax]="1000000000" [nzStep]="1"></nz-input-number>
+            </td>
+            <td>
+              <nz-input-number nzPlaceHolder="تعداد موجود"(ngModelChange)="makeItDirty(item)" [(ngModel)]="t.Supply" [nzMin]="0" [nzMax]="10000" [nzStep]="1"></nz-input-number>
+              <nz-input-number nzPlaceHolder="تعداد فروش"(ngModelChange)="makeItDirty(item)" [(ngModel)]="t.Sells" [nzMin]="0" [nzMax]="10000" [nzStep]="1"></nz-input-number>
+            </td>
+            <td>
+              <input nz-input placeholder="توضیحات" (ngModelChange)="makeItDirty(item)" [(ngModel)]="t.Decription"  />
+              <nz-input-number nzPlaceHolder="حداکثر تعداد مجاز خرید"(ngModelChange)="makeItDirty(item)" [(ngModel)]="t.MaxAllowedBuy" [nzMin]="0" [nzMax]="10000" [nzStep]="1"></nz-input-number>
+            </td>
+            <td>
+              <button nz-button nz-col nzType="dashed" nzDanger (click)="delType(item,t)">حذف</button>
+              <button nz-button nz-col nzType="dashed"  (click)="addType(item,t)">ایجاد کپی</button>
+            </td>
+          </tr>
         </tbody>
       </nz-table>
 

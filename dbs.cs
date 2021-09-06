@@ -92,6 +92,8 @@ namespace Store.Models
     [SafeToGetAll]
     public class Category : BaseModelWithTitle
     {
+        public ICollection<Product> Products { get; set; }
+
         [ForeignKey("ParentCategoryId")]
         public Category ParentCategory { set; get; }
         public int? ParentCategoryId { set; get; }
@@ -147,13 +149,17 @@ namespace Store.Models
 
             return JR(StatusCodes.Status200OK, data: new { Records = x.Item2, TotalRecords = x.Item1, Model = currentItem });
         }
+        [NonAction]
+        public override   IQueryable<Product> BuildRequest(IDictionary<string, string> param)
+        {
+            return base.BuildRequest(param).Include(c=>c.Categories.Select(d=>d.Id)); 
+        }
     }
-
+ 
     public class Product : BaseModelWithTitle
     {
-        [ForeignKey("CategoryId")]
-        public Category Category { set; get; }
-        public int CategoryId { set; get; }
+        public ICollection<Category> Categories { get; set; }
+
         public int SupplyCount { set { } get { return Types?.Sum(c => c.SupplyCount) ?? 0; } }
         public int SoldCount { set { } get { return Types?.Sum(c => c.SoldCount) ?? 0; } }
         public int PurchasesCount { set; get; }

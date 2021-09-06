@@ -14,7 +14,7 @@ const routes: Routes = [
   },
   //{ path: '', redirectTo: 'shopify', pathMatch: 'full' },
   {
-    path: 'myaccstore', loadChildren: () => import('../../../../Santel/Core/ClientApp/src/app/account-manager/account-manager.module').then(m => m.AccManagerModule),
+    path: 'myaccstore', loadChildren: () => import('../../../../Santel/Core/ClientApp/src/app/account-manager/account-manager.module').then(m => m.AccountManagerModule),
     data: {
       key: 'myAccstore', label: 'مدیریت کاربران', isAcc: true
     }

@@ -191,26 +191,32 @@ export class ProductComponent extends BaseComponent {
       c.DetailsNodeValuesLength = Object.keys(c.DetailsNodeValues).length;
     })
   }
-  addType(item: FormGroup) {
+  addType(item: FormGroup, e: any = null) {
     let x = item.controls.Types.value;
+    let n: any = {};
     let id = Number(item.controls.MaxTypeId.value) + 1;
-    x.push({
-      Id: id,
-      Price: 0,
-      Off: 0,
-      TotalPriceAfterOff: 0,
-      Amount: 0,
-      Sells: 0,
-      MaxAllowedBuy: 0,
-    });
+    if (e == null) {
+      n = {
+        Id: id,
+        Price: 0,
+        Off: 0,
+        TotalPriceAfterOff: 0,
+        Amount: 0,
+        Sells: 0,
+        MaxAllowedBuy: 0,
+      };
+    }
+    else {
+      n = { ...e, ...{ Id: id } };
+    }
     item.controls.MaxTypeId.setValue(id);
-    item.controls.Types.setValue(x);
-    this.cdr.detectChanges();
+    item.controls.Types.setValue([...x,n]);
+    this.makeItDirty(item);
   }
   delType(item: FormGroup, t: any) {
     let x = item.controls.Types.value.filter(c => c != t);
     item.controls.Types.setValue(x);
-    this.cdr.detectChanges();
+    this.makeItDirty(item);
   }
   relatedProductSelected(e: any) {
     let item = this.selectedForm();
@@ -234,8 +240,6 @@ export class ProductComponent extends BaseComponent {
     this.selectedForm().controls.Images.markAsDirty();
     this.selectedForm().controls.Images.updateValueAndValidity();
   }
-
-
   getCatNodes(id: number) {
     return this.categories.find(c => c.Id == id).TreeNodes;
   }
