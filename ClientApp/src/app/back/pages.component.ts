@@ -133,10 +133,17 @@ export class CategoryComponent extends BaseComponent {
     this.selectedForm().controls.Images.markAsDirty();
     this.selectedForm().controls.Images.updateValueAndValidity();
   }
-  addFirst(item) {
-    item.controls.TreeNodes.setValue([{ key: 1, Name: '' }]);
+  addFirst(item: FormGroup) {
     let max = item.controls.DetailsNodeValuesMaxId.value + 1;
     item.controls.DetailsNodeValuesMaxId.setValue(max);
+
+    if (!item.controls.TreeNodes.value || item.controls.TreeNodes.value.length == 0) {
+      item.controls.TreeNodes.setValue([{ key: max, Name: '' }]);
+    }
+    else {
+      item.controls.TreeNodes.setValue([...item.controls.TreeNodes.value, { key: max, Name: '' } ]);
+    }
+
 
     this.makeItDirty(item);
   }
@@ -244,7 +251,7 @@ export class ProductComponent extends BaseComponent {
     return this.categories.find(c => c.Id == id).TreeNodes;
   }
   countNodes(item: FormGroup, controlName: string) {
-    return Object.keys(item.controls[controlName].value).length
+    return Object.keys(item.controls[controlName].value).length;
   }
 }
 

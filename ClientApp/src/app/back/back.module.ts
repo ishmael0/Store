@@ -43,7 +43,7 @@ export const config: WebSiteConfiguration = new WebSiteConfiguration('StoreDB', 
       useDefaultIDStatusForm: false,
       propertiesConfigurations: [
         ...defaultPropertyWithTitleConfiguration,
-        new PropertyConfiguration('Categories', 'دسته بندی', { Type: 'custom', value:[], Validators: [Validators.required], InTable: true, InPicker: true }),
+        new PropertyConfiguration('CategoryId', 'دسته بندی', { Type: 'custom', value: null, Validators: [Validators.required], InTable: true, InPicker: true }),
         new PropertyConfiguration('Supply', 'تعداد موجودی ', { Type: 'number', Validators: [], InTable: true, InPicker: true }),
         new PropertyConfiguration('Images', 'تصاویر  ', { value: [], Validators: [], InTable: true }),
         new PropertyConfiguration('Summary', 'خلاصه ', { Type: 'string', Validators: [], InTable: false }),
@@ -54,7 +54,7 @@ export const config: WebSiteConfiguration = new WebSiteConfiguration('StoreDB', 
         new PropertyConfiguration('DetailsNodeValues', 'ویژگی ها', { Type: 'custom', value: {}, Validators: [], InTable: false }),
         new PropertyConfiguration('KeyWords', ' کلید واژه ها', { Type: 'custom', value: [], Validators: [], InTable: false }),
         new PropertyConfiguration('MaxTypeId', 'MaxTypeId', { Type: 'custom', value: 0, Validators: [], InTable: false }),
-        new PropertyConfiguration('Weight', '   وزن', { Type: 'custom', value: [], Validators: [], InTable: false }),
+        new PropertyConfiguration('Weight', '   وزن', { Type: 'number', value: 0, Validators: [], InTable: false }),
       ]
     }),
     new EntityConfiguration(ColorComponent, 'Color', "رنگ", {

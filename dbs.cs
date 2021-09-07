@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -65,8 +64,8 @@ namespace Store.Models
             modelBuilder.Entity<Product>().Property(e => e.Types).HasConversion(v => JsonConvert.SerializeObject(v), v => JsonConvert.DeserializeObject<List<ProductType>>(v));
             modelBuilder.Entity<Product>().Property(e => e.Labels).HasConversion(v => JsonConvert.SerializeObject(v), v => JsonConvert.DeserializeObject<List<ProductLabel>>(v));
             modelBuilder.Entity<Product>().Property(e => e.Images).HasConversion(v => JsonConvert.SerializeObject(v), v => JsonConvert.DeserializeObject<List<Images>>(v));
-            modelBuilder.Entity<Product>().Property(e => e.Relateds).HasConversion(v => JsonConvert.SerializeObject(v.Select(c=>c.Id)), v => JsonConvert.DeserializeObject<List<int>>(v).Select(c=> new ProductIdTitleHelper() {Id = c }));
-            modelBuilder.Entity<Product>().Property(e => e.KeyWords).HasConversion(v => JsonConvert.SerializeObject(v.Select(c=>c.Id)), v => JsonConvert.DeserializeObject<List<int>>(v).Select(c=> new ProductIdTitleHelper() {Id = c }));
+            modelBuilder.Entity<Product>().Property(e => e.Relateds).HasConversion(v => JsonConvert.SerializeObject(v.Select(c => c.Id)), v => JsonConvert.DeserializeObject<List<int>>(v).Select(c => new ProductIdTitleHelper() { Id = c }));
+            modelBuilder.Entity<Product>().Property(e => e.KeyWords).HasConversion(v => JsonConvert.SerializeObject(v.Select(c => c.Id)), v => JsonConvert.DeserializeObject<List<int>>(v).Select(c => new ProductIdTitleHelper() { Id = c }));
             modelBuilder.Entity<Category>().Property(e => e.TreeNodes).HasConversion(v => JsonConvert.SerializeObject(v), v => JsonConvert.DeserializeObject<List<TreeNode>>(v));
             modelBuilder.Entity<Category>().Property(e => e.Images).HasConversion(v => JsonConvert.SerializeObject(v), v => JsonConvert.DeserializeObject<List<Images>>(v));
             modelBuilder.Entity<Customer>().Property(e => e.Addresses).HasConversion(v => JsonConvert.SerializeObject(v), v => JsonConvert.DeserializeObject<List<Address>>(v));
@@ -74,6 +73,10 @@ namespace Store.Models
             modelBuilder.Entity<Invoice>().Property(e => e.ProductTypes).HasConversion(v => JsonConvert.SerializeObject(v), v => JsonConvert.DeserializeObject<List<ProductTypeForInvoice>>(v));
             modelBuilder.Entity<OrderedList>().Property(e => e.Products).HasConversion(v => JsonConvert.SerializeObject(v.Select(c => c.Id)), v => JsonConvert.DeserializeObject<List<int>>(v).Select(c => new ProductIdTitleHelper() { Id = c }));
 
+
+            //modelBuilder.Entity<ProductCategory>().HasKey(t => new { t.CategoryId, t.ProductId });
+            //modelBuilder.Entity<ProductCategory>().HasOne(pt => pt.Product).WithMany(p => p.ProductCategory).HasForeignKey(pt => pt.ProductId);
+            //modelBuilder.Entity<ProductCategory>().HasOne(pt => pt.Category).WithMany(t => t.ProductCategory).HasForeignKey(pt => pt.CategoryId);
         }
     }
     [SafeToGetAll]
@@ -89,13 +92,15 @@ namespace Store.Models
     {
         public string Value { set; get; }
     }
+
     [SafeToGetAll]
     public class Category : BaseModelWithTitle
     {
-        public ICollection<Product> Products { get; set; }
+        //public virtual ICollection<Product> Products { get; set; }
+        //public virtual ICollection<ProductCategory> ProductCategory { get; set; }
 
         [ForeignKey("ParentCategoryId")]
-        public Category ParentCategory { set; get; }
+        public virtual Category ParentCategory { set; get; }
         public int? ParentCategoryId { set; get; }
         public List<TreeNode> TreeNodes { get; set; }
         public List<Images> Images { set; get; }
@@ -149,17 +154,22 @@ namespace Store.Models
 
             return JR(StatusCodes.Status200OK, data: new { Records = x.Item2, TotalRecords = x.Item1, Model = currentItem });
         }
-        [NonAction]
-        public override   IQueryable<Product> BuildRequest(IDictionary<string, string> param)
-        {
-            return base.BuildRequest(param).Include(c=>c.Categories.Select(d=>d.Id)); 
-        }
     }
- 
+    //public class ProductCategory
+    //{
+    //    [ForeignKey("ProductId")]
+    //    public int ProductId { set; get; }
+    //    public virtual Product Product { set; get; }
+
+    //    [ForeignKey("CategoryId")]
+    //    public int CategoryId { set; get; }
+    //    public virtual Category Category { set; get; }
+    //}
     public class Product : BaseModelWithTitle
     {
-        public ICollection<Category> Categories { get; set; }
-
+        [ForeignKey("CategoryId")]
+        public int CategoryId { set; get; }
+        public virtual Category Category { set; get; }
         public int SupplyCount { set { } get { return Types?.Sum(c => c.SupplyCount) ?? 0; } }
         public int SoldCount { set { } get { return Types?.Sum(c => c.SoldCount) ?? 0; } }
         public int PurchasesCount { set; get; }
@@ -227,8 +237,8 @@ namespace Store.Models
     {
         [ForeignKey("CustomerId")]
         public int CustomerId { set; get; }
-        public Customer Customer { set; get; }
-        public Address Address { get; set; }
+        public virtual Customer Customer { set; get; }
+        public virtual Address Address { get; set; }
         public int PostPrice { set; get; }
         public int Price { set; get; }
         public bool IsPaid { set; get; }
@@ -245,7 +255,7 @@ namespace Store.Models
     public class City : BaseModelWithTitle
     {
         [ForeignKey("ProvinceId")]
-        public Province Province { set; get; }
+        public virtual Province Province { set; get; }
         public int ProvinceId { set; get; }
     }
     public class Customer : BaseModel
@@ -268,9 +278,9 @@ namespace Store.Models
     }
 
     [SafeToGetAll]
-    public class OrderedList:BaseModelWithTitle
+    public class OrderedList : BaseModelWithTitle
     {
-        public IEnumerable<ProductIdTitleHelper> Products{ set; get; }
+        public IEnumerable<ProductIdTitleHelper> Products { set; get; }
         public string Color { set; get; }
     }
 

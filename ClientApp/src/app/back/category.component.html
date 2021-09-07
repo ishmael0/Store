@@ -89,7 +89,11 @@
 
 
 
-      <span (click)="addFirst(item)">ایجاد</span>
+      <button (click)="addFirst(item)" nz-button nzType="primary">
+        <i nz-icon
+           [innerHtml]="icons['plus-thick']"></i>
+        ایجاد
+      </button>
       <nz-tree *ngIf="item.controls.TreeNodes.value" [nzData]="item.controls.TreeNodes.value" nzDraggable nzBlockNode [nzTreeTemplate]="nzTreeTemplate">
 
         <ng-template #nzTreeTemplate let-node let-origin="origin">
