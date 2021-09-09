@@ -41,7 +41,7 @@
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets",
+              "src/assets"
               //{
               //  "glob": "**/*",
               //  "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/",
@@ -52,7 +52,7 @@
               //"node_modules/ng-zorro-antd/ng-zorro-antd.min.css",
               //"src/theme.less",
               "../../Santel/Core/ClientApp/src/styles.css",
-              "src/styles.css",
+              "src/styles.scss",
               {
                 "input": "../../Santel/Core/ClientApp/src/styles/default.less",
                 "bundleName": "default",
@@ -63,6 +63,7 @@
                 "bundleName": "dark",
                 "inject": false
               }
+  
             ],
             "stylePreprocessorOptions": {
               "includePaths": [ "../../Santel/Core/ClientApp/src/styles/themes" ]

@@ -1,0 +1,29 @@
+@import "../node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.carousel.min.css";
+@import "../node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.theme.default.min.css";
+
+
+.owl-dots {
+    position:relative;
+    top:-90px;  
+}
+
+.owl-carousel {
+  position: relative;
+}
+
+.owl-next, .owl-prev {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+}
+
+.owl-next {
+  right: 0;
+  display: flex;
+}
+
+.owl-prev {
+  left: 0;
+  display: flex;
+}

@@ -1,1 +1,46 @@
-<p>home works!</p>
+<div>
+
+</div>
+
+
+<div nz-row>
+  <div nz-col
+       [nzXs]="24"
+       [nzSm]="16"
+       [nzMd]="16"
+       [nzLg]="16"
+       [nzXl]="16"
+       [nzXXl]="16">
+
+    <owl-carousel-o [options]="customOptions">
+      <ng-template carouselSlide *ngFor="let index of [1,2,3,4]">
+        <img data-src="{{'../../../assets/test'+index+'.jpg'}}" style="width:100%" />
+      </ng-template>
+    </owl-carousel-o>
+
+  </div>
+  <div nz-col
+       class="slide"
+      [nzXs]="24"
+      [nzSm]="8"
+      [nzMd]="8"
+      [nzLg]="8"
+      [nzXl]="8"
+      [nzXXl]="8">
+    <div>
+      <owl-carousel-o [options]="customOptions">
+        <ng-template carouselSlide *ngFor="let index of [1,2,3,4]">
+          <img [src]="'../../../assets/test'+index+'.jpg'" style="width:100%" />
+        </ng-template>
+      </owl-carousel-o>
+    </div>
+    <div style="padding-top:5px">
+      <owl-carousel-o [options]="customOptions">
+        <ng-template carouselSlide *ngFor="let index of [1,2,3,4]">
+          <img [src]="'../../../assets/test'+index+'.jpg'" style="width:100%" />
+        </ng-template>
+      </owl-carousel-o>
+    </div>
+
+  </div>
+</div>

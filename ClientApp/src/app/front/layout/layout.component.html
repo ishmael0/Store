@@ -1,5 +1,31 @@
-menu1
-menu1
-menu1
-menu1
-<router-outlet></router-outlet>
+<!--
+[nzXs]
+[nzSm]
+[nzMd]
+[nzLg]
+[nzXl]
+[nzXXl]
+-->
+
+<div nz-col style="text-align:center"
+     [nzXs]="24"
+     [nzSm]="24"
+     [nzMd]="24"
+     [nzLg]="{span: 20, offset:2}"
+     [nzXl]="{span: 20, offset:2}"
+     [nzXXl]="{span: 20, offset:2}">
+  <ul nz-menu nzMode="horizontal">
+    <li nz-menu-item nzSelected>
+      <i nz-icon [innerHtml]="http.icons.home"></i>
+      صفحه اصلی
+    </li>
+
+    <li nz-menu-item>
+      <i nz-icon [innerHtml]="http.icons.home"></i>
+      تماس با ما
+    </li>
+  </ul>
+  <br />
+    <router-outlet></router-outlet>
+</div>
+
