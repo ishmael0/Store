@@ -5,7 +5,7 @@ import { ComponentTypes, EntityConfiguration, PropertyConfiguration, WebSiteConf
 import { AuthService } from '../../../../../Santel/Core/ClientApp/src/app/services/auth.service';
 import { WebSiteService } from '../../../../../Santel/Core/ClientApp/src/app/services/website.service';
 import { CategoryComponent, CityComponent, ColorComponent, CustomerComponent, InvoiceComponent, KeywordComponent, OrderedListComponent, ProductComponent, ProvinceComponent, SizeComponent } from './pages.component';
-import { defaultPropertyConfiguration, defaultPropertyWithTitleConfiguration, filesEntity } from '../../../../../Santel/Core/ClientApp/src/app/services/properties';
+import { defaultPropertyConfiguration, defaultPropertyWithTitleConfiguration, filesEntity, logEntity } from '../../../../../Santel/Core/ClientApp/src/app/services/properties';
 import { Validators } from '@angular/forms';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { FileManagerComponent } from '../../../../../Santel/Core/ClientApp/src/app/template/components/file-manager/file-manager.component';
@@ -147,7 +147,7 @@ export const config: WebSiteConfiguration = new WebSiteConfiguration('StoreDB', 
         new PropertyConfiguration('Color', 'رنگ', { Type: 'color', Validators: [], InTable: false }),
       ]
     }),
-
+    logEntity,
     filesEntity,
     new EntityConfiguration(FileManagerComponent, 'FileManager', 'FileManager', { icon: 'folder' }),
     new EntityConfiguration(IconsComponent, 'Icons', 'Icons', { icon: 'format-list-checkbox' })
