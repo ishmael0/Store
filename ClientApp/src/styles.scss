@@ -2,10 +2,7 @@
 @import "../node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.theme.default.min.css";
 
 
-.owl-dots {
-    position:relative;
-    top:-90px;  
-}
+
 
 .owl-carousel {
   position: relative;
@@ -13,6 +10,7 @@
 
 .owl-next, .owl-prev {
   position: absolute;
+  border-radius: 100%;
   top: 50%;
   transform: translateY(-50%);
   -webkit-transform: translateY(-50%);
@@ -22,8 +20,18 @@
   right: 0;
   display: flex;
 }
-
+.owl-nav {
+  margin-top: 0px!important;
+}
 .owl-prev {
   left: 0;
   display: flex;
+}
+
+
+.owl-dots {
+  position: absolute;
+  bottom: 10px;
+  left: 25%;
+  right: 25%;
 }

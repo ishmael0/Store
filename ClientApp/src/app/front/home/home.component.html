@@ -11,36 +11,58 @@
        [nzLg]="16"
        [nzXl]="16"
        [nzXXl]="16">
+    <div style="margin:10px;">
+      <owl-carousel-o [options]="customOptions">
+        <ng-template carouselSlide *ngFor="let index of [1,2,3,4]">
+          <div style="border-radius: 50px; overflow: hidden;">
+            <img data-src="{{'../../../assets/test'+index+'.jpg'}}" style="width:100%" />
+          </div>
+        </ng-template>
+      </owl-carousel-o>
 
-    <owl-carousel-o [options]="customOptions">
-      <ng-template carouselSlide *ngFor="let index of [1,2,3,4]">
-        <img data-src="{{'../../../assets/test'+index+'.jpg'}}" style="width:100%" />
-      </ng-template>
-    </owl-carousel-o>
-
+    </div>
   </div>
   <div nz-col
        class="slide"
-      [nzXs]="24"
-      [nzSm]="8"
-      [nzMd]="8"
-      [nzLg]="8"
-      [nzXl]="8"
-      [nzXXl]="8">
-    <div>
+       [nzXs]="24"
+       [nzSm]="8"
+       [nzMd]="8"
+       [nzLg]="8"
+       [nzXl]="8"
+       [nzXXl]="8">
+    <div style="margin:10px;">
       <owl-carousel-o [options]="customOptions">
         <ng-template carouselSlide *ngFor="let index of [1,2,3,4]">
-          <img [src]="'../../../assets/test'+index+'.jpg'" style="width:100%" />
+          <div style="border-radius: 50px; overflow: hidden;">
+            <img [src]="'../../../assets/test'+index+'.jpg'" style="width:100%" />
+          </div>
         </ng-template>
       </owl-carousel-o>
-    </div>
-    <div style="padding-top:5px">
+
       <owl-carousel-o [options]="customOptions">
         <ng-template carouselSlide *ngFor="let index of [1,2,3,4]">
-          <img [src]="'../../../assets/test'+index+'.jpg'" style="width:100%" />
+          <div style="border-radius: 50px; overflow: hidden;">
+            <img [src]="'../../../assets/test'+index+'.jpg'" style="width:100%" />
+          </div>
         </ng-template>
       </owl-carousel-o>
     </div>
 
+  </div>
+</div>
+<div   *ngFor="let item of [1,2,3]">
+
+  <div style="background-color: white; border-radius: 50px; border: red 1px dashed; overflow: hidden;margin-top:10px ">
+    <button nz-button nzType="primary" nzDanger style="border-bottom-right-radius: 20px; border-top-left-radius: 20px;float:right ">پرفروش ترین ها:</button>
+    <button nz-button nzType="primary" nzDanger style="border-bottom-right-radius: 20px; border-top-left-radius: 20px;float:left "> مشاهده همه</button>
+    <div>
+      <owl-carousel-o [options]="customOptions3">
+        <ng-template carouselSlide *ngFor="let index of [1,2,3,4]">
+          <div style="">
+            <img data-src="{{'../../../assets/test'+index+'.jpg'}}" style="width:100%" />
+          </div>
+        </ng-template>
+      </owl-carousel-o>
+    </div>
   </div>
 </div>
