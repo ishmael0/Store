@@ -199,7 +199,7 @@
           <button nz-button nzType="dashed" (click)="relatedModal = true ">اضافه کردن محصولات مشابه</button>
         </div>
         <div nz-col [nzXs]="24" [nzMd]="16" [nzLg]="12">
-          <ng-container *ngTemplateOutlet="mainTemplate.listWithDragDropTemplate;context:{com: this, item:item, name:'Relateds'}"></ng-container>
+          <ng-container *ngTemplateOutlet="mainTemplate?.listWithDragDropTemplate;context:{com: this, item:item, name:'Relateds'}"></ng-container>
         </div>
       </div>
 
@@ -218,7 +218,7 @@
           <button nz-button nzType="dashed" (click)="keywordModal = true ">اضافه کردن کلیدواژه</button>
         </div>
         <div nz-col [nzXs]="24" [nzMd]="16" [nzLg]="12">
-          <ng-container *ngTemplateOutlet="mainTemplate.listWithDragDropTemplate;context:{com: this, item:item, name:'KeyWords'}"></ng-container>
+          <ng-container *ngTemplateOutlet="mainTemplate?.listWithDragDropTemplate;context:{com: this, item:item, name:'KeyWords'}"></ng-container>
         </div>
       </div>
 
@@ -244,7 +244,7 @@
   <td>{{ item.Create_}}</td>
   <ng-container *ngTemplateOutlet="mainTemplate?.statusView;context:{value:statusView(item.Status)}"></ng-container>
   <td>{{item.Category_}}</td>
-  <td>{{item.Supply}}</td>
+  <td>{{item.SupplyCount}}</td>
   <td>
     <img style="max-width:100px" *ngIf="item.Images?.length>0" [src]="'/front'+item.Images[0].Path" />
   </td>
@@ -256,7 +256,7 @@
   <td>{{ item.Title }}</td>
   <ng-container *ngTemplateOutlet="mainTemplate?.statusView;context:{value:statusView(item.Status)}"></ng-container>
   <td>{{ item.Category_ }}</td>
-  <td>{{item.Supply}}</td>
+  <td>{{item.SupplyCount}}</td>
   <td> </td>
 </ng-template>
 

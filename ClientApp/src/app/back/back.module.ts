@@ -5,7 +5,7 @@ import { ComponentTypes, EntityConfiguration, PropertyConfiguration, WebSiteConf
 import { AuthService } from '../../../../../Santel/Core/ClientApp/src/app/services/auth.service';
 import { WebSiteService } from '../../../../../Santel/Core/ClientApp/src/app/services/website.service';
 import { CategoryComponent, CityComponent, ColorComponent, CustomerComponent, InvoiceComponent, KeywordComponent, OrderedListComponent, ProductComponent, ProvinceComponent, SizeComponent } from './pages.component';
-import { defaultPropertyConfiguration, defaultPropertyWithTitleConfiguration, filesEntity } from '../../../../../Santel/Core/ClientApp/src/app/services/properties';
+import { defaultPropertyConfiguration, defaultPropertyWithTitleConfiguration, filesEntity, logEntity } from '../../../../../Santel/Core/ClientApp/src/app/services/properties';
 import { Validators } from '@angular/forms';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { FileManagerComponent } from '../../../../../Santel/Core/ClientApp/src/app/template/components/file-manager/file-manager.component';
@@ -44,7 +44,7 @@ export const config: WebSiteConfiguration = new WebSiteConfiguration('StoreDB', 
       propertiesConfigurations: [
         ...defaultPropertyWithTitleConfiguration,
         new PropertyConfiguration('CategoryId', 'دسته بندی', { Type: 'custom', value: null, Validators: [Validators.required], InTable: true, InPicker: true }),
-        new PropertyConfiguration('Supply', 'تعداد موجودی ', { Type: 'number', Validators: [], InTable: true, InPicker: true }),
+        new PropertyConfiguration('SupplyCount', 'تعداد موجودی ', { Type: 'number', Validators: [], InTable: true, InPicker: true }),
         new PropertyConfiguration('Images', 'تصاویر  ', { value: [], Validators: [], InTable: true }),
         new PropertyConfiguration('Summary', 'خلاصه ', { Type: 'string', Validators: [], InTable: false }),
         new PropertyConfiguration('Description', 'شرح  ', { Type: 'string', Validators: [], InTable: false }),
@@ -147,7 +147,7 @@ export const config: WebSiteConfiguration = new WebSiteConfiguration('StoreDB', 
         new PropertyConfiguration('Color', 'رنگ', { Type: 'color', Validators: [], InTable: false }),
       ]
     }),
-
+    logEntity,
     filesEntity,
     new EntityConfiguration(FileManagerComponent, 'FileManager', 'FileManager', { icon: 'folder' }),
     new EntityConfiguration(IconsComponent, 'Icons', 'Icons', { icon: 'format-list-checkbox' })
