@@ -39,9 +39,10 @@ export class HomeComponent implements OnInit {
 
   customOptions3: OwlOptions = {
     dots: false,
+    autoWidth: true,
+
     loop: true,
     center: true,
-    autoWidth: true,
     margin: 10,
     navSpeed: 700,
     navText: ['بعدی', 'قبلی'],
@@ -51,14 +52,17 @@ export class HomeComponent implements OnInit {
       0: {
         items: 1
       },
-      500: {
+      400: {
         items: 3
       },
-      1000: {
+      600: {
         items: 4
       },
-      2000: {
-        items: 5
+      800: {
+        items: 6
+      },
+      1200: {
+        items: 8
       },
     }
   }

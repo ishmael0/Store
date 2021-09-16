@@ -50,19 +50,58 @@
 
   </div>
 </div>
-<div   *ngFor="let item of [1,2,3]">
+<div *ngFor="let item of [1,2,3]">
+  <br />
+  <div style=" text-align: right;"> 
+    <button nz-button nzType="primary" nzDanger style="border-bottom-right-radius: 20px; text-align: initial; border-top-left-radius: 20px; ">پرفروش ترین ها:</button>
+  </div>
+  <!--border-radius: 50px; border: red 1px dashed;-->
+  <div style=" overflow: hidden;margin-top:10px ">
 
-  <div style="background-color: white; border-radius: 50px; border: red 1px dashed; overflow: hidden;margin-top:10px ">
-    <button nz-button nzType="primary" nzDanger style="border-bottom-right-radius: 20px; border-top-left-radius: 20px;float:right ">پرفروش ترین ها:</button>
-    <button nz-button nzType="primary" nzDanger style="border-bottom-right-radius: 20px; border-top-left-radius: 20px;float:left "> مشاهده همه</button>
     <div>
       <owl-carousel-o [options]="customOptions3">
-        <ng-template carouselSlide *ngFor="let index of [1,2,3,4]">
-          <div style="">
-            <img data-src="{{'../../../assets/test'+index+'.jpg'}}" style="width:100%" />
-          </div>
+        <ng-template carouselSlide style="width:200px" *ngFor="let index of [1,2,3,4,5,6,7,8,9,10,11,12]">
+          <!--<div style="">
+          <img data-src="{{'../../../assets/test'+index+'.jpg'}}" style="width:100%" />
+        </div>-->
+          <ng-container *ngTemplateOutlet="hiii;context:{index:index}"></ng-container>
         </ng-template>
       </owl-carousel-o>
     </div>
+    <div style=" text-align: left;">
+      <button nz-button nzType="primary" nzDanger style="border-bottom-right-radius: 20px; text-align: initial; border-top-left-radius: 20px; ">    مشاهده همه:</button>
+    </div>
   </div>
 </div>
+
+
+
+<ng-template #hiii let-index="index">
+  <div class="flip-box" style="padding: 5px; border-radius: 2px; border: gray 1px dashed; position: relative; perspective: 1000px; background-color: white ">
+    <div class="flip-box-inner">
+
+      <div class="flip-box-front">
+        <img class="imgfront" style="width:100%" src="{{'../../../assets/p'+(index%2+1)+'.jpg'}}" />
+      </div>
+      <div class="flip-box-back">
+        <img class="imgback" src="{{'../../../assets/p'+((index+1)%2+1)+'.jpg'}}" />
+      </div>
+    </div>
+    <nz-tag style="position:absolute;top:10px;left:-10px" nzColor="#f50">فروش ویژه</nz-tag>
+    <nz-tag style="position:absolute;top:40px;left:-10px" nzColor="#87d068">جدید </nz-tag>
+    <nz-tag style="position:absolute;top:70px;left:-10px" nzColor="#5963a1">نمیدونم </nz-tag>
+    <span style="position: absolute; top: 10px; right: +10px;border-radius:50%; background-color: red; color: white; padding: 5px;"> 20%</span>
+    <span>
+      <span class="dot" style="background-color: red;" nz-tooltip nzTooltipTitle=" سبز" nzTooltipPlacement="bottom"></span>
+      <span class="dot" style="background-color: blue;" nz-tooltip nzTooltipTitle=" سبز" nzTooltipPlacement="bottom"></span>
+      <span class="dot" style="background-color: white;" nz-tooltip nzTooltipTitle="سبز " nzTooltipPlacement="bottom"></span>
+      <span class="dot" style="background-color: yellow;" nz-tooltip nzTooltipTitle="سبز " nzTooltipPlacement="bottom"></span>
+    </span>
+    <div>محصول اول</div>
+    <div> مدل</div>
+    <del>54455</del>
+    <div>54455</div>
+    <div>s m x xl xxl</div>
+
+  </div>
+</ng-template>
