@@ -77,31 +77,42 @@
 
 
 <ng-template #hiii let-index="index">
-  <div class="flip-box" style="padding: 5px; border-radius: 2px; border: gray 1px dashed; position: relative; perspective: 1000px; background-color: white ">
-    <div class="flip-box-inner">
+  <div  style="padding: 5px; border-radius: 5px; border-top-right-radius: 25px; border-bottom-left-radius: 25px; overflow: hidden; border: gray 1px dashed; background-color: white ">
 
-      <div class="flip-box-front">
-        <img class="imgfront" style="width:100%" src="{{'../../../assets/p'+(index%2+1)+'.jpg'}}" />
+    <div class="flip-box">
+      <div class="flip-box-inner">
+
+        <div class="flip-box-front">
+          <img class="imgfront" style="width:100%" src="{{'../../../assets/p'+(index%2+1)+'.jpg'}}" />
+        </div>
+        <div class="flip-box-back">
+          <img class="imgback" src="{{'../../../assets/p'+((index+1)%2+1)+'.jpg'}}" />
+        </div>
       </div>
-      <div class="flip-box-back">
-        <img class="imgback" src="{{'../../../assets/p'+((index+1)%2+1)+'.jpg'}}" />
-      </div>
+      <nz-tag style="position:absolute;top:10px;left:-10px" nzColor="#f50">فروش ویژه</nz-tag>
+      <nz-tag style="position:absolute;top:40px;left:-10px" nzColor="#87d068">جدید </nz-tag>
+      <nz-tag style="position:absolute;top:70px;left:-10px" nzColor="#5963a1">نمیدونم </nz-tag>
+      <span style="position: absolute; top: 10px; right: 10px;border-radius:50%; background-color: red; color: white; padding: 5px;"> 20%</span>
+      <span style="position: absolute; bottom: 0px; right: 10px; ">
+        <span class="dot" style="background-color: red;" nz-tooltip nzTooltipTitle=" سبز" nzTooltipPlacement="bottom"></span>
+        <span class="dot" style="background-color: blue;" nz-tooltip nzTooltipTitle=" سبز" nzTooltipPlacement="bottom"></span>
+        <span class="dot" style="background-color: white;" nz-tooltip nzTooltipTitle="سبز " nzTooltipPlacement="bottom"></span>
+        <span class="dot" style="background-color: yellow;" nz-tooltip nzTooltipTitle="سبز " nzTooltipPlacement="bottom"></span>
+      </span>
+      <span style="position: absolute; bottom: 25px; right: 10px; ">
+        <span  style="padding-right:5px;"  nz-tooltip nzTooltipTitle=" سبز" nzTooltipPlacement="bottom">s</span>
+        <span  style="padding-right:5px;"  nz-tooltip nzTooltipTitle=" سبز" nzTooltipPlacement="bottom">m</span>
+        <span  style="padding-right:5px;"  nz-tooltip nzTooltipTitle="سبز " nzTooltipPlacement="bottom">x</span>
+        <span  style="padding-right:5px;"  nz-tooltip nzTooltipTitle="سبز " nzTooltipPlacement="bottom">xl</span>
+      </span>
     </div>
-    <nz-tag style="position:absolute;top:10px;left:-10px" nzColor="#f50">فروش ویژه</nz-tag>
-    <nz-tag style="position:absolute;top:40px;left:-10px" nzColor="#87d068">جدید </nz-tag>
-    <nz-tag style="position:absolute;top:70px;left:-10px" nzColor="#5963a1">نمیدونم </nz-tag>
-    <span style="position: absolute; top: 10px; right: +10px;border-radius:50%; background-color: red; color: white; padding: 5px;"> 20%</span>
-    <span>
-      <span class="dot" style="background-color: red;" nz-tooltip nzTooltipTitle=" سبز" nzTooltipPlacement="bottom"></span>
-      <span class="dot" style="background-color: blue;" nz-tooltip nzTooltipTitle=" سبز" nzTooltipPlacement="bottom"></span>
-      <span class="dot" style="background-color: white;" nz-tooltip nzTooltipTitle="سبز " nzTooltipPlacement="bottom"></span>
-      <span class="dot" style="background-color: yellow;" nz-tooltip nzTooltipTitle="سبز " nzTooltipPlacement="bottom"></span>
-    </span>
-    <div>محصول اول</div>
-    <div> مدل</div>
-    <del>54455</del>
-    <div>54455</div>
-    <div>s m x xl xxl</div>
 
+    <div style="background-color:darkgray;padding:5px;color:white">محصول اول</div>
+    <div>rmx مدل</div>
+    <div>
+      <del style="color:red">54455</del>
+      <span>54455</span>
+    </div>
   </div>
+
 </ng-template>

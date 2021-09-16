@@ -14,9 +14,9 @@ export class HomeComponent implements OnInit {
   constructor(public http: HttpService) { }
 
   async ngOnInit(): Promise<void> {
-    let data :any= await this.http.get('​api​/Front​/GetInitial').toPromise(); 
+    let data :any= await this.http.get('api/Front/GetInitial').toPromise(); 
     console.log(data);
-    let x = toTreeHelper(data.categories, 'Id', 'ParentId', null);
+    let x = toTreeHelper(data.categories, 'Id', 'ParentCategoryId', null);
     console.log(x);
 
   }
