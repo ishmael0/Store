@@ -106,6 +106,7 @@ namespace Store.Models
         public List<Images> Images { set; get; }
         public string Summary { set; get; }
         public string Description { set; get; }
+        public string Icon { set; get; }
         public int DetailsNodeValuesMaxId { set; get; }
 
     }

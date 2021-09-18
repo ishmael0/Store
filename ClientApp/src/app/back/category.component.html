@@ -31,15 +31,12 @@
 
         <nz-form-item>
           <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Title">عنوان</nz-form-label>
-          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="عنوان را وارد کنید">
+          <nz-form-control [nzSm]="6" [nzXs]="24" nzErrorTip="عنوان را وارد کنید">
             <input nz-input formControlName="Title" />
           </nz-form-control>
-        </nz-form-item>
-
-
-        <nz-form-item>
-          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="email"> دسته بندی والد</nz-form-label>
-          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid E-mail!">
+    
+          <nz-form-label [nzSm]="2" [nzXs]="24" nzFor="email"> دسته بندی والد</nz-form-label>
+          <nz-form-control [nzSm]="6" [nzXs]="24" nzErrorTip="The input is not valid E-mail!">
             <nz-tree-select [nzNodes]="dataManager.ViewRecords"
                             nzShowSearch
                             nzPlaceHolder="لطفا دسته بندی والد را انتخاب نمایید"
@@ -53,13 +50,32 @@
           <nz-form-control [nzSm]="6" [nzXs]="24" nzErrorTip="شرح خلاصه را وارد کنید">
             <input nz-input formControlName="Summary" />
           </nz-form-control>
+
+
+          <nz-form-label [nzSm]="2" [nzXs]="24" nzFor="email">آیکون
+          <i [innerHtml]="item.controls.Icon.value | sanitizeHtml"></i>
+          </nz-form-label>
+          <nz-form-control [nzSm]="6" [nzXs]="24" nzErrorTip="The input is not valid E-mail!">
+            <textarea nz-input formControlName="Icon" ></textarea>
+
+            <!--<nz-select formControlName="Icon" [nzCustomTemplate]="iconSelectedTemplate">
+              <nz-option *ngFor="let icon of icons | keyvalue" nzCustomContent [nzValue]="icon.key">
+                  <i nz-icon [innerHtml]="icon.value"  ></i>
+                  {{icon.key}}
+              </nz-option>
+            </nz-select>
+            <ng-template #iconSelectedTemplate let-selected>
+              <i nz-icon [innerHtml]="icons[selected.nzValue]"></i>
+              {{ selected.nzValue }}
+            </ng-template>-->
+          </nz-form-control>
         </nz-form-item>
 
 
 
         <nz-form-item>
           <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Description">شرح </nz-form-label>
-          <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="شرح  را وارد کنید">
+          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="شرح  را وارد کنید">
             <ckeditor [editor]="Editor" tagName="textarea" [config]="config" formControlName="Description"></ckeditor>
           </nz-form-control>
         </nz-form-item>
@@ -133,11 +149,13 @@
 
 </ng-template>
 
-<ng-template #tableBody let-item="item">
-  <td>{{ item.Id }}</td>
-  <td>{{ item.Title }}</td>
-  <td>{{ item.Create_}}</td>
+<ng-template #treeBody let-item="item">
+  <nz-tag [nzColor]="'#f50'">{{ item.Id }}</nz-tag>
+
+  
+  {{ item.Title }}
   <ng-container *ngTemplateOutlet="mainTemplate?.statusView;context:{value:statusView(item.Status)}"></ng-container>
+  {{ item.Create_}}
 </ng-template>
 
 

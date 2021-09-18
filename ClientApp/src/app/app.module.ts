@@ -1,12 +1,11 @@
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { WebSelectorComponent } from '../../../../Santel/Core/ClientApp/src/app/shared/components/web-selector/web-selector.component';
 import { LoginComponent } from '../../../../Santel/Core/ClientApp/src/app/shared/components/login/login.component';
 import { SharedModule } from '../../../../Santel/Core/ClientApp/src/app/shared/shared.module';
 import { WebSiteService } from '../../../../Santel/Core/ClientApp/src/app/services/website.service';
-
-
+ 
 
 const routes: Routes = [
   {

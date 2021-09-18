@@ -7,6 +7,7 @@
 [nzXXl]
 -->
 
+
 <div nz-col style="text-align:center"
      [nzXs]="24"
      [nzSm]="24"
@@ -19,6 +20,26 @@
       <i nz-icon [innerHtml]="http.icons.home"></i>
       صفحه اصلی
     </li>
+    <ng-container *ngFor="let item of http.data.categoriesTree">
+      <li nz-menu-item *ngIf="!item.children || item.children.length==0">
+        <i nz-icon [innerHtml]="item.data.Icon" style="font-size:24px"></i>
+        {{item.title}}
+      </li>
+
+      <li nz-submenu [nzTitle]="cm" *ngIf="item.children && item.children.length>0">
+        <ng-template #cm>
+          <i nz-icon [innerHtml]="item.data.Icon" style="font-size:24px"></i>
+          {{item.title}}
+        </ng-template>
+        <ul>
+          <li nz-menu-item *ngFor="let item2 of item.children">
+            <!--<ng-container *ngTemplateOutlet="mysubmenu;context:{item: item2}"></ng-container>-->
+            <i nz-icon [innerHtml]="item2.data.Icon" style="font-size:24px"></i>
+            {{item2.title}}
+          </li>
+        </ul>
+      </li>
+    </ng-container>
 
     <li nz-menu-item>
       <i nz-icon [innerHtml]="http.icons.home"></i>
@@ -26,6 +47,42 @@
     </li>
   </ul>
   <br />
-    <router-outlet></router-outlet>
+  <div nz-row>
+    <div nz-col [nzSm]="4" class="roundborderr">
+      <nz-tree [nzData]="http.data.categoriesTree" nzBlockNode [nzTreeTemplate]="nzTreeTemplate">
+        <ng-template #nzTreeTemplate let-node let-origin="origin">
+          <span class="custom-node">
+            <span>
+              <i nz-icon [innerHtml]="origin.data.Icon" style="font-size:24px"></i>
+              <span class="file-name">{{ node.title }}</span>
+            </span>
+          </span>
+        </ng-template>
+      </nz-tree>
+    </div>
+    <div nz-col [nzSm]="20">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
 </div>
 
+<!--<ng-template #mysubmenu let-item="item">
+  <li nz-menu-item *ngIf="!item.children || item.children.length==0">
+    <i nz-icon [innerHtml]="http.icons.home"></i>
+    {{item.title}}
+  </li>
+
+  <li nz-submenu [nzTitle]="cm" *ngIf="item.children && item.children.length>0">
+    <ng-template #cm>
+      <i nz-icon [innerHtml]="http.icons.home"></i>
+      {{item.title}}123
+    </ng-template>
+    <ul>
+      <li nz-menu-item *ngFor="let item2 of item.children">-->
+<!--<ng-container *ngTemplateOutlet="mysubmenu;context:{item: item2}"></ng-container>-->
+<!--<i nz-icon [innerHtml]="http.icons.home"></i>
+        {{item2.title}}
+      </li>
+    </ul>
+  </li>
+</ng-template>-->
