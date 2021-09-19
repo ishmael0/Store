@@ -21,6 +21,8 @@
       </owl-carousel-o>
 
     </div>
+    <ng-container *ngTemplateOutlet="hiii2"></ng-container>
+
   </div>
   <div nz-col
        class="slide"
@@ -41,9 +43,7 @@
 
       <owl-carousel-o [options]="customOptions">
         <ng-template carouselSlide *ngFor="let index of [1,2,3,4]">
-          <div style="border-radius: 50px; overflow: hidden;">
-            <img [src]="'../../../assets/test'+index+'.jpg'" style="width:100%" />
-          </div>
+          <ng-container *ngTemplateOutlet="hiii;context:{index:index}"></ng-container>
         </ng-template>
       </owl-carousel-o>
     </div>
@@ -52,7 +52,7 @@
 </div>
 <div *ngFor="let item of [1,2,3]">
   <br />
-  <div style=" text-align: right;"> 
+  <div style=" text-align: right;">
     <button nz-button nzType="primary" nzDanger style="border-bottom-right-radius: 20px; text-align: initial; border-top-left-radius: 20px; ">پرفروش ترین ها:</button>
   </div>
   <!--border-radius: 50px; border: red 1px dashed;-->
@@ -60,10 +60,12 @@
 
     <div>
       <owl-carousel-o [options]="customOptions3">
+        to
+        ar
         <ng-template carouselSlide style="width:200px" *ngFor="let index of [1,2,3,4,5,6,7,8,9,10,11,12]">
           <!--<div style="">
-          <img data-src="{{'../../../assets/test'+index+'.jpg'}}" style="width:100%" />
-        </div>-->
+            <img data-src="{{'../../../assets/test'+index+'.jpg'}}" style="width:100%" />
+          </div>-->
           <ng-container *ngTemplateOutlet="hiii;context:{index:index}"></ng-container>
         </ng-template>
       </owl-carousel-o>
@@ -77,7 +79,7 @@
 
 
 <ng-template #hiii let-index="index">
-  <div  style="padding: 5px; border-radius: 5px; border-top-right-radius: 25px; border-bottom-left-radius: 25px; overflow: hidden; border: gray 1px dashed; background-color: white ">
+  <div style="padding: 5px; border-radius: 5px; border-top-right-radius: 25px; border-bottom-left-radius: 25px; overflow: hidden; border: gray 1px dashed; background-color: white ">
 
     <div class="flip-box">
       <div class="flip-box-inner">
@@ -100,10 +102,10 @@
         <span class="dot" style="background-color: yellow;" nz-tooltip nzTooltipTitle="سبز " nzTooltipPlacement="bottom"></span>
       </span>
       <span style="position: absolute; bottom: 25px; right: 10px; ">
-        <span  style="padding-right:5px;"  nz-tooltip nzTooltipTitle=" سبز" nzTooltipPlacement="bottom">s</span>
-        <span  style="padding-right:5px;"  nz-tooltip nzTooltipTitle=" سبز" nzTooltipPlacement="bottom">m</span>
-        <span  style="padding-right:5px;"  nz-tooltip nzTooltipTitle="سبز " nzTooltipPlacement="bottom">x</span>
-        <span  style="padding-right:5px;"  nz-tooltip nzTooltipTitle="سبز " nzTooltipPlacement="bottom">xl</span>
+        <span style="padding-right:5px;" nz-tooltip nzTooltipTitle=" سبز" nzTooltipPlacement="bottom">s</span>
+        <span style="padding-right:5px;" nz-tooltip nzTooltipTitle=" سبز" nzTooltipPlacement="bottom">m</span>
+        <span style="padding-right:5px;" nz-tooltip nzTooltipTitle="سبز " nzTooltipPlacement="bottom">x</span>
+        <span style="padding-right:5px;" nz-tooltip nzTooltipTitle="سبز " nzTooltipPlacement="bottom">xl</span>
       </span>
     </div>
 
@@ -111,8 +113,51 @@
     <div>rmx مدل</div>
     <div>
       <del style="color:red">54455</del>
-      <span>54455</span>
+      <span style="margin-left:5px;">54455</span>
     </div>
   </div>
 
 </ng-template>
+
+
+<ng-template #hiii2>
+  <div style="padding: 5px; border-radius: 5px; border-top-right-radius: 25px; border-bottom-left-radius: 25px; overflow: hidden; border: gray 1px dashed; background-color: white ">
+
+    <div class="flip-box">
+      <div class="flip-box-inner">
+
+        <div class="flip-box-front">
+          <img class="imgfront" style="width:100%" src="../../../assets/p2.jpg" />
+        </div>
+        <div class="flip-box-back">
+          <img class="imgback" src="../../../assets/p1.jpg" />
+        </div>
+      </div>
+      <nz-tag style="position:absolute;top:10px;left:-10px" nzColor="#f50">فروش ویژه</nz-tag>
+      <nz-tag style="position:absolute;top:40px;left:-10px" nzColor="#87d068">جدید </nz-tag>
+      <nz-tag style="position:absolute;top:70px;left:-10px" nzColor="#5963a1">نمیدونم </nz-tag>
+      <span style="position: absolute; top: 10px; right: 10px;border-radius:50%; background-color: red; color: white; padding: 5px;"> 20%</span>
+      <span style="position: absolute; bottom: 0px; right: 10px; ">
+        <span class="dot" style="background-color: red;" nz-tooltip nzTooltipTitle=" سبز" nzTooltipPlacement="bottom"></span>
+        <span class="dot" style="background-color: blue;" nz-tooltip nzTooltipTitle=" سبز" nzTooltipPlacement="bottom"></span>
+        <span class="dot" style="background-color: white;" nz-tooltip nzTooltipTitle="سبز " nzTooltipPlacement="bottom"></span>
+        <span class="dot" style="background-color: yellow;" nz-tooltip nzTooltipTitle="سبز " nzTooltipPlacement="bottom"></span>
+      </span>
+      <span style="position: absolute; bottom: 25px; right: 10px; ">
+        <span style="padding-right:5px;" nz-tooltip nzTooltipTitle=" سبز" nzTooltipPlacement="bottom">s</span>
+        <span style="padding-right:5px;" nz-tooltip nzTooltipTitle=" سبز" nzTooltipPlacement="bottom">m</span>
+        <span style="padding-right:5px;" nz-tooltip nzTooltipTitle="سبز " nzTooltipPlacement="bottom">x</span>
+        <span style="padding-right:5px;" nz-tooltip nzTooltipTitle="سبز " nzTooltipPlacement="bottom">xl</span>
+      </span>
+    </div>
+
+    <div style="background-color:darkgray;padding:5px;color:white">محصول اول</div>
+    <div>rmx مدل</div>
+    <div>
+      <del style="color:red">54455</del>
+      <span style="margin-left:5px;">54455</span>
+    </div>
+  </div>
+
+</ng-template>
+
