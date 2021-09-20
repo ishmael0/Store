@@ -19,17 +19,25 @@
 .owl-next {
   right: 0;
   display: flex;
+  background-color: transparent !important;
 }
+
 .owl-nav {
-  margin-top: 0px!important;
+  margin-top: 0px !important;
 }
+
 .owl-prev {
   left: 0;
   display: flex;
+  background-color: transparent !important;
 }
 
 
-
+.owl-dots {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+}
 
 .flip-box {
   background-color: transparent;
@@ -51,7 +59,7 @@
 }
 
 .flip-box-front, .flip-box-back {
-/*  position: absolute;*/
+  /*  position: absolute;*/
   width: 100%;
   height: 100%;
   -webkit-backface-visibility: hidden;
@@ -69,11 +77,12 @@
   color: white;
   transform: rotateY(180deg);
 }
+
 .dot {
   height: 20px;
   width: 20px;
-  margin:3px;
-  border:1px gray solid;
+  margin: 3px;
+  border: 1px gray solid;
   display: inline-block;
   border-radius: 50%;
 }
@@ -89,6 +98,7 @@
   border: gray 1px dashed;
   background-color: white
 }
+$border-color: gray;
 .roundborderr {
   padding: 5px;
   height: fit-content;
@@ -96,6 +106,22 @@
   border-top-left-radius: 25px;
   border-bottom-right-radius: 25px;
   overflow: hidden;
-  border: gray 1px dashed;
+  border: $border-color 1px dashed;
   background-color: white
 }
+.customCard {
+  .customerCardHeader {
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-bottom: 5px;
+    border-bottom: $border-color 1px dashed;
+    text-align: initial;
+
+    i {
+      font-size: 24px;
+    }
+  }
+}
+
+
+

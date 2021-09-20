@@ -16,9 +16,38 @@
      [nzXl]="{span: 20, offset:2}"
      [nzXXl]="{span: 20, offset:2}">
   <ul nz-menu nzMode="horizontal">
+    <li nz-menu-item>
+      jijikala
+    </li>
     <li nz-menu-item nzSelected>
       <i nz-icon [innerHtml]="http.icons.home"></i>
       صفحه اصلی
+    </li>
+    
+
+    <li nz-menu-item>
+      <i nz-icon [innerHtml]="http.icons.home"></i>
+      تماس با ما
+    </li>
+
+
+  <li nz-menu-item style="float:left">
+      <i nz-icon [innerHtml]="http.icons.home"></i>
+   اطلاعات کاربری
+    </li>
+
+
+
+    <li nz-menu-item style="float:left">
+      <i nz-icon [innerHtml]="http.icons.home"></i>
+سبد خرید
+    </li>
+  </ul>
+
+  <ul nz-menu nzMode="horizontal">
+    <li nz-menu-item>
+      <i nz-icon [innerHtml]="http.icons.home"></i>
+      دسته بندی های کالا:
     </li>
     <ng-container *ngFor="let item of http.data.categoriesTree">
       <li nz-menu-item *ngIf="!item.children || item.children.length==0">
@@ -41,24 +70,73 @@
       </li>
     </ng-container>
 
-    <li nz-menu-item>
-      <i nz-icon [innerHtml]="http.icons.home"></i>
-      تماس با ما
+    <li nz-menu-item style="float:left;width:300px">
+      <input nz-input placeholder="جستجو" style="width:100%"/>
+
     </li>
+
   </ul>
+
+
+
+
+
+
   <br />
   <div nz-row>
-    <div nz-col [nzSm]="4" class="roundborderr">
-      <nz-tree [nzData]="http.data.categoriesTree" nzBlockNode [nzTreeTemplate]="nzTreeTemplate">
-        <ng-template #nzTreeTemplate let-node let-origin="origin">
-          <span class="custom-node">
-            <span>
-              <i nz-icon [innerHtml]="origin.data.Icon" style="font-size:24px"></i>
-              <span class="file-name">{{ node.title }}</span>
+    <div nz-col [nzSm]="4">
+      <div class="roundborderr">
+        <nz-tree [nzData]="http.data.categoriesTree" nzBlockNode [nzTreeTemplate]="nzTreeTemplate">
+          <ng-template #nzTreeTemplate let-node let-origin="origin">
+            <span class="custom-node">
+              <span>
+                <i nz-icon [innerHtml]="origin.data.Icon" style="font-size:24px"></i>
+                <span class="file-name">{{ node.title }}</span>
+              </span>
             </span>
-          </span>
+          </ng-template>
+        </nz-tree>
+      </div>
+      <br />
+      <owl-carousel-o [options]="customOptions">
+        <ng-template carouselSlide *ngFor="let index of [1,2,3,4]">
+          <div class="roundborderr" style=" overflow: hidden;padding:0px;">
+            <img [src]="'../../../assets/test'+index+'.jpg'" style="width:100%" />
+          </div>
         </ng-template>
-      </nz-tree>
+      </owl-carousel-o>
+      <br />
+
+      <div class="roundborderr">
+        <div class="customCard">
+          <div class="customerCardHeader">
+            <i nz-icon [innerHtml]="icons.heart" style=" color: #FE251B;  "></i>
+            <span>
+علاقه مندی های من
+            </span>
+          </div>
+        </div>
+        <div class="customerCardBody">
+          <app-productcard *ngFor="let p of [1,2,3,4,5,6]" type="smallWithoutPrice">
+          </app-productcard>
+        </div>
+      </div>
+      <br />
+      <div class="roundborderr">
+        <div class="customCard">
+          <div class="customerCardHeader">
+            <i nz-icon [innerHtml]="icons['basket-fill']" style=" color: #FE251B;  "></i>
+            <span>
+              سبد خرید من
+            </span>
+          </div>
+        </div>
+        <div class="customerCardBody">
+          <app-productcard *ngFor="let p of [1,2,3,4,5,6]" type="smallWithoutPrice">
+          </app-productcard>
+        </div>
+      </div>
+
     </div>
     <div nz-col [nzSm]="20">
       <router-outlet></router-outlet>

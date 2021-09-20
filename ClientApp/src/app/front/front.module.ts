@@ -7,7 +7,7 @@ import { CommonModule } from "@angular/common";
 import { LayoutComponent } from './layout/layout.component';
 import { HomeComponent } from './home/home.component';
 import { CategoryComponent } from './category/category.component';
-import { ProductComponent } from './product/product.component';
+import { ProductCardComponent, ProductComponent } from './product/product.component';
 import { BasketComponent } from './basket/basket.component';
 import { InvoiceComponent } from './invoice/invoice.component';
 import { ProfileComponent } from './profile/profile.component';
@@ -76,7 +76,8 @@ const routes: Routes = [
     BasketComponent,
     InvoiceComponent,
     ProfileComponent,
-    ContactUsComponent
+    ContactUsComponent,
+    ProductCardComponent
   ],
   imports: [
     CommonModule,
