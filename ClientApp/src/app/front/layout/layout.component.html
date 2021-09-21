@@ -23,7 +23,7 @@
       <i nz-icon [innerHtml]="http.icons.home"></i>
       صفحه اصلی
     </li>
-    
+
 
     <li nz-menu-item>
       <i nz-icon [innerHtml]="http.icons.home"></i>
@@ -31,16 +31,16 @@
     </li>
 
 
-  <li nz-menu-item style="float:left">
+    <li nz-menu-item style="float:left">
       <i nz-icon [innerHtml]="http.icons.home"></i>
-   اطلاعات کاربری
+      اطلاعات کاربری
     </li>
 
 
 
     <li nz-menu-item style="float:left">
       <i nz-icon [innerHtml]="http.icons.home"></i>
-سبد خرید
+      سبد خرید
     </li>
   </ul>
 
@@ -71,7 +71,7 @@
     </ng-container>
 
     <li nz-menu-item style="float:left;width:300px">
-      <input nz-input placeholder="جستجو" style="width:100%"/>
+      <input nz-input placeholder="جستجو" style="width:100%" />
 
     </li>
 
@@ -112,7 +112,7 @@
           <div class="customerCardHeader">
             <i nz-icon [innerHtml]="icons.heart" style=" color: #FE251B;  "></i>
             <span>
-علاقه مندی های من
+              علاقه مندی های من
             </span>
           </div>
         </div>
@@ -139,10 +139,22 @@
 
     </div>
     <div nz-col [nzSm]="20">
+      <div nz-row>
+        <div nz-col *ngFor="let item of http.data.categoriesTree" class="roundborderr" style="width: 200px; height: 200px; background-color: cadetblue; margin: 10px; position: relative; padding: 0px; overflow: hidden; border: white 1px dashed;">
+          <span style=" position: absolute; bottom: 20px; font-size: large; padding-right: 10px; color: white; background-color: #80808061; width: 100%; right: 0; ">
+            {{item.title}}
+          </span>
+          <div *ngIf="item.data.Images?.length>0">
+          </div>
+          <img *ngIf="item.data.Images?.length>0" style="width:100%" [src]="'front'+item.data.Images[0].Path" />
+        </div>
+      </div>
       <router-outlet></router-outlet>
     </div>
   </div>
 </div>
+
+
 
 <!--<ng-template #mysubmenu let-item="item">
   <li nz-menu-item *ngIf="!item.children || item.children.length==0">
@@ -164,3 +176,4 @@
     </ul>
   </li>
 </ng-template>-->
+

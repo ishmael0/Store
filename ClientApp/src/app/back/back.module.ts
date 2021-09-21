@@ -32,7 +32,7 @@ export const config: WebSiteConfiguration = new WebSiteConfiguration('StoreDB', 
         new PropertyConfiguration('Icon', 'خلاصه ', { Validators: [], InTable: true }),
         new PropertyConfiguration('Summary', 'خلاصه ', { Validators: [], InTable: true }),
         new PropertyConfiguration('Description', 'شرح  ', { Validators: [], InTable: true }),
-        new PropertyConfiguration('Images', 'تصاویر  ', { Validators: [], InTable: true }),
+        new PropertyConfiguration('Images', 'تصاویر  ', { value:[], Validators: [], InTable: true }),
         new PropertyConfiguration('TreeNodes', 'جزیات محصولات در این دسته بندی  ', { Validators: [], InTable: true }),
         new PropertyConfiguration('DetailsNodeValuesMaxId', 'DetailsNodeValuesMaxId  ', { value: 0, Validators: [], InTable: false }),
       ]

@@ -130,8 +130,7 @@ export class CategoryComponent extends BaseComponent {
     this.imageModal = false;
     let x: any[] = this.selectedForm().controls.Images.value;
     x.push({ Path: e, Description: '' });
-    this.selectedForm().controls.Images.markAsDirty();
-    this.selectedForm().controls.Images.updateValueAndValidity();
+    this.makeItDirty(this.selectedForm());
   }
   addFirst(item: FormGroup) {
     let max = item.controls.DetailsNodeValuesMaxId.value + 1;

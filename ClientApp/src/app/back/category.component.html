@@ -1,12 +1,10 @@
 
 
 <ng-template #form let-item="item">
-
+  -{{item.controls.Images.value}}-
   <nz-tabset [nzAnimated]="false">
     <nz-tab nzTitle="محتوای اصلی">
       <form nz-form [formGroup]="item">
-
-
         <nz-form-item>
           <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Id">شناسه</nz-form-label>
           <nz-tag [nzColor]="'#f50'">{{item.controls.Id.value}}</nz-tag>
@@ -34,7 +32,7 @@
           <nz-form-control [nzSm]="6" [nzXs]="24" nzErrorTip="عنوان را وارد کنید">
             <input nz-input formControlName="Title" />
           </nz-form-control>
-    
+
           <nz-form-label [nzSm]="2" [nzXs]="24" nzFor="email"> دسته بندی والد</nz-form-label>
           <nz-form-control [nzSm]="6" [nzXs]="24" nzErrorTip="The input is not valid E-mail!">
             <nz-tree-select [nzNodes]="dataManager.ViewRecords"
@@ -52,11 +50,12 @@
           </nz-form-control>
 
 
-          <nz-form-label [nzSm]="2" [nzXs]="24" nzFor="email">آیکون
-          <i [innerHtml]="item.controls.Icon.value | sanitizeHtml"></i>
+          <nz-form-label [nzSm]="2" [nzXs]="24" nzFor="email">
+            آیکون
+            <i [innerHtml]="item.controls.Icon.value | sanitizeHtml"></i>
           </nz-form-label>
           <nz-form-control [nzSm]="6" [nzXs]="24" nzErrorTip="The input is not valid E-mail!">
-            <textarea nz-input formControlName="Icon" ></textarea>
+            <textarea nz-input formControlName="Icon"></textarea>
 
             <!--<nz-select formControlName="Icon" [nzCustomTemplate]="iconSelectedTemplate">
               <nz-option *ngFor="let icon of icons | keyvalue" nzCustomContent [nzValue]="icon.key">
@@ -79,32 +78,9 @@
             <ckeditor [editor]="Editor" tagName="textarea" [config]="config" formControlName="Description"></ckeditor>
           </nz-form-control>
         </nz-form-item>
-
-
-
-        <div nz-row cdkDropList (cdkDropListDropped)="dropImage($event, item)">
-          <nz-card *ngFor="let pic of item.controls.Images.value" nz-col [nzSm]="6" [nzXs]="24" cdkDrag>
-            <img style="width:100%" [src]="'/front'+pic.Path" />
-            <br />
-            <input type="text" nz-input style="width:100%" placeholder="توضیحات" [(ngModel)]="pic.Description" />
-          </nz-card>
-
-        </div>
-        <button nz-button nz-col [nzSm]="4" nzType="dashed" (click)="imageModal = true ">اضافه کردن</button>
-
-
-
       </form>
     </nz-tab>
     <nz-tab nzTitle=" جزییات محصولات در این دسته بندی">
-
-
-
-
-
-
-
-
       <button (click)="addFirst(item)" nz-button nzType="primary">
         <i nz-icon
            [innerHtml]="icons['plus-thick']"></i>
@@ -127,15 +103,32 @@
         </ng-template>
 
       </nz-tree>
-
-
-
-
-
-
+    </nz-tab>
+    <nz-tab nzTitle=" تصاویر  ({{item.controls.Images.value?.length}})">
+      <div nz-row>
+        <div nz-col [nzMd]="6" [nzXs]="24" style="text-align:center">
+          <nz-form-label>تصاویر</nz-form-label>
+          <br />
+          <nz-alert nzType="info" class="alertInTopOfTable" nzMessage=" اولین تصویر، تصویر اصلی، دومین تصویر تصویر فرعی محسوب میشوند"></nz-alert>
+          <nz-alert nzType="info" class="alertInTopOfTable" nzMessage=" میتوانید با کشیدن و رها کردن ترتیب تصاویر را تغییر دهید"></nz-alert>
+          <button nz-button nzType="dashed" (click)=" imageModal = true ">اضافه کردن محصولات مشابه</button>
+        </div>
+        <div nz-col [nzSm]="12" [nzXs]="24">
+          <div nz-row cdkDropList (cdkDropListDropped)="dropAndDrop_DropHandler($event, item,'Images')">
+            <nz-card *ngFor="let r of item.controls.Images.value" nz-col [nzMd]="6" [nzXs]="24" cdkDrag>
+              <img style="width:100%" [src]="'/front'+r.Path" />
+              <br />
+              <input type="text" nz-input style="width:100%" placeholder="توضیحات" [(ngModel)]="r.Description" />
+              <i nz-icon (click)="deleteFromList(item, 'Images',r.Path,'Path' )"
+                 style="color: #F93154;"
+                 class="larger"
+                 [innerHtml]="icons['delete']"></i>
+            </nz-card>
+          </div>
+        </div>
+      </div>
     </nz-tab>
   </nz-tabset>
-
 </ng-template>
 
 <ng-template #viewMessage>
@@ -152,7 +145,7 @@
 <ng-template #treeBody let-item="item">
   <nz-tag [nzColor]="'#f50'">{{ item.Id }}</nz-tag>
 
-  
+
   {{ item.Title }}
   <ng-container *ngTemplateOutlet="mainTemplate?.statusView;context:{value:statusView(item.Status)}"></ng-container>
   {{ item.Create_}}
@@ -164,11 +157,13 @@
 <app-template #mainTemplate *ngIf="ok" [com]="this"></app-template>
 
 
-<nz-modal [(nzVisible)]="imageModal" [nzFooter]="modalFooter" nzTitle="The first Modal" (nzOnCancel)="imageModal = false" (nzOnOk)="imageModal = false">
-  <ng-container *nzModalContent>
-    <app-image-uploader-card key="StoreDB/Category" Id="1" (onOk)="addImage($event)"></app-image-uploader-card>
-  </ng-container>
-  <ng-template #modalFooter>
-    <button nz-button nzType="default" (click)="imageModal = false">انصراف </button>
-  </ng-template>
-</nz-modal>
+<ng-container *ngIf="mainTemplate">
+
+
+  <nz-modal [(nzVisible)]="imageModal" [nzFooter]="mainTemplate.modalEmptyFooter" nzTitle="افزودن تصویر" (nzOnCancel)="imageModal = false">
+    <ng-container *nzModalContent>
+      <app-image-uploader-card key="StoreDB/Product" Id="1" (onOk)="addImage($event)"></app-image-uploader-card>
+      <button style="float:left" nz-button nzType="primary" (click)="imageModal = false">تایید </button>
+    </ng-container>
+  </nz-modal>
+</ng-container>
