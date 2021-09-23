@@ -1,1 +1,23 @@
-<p>category works!</p>
+<div nz-col
+     [nzXs]="24"
+     [nzSm]="24"
+     [nzMd]="8"
+     [nzLg]="8"
+     [nzXl]="8"
+     [nzXXl]="8">
+  <div nz-row  nzJustify="center">
+    <app-category-card nz-col
+                       [nzXs]="8"
+                       [nzSm]="6"
+     [nzMd]="12"
+
+                       *ngFor="let item of category.children" [data]="item.data"></app-category-card>
+
+    <app-category-tree nz-col  [nzXs]="24"></app-category-tree>
+
+
+  </div>
+
+
+
+</div>

@@ -3,18 +3,43 @@ import { HttpClient, HttpHandler, HttpHeaders } from '@angular/common/http';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { icons } from '../../../../../Santel/Core/ClientApp/src/app/services/icon';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-export interface IDataInterFace{
-  categories: any[] ;
-  categoriesTree: any[] ;
+import { toTreeHelper } from '../../../../../Santel/Core/ClientApp/src/app/services/utils';
+import { ActivatedRoute } from '@angular/router';
+
+export interface IDataInterFace {
+  isInitilized: boolean;
+  categories: any[];
+  categoriesTree: any[];
+  products: any[];
 }
 @Injectable({
   providedIn: 'root'
 })
-export class HttpService extends HttpClient{
+export class HttpService extends HttpClient {
 
-  constructor(handler: HttpHandler, public ns: NzNotificationService, public domSanitizer: DomSanitizer) {
+  constructor(handler: HttpHandler, public ns: NzNotificationService, public domSanitizer: DomSanitizer ) {
     super(handler);
   }
   icons = icons;
-  data: Partial<IDataInterFace> = {};
+  findCategoryInTree(tree: any[], id: number) {
+    for (var i = 0; i < tree.length; i++) {
+      if (tree[i].data.Id == id) return tree[i];
+      let x = this.findCategoryInTree(tree[i].children, id);
+      if (x) return x;
+    }
+    return null;
+  } 
+  getParam(route: ActivatedRoute, p:string) {
+    return route.snapshot.paramMap.get('categoryId')
+  }
+  async init() {
+    if (this.data.isInitilized) return;
+    let x: any = await this.get('api/Front/GetInitial').toPromise();
+    this.data.categories = x.categories;
+    this.data.categories.forEach(c => {
+      c.Icon = this.domSanitizer.bypassSecurityTrustHtml(c.Icon);
+    });
+    this.data.categoriesTree = toTreeHelper(x.categories, 'Id', 'ParentCategoryId', null);
+  }
+  data: Partial<IDataInterFace> = { isInitilized: false };
 }

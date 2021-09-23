@@ -8,7 +8,7 @@
 -->
 
 
-<div nz-col style="text-align:center"
+<div *ngIf="!loading" nz-col style="text-align:center"
      [nzXs]="24"
      [nzSm]="24"
      [nzMd]="24"
@@ -19,27 +19,27 @@
     <li nz-menu-item>
       jijikala
     </li>
-    <li nz-menu-item nzSelected>
+    <li nz-menu-item nzSelected [routerLink]="['/home']" >
       <i nz-icon [innerHtml]="http.icons.home"></i>
       صفحه اصلی
     </li>
 
 
-    <li nz-menu-item>
-      <i nz-icon [innerHtml]="http.icons.home"></i>
+    <li nz-menu-item  nzSelected [routerLink]="['/contact']" >
+      <i nz-icon [innerHtml]="http.icons['phone-in-talk-outline']"></i>
       تماس با ما
     </li>
 
 
-    <li nz-menu-item style="float:left">
-      <i nz-icon [innerHtml]="http.icons.home"></i>
+    <li nz-menu-item style="float:left"  nzSelected [routerLink]="['/profile']" >
+      <i nz-icon [innerHtml]="http.icons.profile"></i>
       اطلاعات کاربری
     </li>
 
 
 
-    <li nz-menu-item style="float:left">
-      <i nz-icon [innerHtml]="http.icons.home"></i>
+    <li nz-menu-item style="float:left"  nzSelected [routerLink]="['/basket']" >
+      <i nz-icon [innerHtml]="http.icons['basket-fill']" style="color:green;font-size:24px" ></i>
       سبد خرید
     </li>
   </ul>
@@ -50,18 +50,18 @@
       دسته بندی های کالا:
     </li>
     <ng-container *ngFor="let item of http.data.categoriesTree">
-      <li nz-menu-item *ngIf="!item.children || item.children.length==0">
+      <li nz-menu-item *ngIf="!item.children || item.children.length==0" [routerLink]="['/category/' + item.data.Id]" >
         <i nz-icon [innerHtml]="item.data.Icon" style="font-size:24px"></i>
         {{item.title}}
       </li>
 
-      <li nz-submenu [nzTitle]="cm" *ngIf="item.children && item.children.length>0">
+      <li nz-submenu [nzTitle]="cm" *ngIf="item.children && item.children.length>0" >
         <ng-template #cm>
           <i nz-icon [innerHtml]="item.data.Icon" style="font-size:24px"></i>
           {{item.title}}
         </ng-template>
         <ul>
-          <li nz-menu-item *ngFor="let item2 of item.children">
+          <li nz-menu-item *ngFor="let item2 of item.children" [routerLink]="['/category/' + item2.data.Id]" >
             <!--<ng-container *ngTemplateOutlet="mysubmenu;context:{item: item2}"></ng-container>-->
             <i nz-icon [innerHtml]="item2.data.Icon" style="font-size:24px"></i>
             {{item2.title}}
@@ -77,85 +77,60 @@
 
   </ul>
 
-
-
-
-
-
   <br />
-  <div nz-row>
-    <div nz-col [nzSm]="4">
-      <div class="roundborderr">
-        <nz-tree [nzData]="http.data.categoriesTree" nzBlockNode [nzTreeTemplate]="nzTreeTemplate">
-          <ng-template #nzTreeTemplate let-node let-origin="origin">
-            <span class="custom-node">
-              <span>
-                <i nz-icon [innerHtml]="origin.data.Icon" style="font-size:24px"></i>
-                <span class="file-name">{{ node.title }}</span>
-              </span>
-            </span>
-          </ng-template>
-        </nz-tree>
-      </div>
-      <br />
-      <owl-carousel-o [options]="customOptions">
-        <ng-template carouselSlide *ngFor="let index of [1,2,3,4]">
-          <div class="roundborderr" style=" overflow: hidden;padding:0px;">
-            <img [src]="'../../../assets/test'+index+'.jpg'" style="width:100%" />
-          </div>
-        </ng-template>
-      </owl-carousel-o>
-      <br />
+  
 
-      <div class="roundborderr">
-        <div class="customCard">
-          <div class="customerCardHeader">
-            <i nz-icon [innerHtml]="icons.heart" style=" color: #FE251B;  "></i>
-            <span>
-              علاقه مندی های من
-            </span>
-          </div>
-        </div>
-        <div class="customerCardBody">
-          <app-productcard *ngFor="let p of [1,2,3,4,5,6]" type="smallWithoutPrice">
-          </app-productcard>
-        </div>
-      </div>
-      <br />
-      <div class="roundborderr">
-        <div class="customCard">
-          <div class="customerCardHeader">
-            <i nz-icon [innerHtml]="icons['basket-fill']" style=" color: #FE251B;  "></i>
-            <span>
-              سبد خرید من
-            </span>
-          </div>
-        </div>
-        <div class="customerCardBody">
-          <app-productcard *ngFor="let p of [1,2,3,4,5,6]" type="smallWithoutPrice">
-          </app-productcard>
-        </div>
-      </div>
+  <router-outlet></router-outlet>
 
-    </div>
-    <div nz-col [nzSm]="20">
-      <div nz-row>
-        <div nz-col *ngFor="let item of http.data.categoriesTree" class="roundborderr" style="width: 200px; height: 200px; background-color: cadetblue; margin: 10px; position: relative; padding: 0px; overflow: hidden; border: white 1px dashed;">
-          <span style=" position: absolute; bottom: 20px; font-size: large; padding-right: 10px; color: white; background-color: #80808061; width: 100%; right: 0; ">
-            {{item.title}}
-          </span>
-          <div *ngIf="item.data.Images?.length>0">
-          </div>
-          <img *ngIf="item.data.Images?.length>0" style="width:100%" [src]="'front'+item.data.Images[0].Path" />
-        </div>
-      </div>
-      <router-outlet></router-outlet>
-    </div>
-  </div>
 </div>
 
 
+<!--<br />
+<div nz-row>
+  <div nz-col [nzSm]="4">
+    <app-category-tree></app-category-tree>
+    <br />
+    <owl-carousel-o [options]="customOptions">
+      <ng-template carouselSlide *ngFor="let index of [1,2,3,4]">
+        <div class="roundborderr" style=" overflow: hidden;padding:0px;">
+          <img [src]="'../../../assets/test'+index+'.jpg'" style="width:100%" />
+        </div>
+      </ng-template>
+    </owl-carousel-o>
+    <br />
 
+    <div class="roundborderr">
+      <div class="customCard">
+        <div class="customerCardHeader">
+          <i nz-icon [innerHtml]="icons.heart" style=" color: #FE251B;  "></i>
+          <span>
+            علاقه مندی های من
+          </span>
+        </div>
+      </div>
+      <div class="customerCardBody">
+        <app-productcard *ngFor="let p of [1,2,3,4,5,6]" type="smallWithoutPrice">
+        </app-productcard>
+      </div>
+    </div>
+    <br />
+    <div class="roundborderr">
+      <div class="customCard">
+        <div class="customerCardHeader">
+          <i nz-icon [innerHtml]="icons['basket-fill']" style=" color: #FE251B;  "></i>
+          <span>
+            سبد خرید من
+          </span>
+        </div>
+      </div>
+      <div class="customerCardBody">
+        <app-productcard *ngFor="let p of [1,2,3,4,5,6]" type="smallWithoutPrice">
+        </app-productcard>
+      </div>
+    </div>
+
+  </div>
+</div>-->
 <!--<ng-template #mysubmenu let-item="item">
   <li nz-menu-item *ngIf="!item.children || item.children.length==0">
     <i nz-icon [innerHtml]="http.icons.home"></i>
@@ -176,4 +151,3 @@
     </ul>
   </li>
 </ng-template>-->
-

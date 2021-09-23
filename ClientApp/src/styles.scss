@@ -87,7 +87,7 @@
   border-radius: 50%;
 }
 
-
+$border-color: white;
 .roundborder {
   padding: 5px;
   height: fit-content;
@@ -95,10 +95,9 @@
   border-top-right-radius: 25px;
   border-bottom-left-radius: 25px;
   overflow: hidden;
-  border: gray 1px dashed;
+  border: $border-color 1px dashed;
   background-color: white
 }
-$border-color: gray;
 .roundborderr {
   padding: 5px;
   height: fit-content;

@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, ViewEncapsulation} from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ViewEncapsulation,ChangeDetectorRef} from '@angular/core';
 import { HttpService } from '../http.service';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { icons } from '../../../../../../Santel/Core/ClientApp/src/app/services/icon';
@@ -16,9 +16,12 @@ import { icons } from '../../../../../../Santel/Core/ClientApp/src/app/services/
 })
 export class LayoutComponent implements OnInit {
 
-  constructor(public http: HttpService) { }
-  icons = icons;
-  ngOnInit(): void {
+  constructor(public http: HttpService,public cdr: ChangeDetectorRef) { }
+  loading = true;
+  async ngOnInit() {
+    await this.http.init();
+    this.loading = false;
+    this.cdr.detectChanges();
   }
   customOptions: OwlOptions = {
     dots: true,

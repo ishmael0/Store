@@ -48,6 +48,9 @@ import { NzCascaderModule } from 'ng-zorro-antd/cascader';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzCarouselModule } from 'ng-zorro-antd/carousel';
 import { CarouselModule } from 'ngx-owl-carousel-o';
+import { CategoryCardComponent } from './components/category-card/category-card.component';
+import { ProductMiniCardComponent } from './components/product-mini-card/product-mini-card.component';
+import { CategoryTreeComponent } from './components/category-tree/category-tree.component';
 
 
 
@@ -77,7 +80,10 @@ const routes: Routes = [
     InvoiceComponent,
     ProfileComponent,
     ContactUsComponent,
-    ProductCardComponent
+    ProductCardComponent,
+    CategoryCardComponent,
+    ProductMiniCardComponent,
+    CategoryTreeComponent
   ],
   imports: [
     CommonModule,

@@ -1,6 +1,44 @@
-<div>
+<div nz-row>
+  <div nz-col
+       [nzXs]="24"
+       [nzSm]="24"
+       [nzMd]="12"
+       [nzLg]="12"
+       [nzXl]="14"
+       [nzXXl]="14">
+    <div class="roundborder" style="height:80px;width:100%;background-color:lightgray"></div>
+
+    <owl-carousel-o [options]="customOptions">
+      <ng-template carouselSlide *ngFor="let index of [1,2,3,4]">
+        <div class="roundborderr" style=" overflow: hidden;padding:0px;">
+          <img [src]="'../../../assets/test'+index+'.jpg'" style="width:100%" />
+        </div>
+      </ng-template>
+    </owl-carousel-o>
+
+  </div>
+
+
+  <div nz-col
+       [nzXs]="24"
+       [nzSm]="24"
+       [nzMd]="12"
+       [nzLg]="12"
+       [nzXl]="10"
+       [nzXXl]="10">
+
+    <div nz-row nzJustify="center">
+      <app-category-card nz-col
+                         [nzXs]="12"
+                         *ngFor="let item of http.data.categoriesTree" [data]="item.data"></app-category-card>
+    </div>
+
+
+  </div>
 
 </div>
+
+
 
 <!--<div nz-row>
   <div nz-col
