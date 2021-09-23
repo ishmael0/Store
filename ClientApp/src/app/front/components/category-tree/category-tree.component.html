@@ -1,0 +1,12 @@
+<div class="">
+  <nz-tree [nzData]="http.data.categoriesTree" nzBlockNode [nzTreeTemplate]="nzTreeTemplate">
+    <ng-template #nzTreeTemplate let-node let-origin="origin">
+      <span class="custom-node">
+        <span>
+          <i nz-icon [innerHtml]="origin.data.Icon" style="font-size:24px"></i>
+          <span class="file-name">{{ node.title }}</span>
+        </span>
+      </span>
+    </ng-template>
+  </nz-tree>
+</div>
