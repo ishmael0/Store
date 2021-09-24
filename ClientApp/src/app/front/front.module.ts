@@ -7,8 +7,7 @@ import { CommonModule } from "@angular/common";
 import { LayoutComponent } from './layout/layout.component';
 import { HomeComponent } from './home/home.component';
 import { CategoryComponent } from './category/category.component';
-import { ProductCardComponent, ProductComponent } from './product/product.component';
-import { BasketComponent } from './basket/basket.component';
+ import { BasketComponent } from './basket/basket.component';
 import { InvoiceComponent } from './invoice/invoice.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
@@ -51,6 +50,8 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
 import { CategoryCardComponent } from './components/category-card/category-card.component';
 import { ProductMiniCardComponent } from './components/product-mini-card/product-mini-card.component';
 import { CategoryTreeComponent } from './components/category-tree/category-tree.component';
+ import { ProductCardComponent } from './components/product-card/product-card.component';
+import { ProductComponent } from './product/product.component';
 
 
 
@@ -83,7 +84,7 @@ const routes: Routes = [
     ProductCardComponent,
     CategoryCardComponent,
     ProductMiniCardComponent,
-    CategoryTreeComponent
+    CategoryTreeComponent,
   ],
   imports: [
     CommonModule,
