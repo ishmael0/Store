@@ -3,7 +3,7 @@ using Core.StartUp;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Store.Models;
-
+using System.Linq;
 
 namespace Store
 {
@@ -11,6 +11,10 @@ namespace Store
     {
         public static void Main(string[] args)
         {
+
+
+
+
             CreateHostBuilder(args).Build().Run();
         }
 

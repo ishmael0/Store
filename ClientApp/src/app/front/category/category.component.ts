@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef} from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { HttpService } from '../http.service';
 import { ActivatedRoute } from '@angular/router';
 
@@ -24,6 +24,7 @@ export class CategoryComponent implements OnInit {
   ngOnInit(): void {
 
   }
+  params: any = { SortType:'B'};
   ngOnDestroy() {
     if (this.parametersObservable != null) {
       this.parametersObservable.unsubscribe();

@@ -21,12 +21,32 @@
   <div nz-col
        [nzXs]="24"
        [nzMd]="16">
-    <div nz-row >
+
+
+    <div class="roundborderr" style="margin-right: 5px; margin-left: 5px; ">
+      <nz-radio-group [(ngModel)]="params.SortType" nzButtonStyle="solid">
+        <label nz-radio-button nzValue="A">پرفروش ترین</label>
+        <label nz-radio-button nzValue="B">جدید ترین</label>
+        <label nz-radio-button nzValue="C"> پربازدید ترین</label>
+        <label nz-radio-button nzValue="D">گرانترین</label>
+        <label nz-radio-button nzValue="E">ارزانترین</label>
+      </nz-radio-group>
+      <div style="float:left">
+        <i nz-icon style="font-size:24px" [innerHtml]="http.icons['view-list']"></i>
+        <i nz-icon style="font-size:24px" [innerHtml]="http.icons['view-module']"></i>
+      </div>
+
+
+
+
+    </div>
+
+    <div nz-row>
       <app-product-card nz-col
                         style="padding:5px"
                         *ngFor="let item of [1,2,3,4,5,6]"
                         [nzXs]="8"
-                        [nzSm]="6"
+                        [nzSm]="8"
                         [nzMd]="8"
                         [nzLg]="6"></app-product-card>
     </div>

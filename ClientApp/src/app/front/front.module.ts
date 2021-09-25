@@ -87,6 +87,7 @@ const routes: Routes = [
     CategoryTreeComponent,
   ],
   imports: [
+    FormsModule,
     CommonModule,
     RouterModule.forChild(routes),
     ReactiveFormsModule,
