@@ -44,6 +44,14 @@
         </nz-form-item>
 
         <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Title">اولویت</nz-form-label>
+          <nz-form-control [nzSm]="6" [nzXs]="24" nzErrorTip="اولویت را وارد کنید">
+            <input nz-input formControlName="Priority" />
+          </nz-form-control>
+
+        </nz-form-item>
+
+        <nz-form-item>
           <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Summary">شرح خلاصه</nz-form-label>
           <nz-form-control [nzSm]="6" [nzXs]="24" nzErrorTip="شرح خلاصه را وارد کنید">
             <input nz-input formControlName="Summary" />
@@ -144,11 +152,13 @@
 
 <ng-template #treeBody let-item="item">
   <nz-tag [nzColor]="'#f50'">{{ item.Id }}</nz-tag>
+  <nz-tag [nzColor]="'#130fffc9'">{{ item.Priority }}</nz-tag>
 
 
   {{ item.Title }}
   <ng-container *ngTemplateOutlet="mainTemplate?.statusView;context:{value:statusView(item.Status)}"></ng-container>
   {{ item.Create_}}
+
 </ng-template>
 
 

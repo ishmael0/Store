@@ -30,6 +30,7 @@ export const config: WebSiteConfiguration = new WebSiteConfiguration('StoreDB', 
           Validators: []
         }),
         new PropertyConfiguration('Icon', 'خلاصه ', { Validators: [], InTable: true }),
+        new PropertyConfiguration('Priority', 'اولویت ', { Type: 'number', Validators: [], InTable: false }),
         new PropertyConfiguration('Summary', 'خلاصه ', { Validators: [], InTable: true }),
         new PropertyConfiguration('Description', 'شرح  ', { Validators: [], InTable: true }),
         new PropertyConfiguration('Images', 'تصاویر  ', { value:[], Validators: [], InTable: true }),
