@@ -32,8 +32,8 @@
         <label nz-radio-button nzValue="E">ارزانترین</label>
       </nz-radio-group>
       <div style="float:left">
-        <i nz-icon style="font-size:24px" [innerHtml]="http.icons['view-list']"></i>
-        <i nz-icon style="font-size:24px" [innerHtml]="http.icons['view-module']"></i>
+        <i nz-icon style="font-size:24px" (click)="viewType = 1" [innerHtml]="http.icons['view-list']"></i>
+        <i nz-icon style="font-size:24px" (click)="viewType = 2" [innerHtml]="http.icons['view-module']"></i>
       </div>
 
 
@@ -41,14 +41,23 @@
 
     </div>
 
-    <div nz-row>
-      <app-product-card nz-col
+    <div nz-row *ngIf="viewType == 1">
+      <app-product-card1 *ngFor="let item of [1,2,3,4,5,6]"
+                        nz-col
                         style="padding:5px"
-                        *ngFor="let item of [1,2,3,4,5,6]"
                         [nzXs]="8"
                         [nzSm]="8"
                         [nzMd]="8"
-                        [nzLg]="6"></app-product-card>
+                        [nzLg]="6"></app-product-card1>
+    </div>
+    <div nz-row *ngIf="viewType == 2">
+      <app-product-card2 *ngFor="let item of [1,2,3,4,5,6]"
+                        nz-col
+                        style="padding:5px"
+                        [nzXs]="8"
+                        [nzSm]="8"
+                        [nzMd]="8"
+                        [nzLg]="6"></app-product-card2>
     </div>
 
   </div>

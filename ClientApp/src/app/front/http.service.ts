@@ -30,7 +30,7 @@ export class HttpService extends HttpClient {
     return null;
   } 
   getParam(route: ActivatedRoute, p:string) {
-    return route.snapshot.paramMap.get('categoryId')
+    return route.snapshot.paramMap.get(p)
   }
   async init() {
     if (this.data.isInitilized) return;

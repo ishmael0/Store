@@ -50,8 +50,8 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
 import { CategoryCardComponent } from './components/category-card/category-card.component';
 import { ProductMiniCardComponent } from './components/product-mini-card/product-mini-card.component';
 import { CategoryTreeComponent } from './components/category-tree/category-tree.component';
- import { ProductCardComponent } from './components/product-card/product-card.component';
 import { ProductComponent } from './product/product.component';
+import { ProductCard1Component, ProductCard2Component } from './components/product-card/product-card.component';
 
 
 
@@ -63,7 +63,7 @@ const routes: Routes = [
       { path: 'category/:categoryId', component: CategoryComponent },
       { path: 'category/:categoryId/:categoryName', component: CategoryComponent },
       { path: 'product/:productId', component: ProductComponent },
-      { path: 'product/:categoryId/:categoryName/:productId/:productName', component: ProductComponent },
+      { path: 'product/:productId/:categoryName/:productName', component: ProductComponent },
       { path: 'contact', component: ContactUsComponent },
       { path: 'profile', component: ProfileComponent },
     ]
@@ -81,7 +81,8 @@ const routes: Routes = [
     InvoiceComponent,
     ProfileComponent,
     ContactUsComponent,
-    ProductCardComponent,
+    ProductCard1Component,
+    ProductCard2Component,
     CategoryCardComponent,
     ProductMiniCardComponent,
     CategoryTreeComponent,
