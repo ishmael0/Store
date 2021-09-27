@@ -16,11 +16,23 @@ export interface IDataInterFace {
   providedIn: 'root'
 })
 export class HttpService extends HttpClient {
+  getProduct(productId: number)  {
+       
+  }
 
-  constructor(handler: HttpHandler, public ns: NzNotificationService, public domSanitizer: DomSanitizer ) {
+  constructor(handler: HttpHandler, public ns: NzNotificationService, public domSanitizer: DomSanitizer) {
     super(handler);
   }
   icons = icons;
+  fixUrl(str: string) {
+    return str.replace(" ", "_");
+  }
+  buildCategoryUrl(category: any) {
+    return 'category/' + category.Id + "/" + this.fixUrl(category.Title) + "/";
+  }
+  buildProductUrl(product: any) {
+    return 'product/' + product.Id + "/" + this.fixUrl(product.Title) + "/"
+  }
   findCategoryInTree(tree: any[], id: number) {
     for (var i = 0; i < tree.length; i++) {
       if (tree[i].data.Id == id) return tree[i];
@@ -28,8 +40,8 @@ export class HttpService extends HttpClient {
       if (x) return x;
     }
     return null;
-  } 
-  getParam(route: ActivatedRoute, p:string) {
+  }
+  getParam(route: ActivatedRoute, p: string) {
     return route.snapshot.paramMap.get(p)
   }
   async init() {

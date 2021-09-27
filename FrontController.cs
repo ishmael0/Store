@@ -1,6 +1,7 @@
 ﻿using Core.DB;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -23,6 +24,17 @@ namespace Store.Models
                 .Select(c => new { c.ParentCategoryId, c.Id, c.Title, c.Description, c.Icon, c.Images, c.Summary, c.Priority })
                 .ToListAsync();
             return new JsonResult(new { categories = items.OrderBy(c => c.Priority) });
+        }
+        [HttpGet]
+        public async Task<JsonResult> GetProduct([FromBody] ProductHelper helper)
+        {
+            var products = await _context.Products.Where(c => c.Status == Core.Models.Statuses.Published && helper.Categories.Contains(c.CategoryId)).ToListAsync();
+            return new JsonResult(new { categories = products.OrderBy(c => c.Create) });
+        }
+
+        public class ProductHelper
+        {
+            public List<int> Categories { set; get; }
         }
     }
 }

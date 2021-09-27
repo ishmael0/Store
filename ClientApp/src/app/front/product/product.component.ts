@@ -11,15 +11,16 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class ProductComponent implements OnInit {
   parametersObservable: any;
+  category = {};
+  product = {};
   constructor(public http: HttpService, public route: ActivatedRoute, public cdr: ChangeDetectorRef, private router: Router) {
     this.parametersObservable = this.route.params.subscribe(params => {
       let productId = +this.http.getParam(this.route, 'productId');
+      this.product = http.getProduct(productId);
       //get product
       let category = this.http.findCategoryInTree(this.http.data.categoriesTree, 1);
 
-
-
-      this.router.navigate(['product/' + productId + "/" + category.title + "/"+ "هویج/"])
+      this.router.navigate([http.fixUrl('product/' + productId + "/" + category.title + "/" + "هویج/")])
 
 
 
