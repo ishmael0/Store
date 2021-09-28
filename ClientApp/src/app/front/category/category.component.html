@@ -8,9 +8,27 @@
                          [nzSm]="6"
                          [nzMd]="12"
                          [nzLg]="8"
-                         *ngFor="let item of category.children" [data]="item.data"></app-category-card>
+                         *ngFor="let item of http.findCategoryInTree(this.category.Id).children" [data]="item.data"></app-category-card>
 
       <app-category-tree nz-col [nzXs]="24"></app-category-tree>
+
+      <div class="roundborder" style="margin-top:10px"  nz-col [nzXs]="24">
+        <nz-tree [nzExpandAll]="true"	[nzData]="category.TreeNodes" nzBlockNode [nzTreeTemplate]="nzTreeTemplate">
+          <ng-template #nzTreeTemplate let-node let-origin="origin">
+            <div >
+              <span class="custom-node" >
+                <span>
+                  <span class="file-name">{{ origin.name }}</span>
+                  <input />
+                </span>
+              </span>
+            </div>
+          </ng-template>
+        </nz-tree>
+      </div>
+
+
+
 
 
     </div>
@@ -42,22 +60,24 @@
     </div>
 
     <div nz-row *ngIf="viewType == 1">
-      <app-product-card1 *ngFor="let item of [1,2,3,4,5,6]"
-                        nz-col
-                        style="padding:5px"
-                        [nzXs]="8"
-                        [nzSm]="8"
-                        [nzMd]="8"
-                        [nzLg]="6"></app-product-card1>
+      <app-product-card1 *ngFor="let item of products"
+                         [product]="item"
+                         nz-col
+                         style="padding:5px"
+                         [nzXs]="8"
+                         [nzSm]="8"
+                         [nzMd]="8"
+                         [nzLg]="6"></app-product-card1>
     </div>
     <div nz-row *ngIf="viewType == 2">
-      <app-product-card2 *ngFor="let item of [1,2,3,4,5,6]"
-                        nz-col
-                        style="padding:5px"
-                        [nzXs]="8"
-                        [nzSm]="8"
-                        [nzMd]="8"
-                        [nzLg]="6"></app-product-card2>
+      <app-product-card2 *ngFor="let item of products"
+                         [product]="item"
+                         nz-col
+                         style="padding:5px"
+                         [nzXs]="8"
+                         [nzSm]="8"
+                         [nzMd]="8"
+                         [nzLg]="6"></app-product-card2>
     </div>
 
   </div>

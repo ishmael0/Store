@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { HttpService } from '../http.service';
+import { HttpService, ICategory } from '../http.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -14,19 +14,17 @@ export class CategoryComponent implements OnInit {
 
   constructor(public http: HttpService, public route: ActivatedRoute, public cdr: ChangeDetectorRef, private router: Router) {
     this.parametersObservable = this.route.params.subscribe(params => {
-      let categoryId = +this.http.getParam(this.route, 'categoryId');
-      this.category = this.http.findCategoryInTree(this.http.data.categoriesTree, categoryId);
-      let categoryName = this.http.getParam(this.route, 'categoryName');
-      if (!categoryName || categoryName != this.category.title) {
-        this.router.navigate(['category/' + categoryId + "/" + this.category.title])
-      }
+      this.category = this.http.getCategory(+this.http.getParam(this.route, 'categoryId'));
+      this.router.navigate([this.http.buildCategoryUrl(this.category.Id)]);
+      console.log(this.category)
     });
   }
-
-  category: any = {};
-  ngOnInit(): void {
-
+  category: ICategory;
+  async ngOnInit(): Promise<void> {
+    this.products = await this.http.getProducts(this.category.Id);
+    this.cdr.detectChanges();
   }
+  products: any[] = [];
   viewType = 2;
   params: any = { SortType: 'B' };
   ngOnDestroy() {

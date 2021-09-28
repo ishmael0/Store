@@ -1,4 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
+import { HttpService } from '../../http.service';
 
 @Component({
   selector: 'app-category-card',
@@ -9,7 +10,7 @@ import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core
 })
 export class CategoryCardComponent implements OnInit {
 
-  constructor() { }
+  constructor(public http: HttpService) { }
   @Input() data: any = {};
   ngOnInit(): void {
   }

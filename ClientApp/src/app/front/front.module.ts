@@ -63,7 +63,7 @@ const routes: Routes = [
       { path: 'category/:categoryId', component: CategoryComponent },
       { path: 'category/:categoryId/:categoryName', component: CategoryComponent },
       { path: 'product/:productId', component: ProductComponent },
-      { path: 'product/:productId/:categoryName/:productName', component: ProductComponent },
+      { path: 'product/:productId/:productName', component: ProductComponent },
       { path: 'contact', component: ContactUsComponent },
       { path: 'profile', component: ProfileComponent },
     ]

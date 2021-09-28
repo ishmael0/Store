@@ -1,4 +1,14 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy,Input, Directive } from '@angular/core';
+import { HttpService } from '../../http.service';
+
+@Directive()
+export class ProductCardBase implements OnInit {
+  @Input() product;
+  constructor(public http: HttpService) {
+  }
+  ngOnInit(): void {
+  }
+}
 
 @Component({
   selector: 'app-product-card1',
@@ -7,13 +17,11 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ProductCard1Component implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
+export class ProductCard1Component extends ProductCardBase{
+  constructor(public http: HttpService) {
+    super(http);
   }
-
+ 
 }
 @Component({
   selector: 'app-product-card2',
@@ -22,11 +30,9 @@ export class ProductCard1Component implements OnInit {
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ProductCard2Component implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
+export class ProductCard2Component extends ProductCardBase {
+  constructor(public http: HttpService) {
+    super(http);
   }
-
+  
 }

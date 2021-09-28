@@ -1,12 +1,14 @@
 <div class="roundborder">
-  <nz-tree [nzData]="http.data.categoriesTree" nzBlockNode [nzTreeTemplate]="nzTreeTemplate">
+  <nz-tree    [nzData]="http.data.categoriesTree" nzBlockNode [nzTreeTemplate]="nzTreeTemplate">
     <ng-template #nzTreeTemplate let-node let-origin="origin">
-      <span class="custom-node">
-        <span>
-          <i nz-icon [innerHtml]="origin.data.Icon" style="font-size:24px"></i>
-          <span class="file-name">{{ node.title }}</span>
+      <div [routerLink]="[http.buildCategoryUrl(origin.data.Id)]">
+        <span class="custom-node" (click)="node.isExpanded = true" >
+          <span>
+            <i nz-icon [innerHtml]="origin.data.IconSanitizer" style="font-size:24px"></i>
+            <span class="file-name">{{ node.title }}</span>
+          </span>
         </span>
-      </span>
+      </div>
     </ng-template>
   </nz-tree>
 </div>
