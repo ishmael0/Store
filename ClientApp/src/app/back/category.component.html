@@ -1,7 +1,6 @@
 
 
 <ng-template #form let-item="item">
-  -{{item.controls.Images.value}}-
   <nz-tabset [nzAnimated]="false">
     <nz-tab nzTitle="محتوای اصلی">
       <form nz-form [formGroup]="item">
@@ -9,7 +8,7 @@
           <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Id">شناسه</nz-form-label>
           <nz-tag [nzColor]="'#f50'">{{item.controls.Id.value}}</nz-tag>
           <nz-form-control [nzSm]="4" [nzXs]="24" nzErrorTip="وضعیت معتبر نیست">
-            <nz-select formControlName="Status" nzPlaceHolder="Select OS" nzShowSearch nzAllowClear [nzCustomTemplate]="statusTemplate">
+            <nz-select formControlName="Status"  nzPlaceHolder="Select OS" nzShowSearch nzAllowClear [nzCustomTemplate]="statusTemplate">
               <nz-option *ngFor="let item of cs.Statuses" [nzValue]="item.title" nzCustomContent>
                 {{item.label}}
                 <i [style.color]="item.color" nz-icon [innerHtml]="icons[item.icon]"></i>
@@ -95,15 +94,20 @@
         ایجاد
       </button>
       <nz-tree *ngIf="item.controls.TreeNodes.value" [nzData]="item.controls.TreeNodes.value" nzDraggable nzBlockNode [nzTreeTemplate]="nzTreeTemplate">
-
         <ng-template #nzTreeTemplate let-node let-origin="origin">
+          <label nz-tooltip (change)="makeItDirty(item)" nzTooltipTitle=" قابلیت جستجو بر روی این گزینه؟" nz-checkbox [(ngModel)]="origin.Searchable"></label>
+            <nz-select (change)="makeItDirty(item)" [(ngModel)]="origin.Type" style="width:200px" nzPlaceHolder=" نوع گزینه را مشخص کنید" >
+              <nz-option nzLabel="بله/خیر" nzValue="Boolean"></nz-option>
+              <nz-option nzLabel="متن" nzValue="String"></nz-option>
+              <nz-option nzLabel="عدد" nzValue="Number"></nz-option>
+            </nz-select>
+          
           <nz-tag [nzColor]="'magenta'" style="width:30px"> {{origin.key}}</nz-tag>
           <input (change)="makeItDirty(item)" [(ngModel)]="origin.name" />
           <button (click)="removeNode(item, node)" nz-button nzDanger nzType="primary">
             <i nz-icon
                [innerHtml]="icons['delete']"></i>
           </button>
-
           <button (click)="addNode(item, node)" nz-button nzType="primary">
             <i nz-icon
                [innerHtml]="icons['plus-thick']"></i>

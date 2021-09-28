@@ -181,8 +181,8 @@
       <br />
       <nz-tree *ngIf="item.controls.CategoryId.value" [nzData]="getCatNodes(item.controls.CategoryId.value)" nzBlockNode [nzTreeTemplate]="nzTreeTemplate">
         <ng-template #nzTreeTemplate let-node let-origin="origin">
-          <nz-tag [nzColor]="'magenta'" style="width:30px"> {{origin.key}}</nz-tag>
-          <nz-tag [nzColor]="'cyan'" style="width:30px"> {{origin.name}}</nz-tag>
+          <nz-tag [nzColor]="'magenta'" style="width:50px"> {{origin.key}}</nz-tag>
+          <nz-tag [nzColor]="'cyan'" style="width:200px"> {{origin.name}}</nz-tag>
           <input (change)="makeItDirty(item)" [(ngModel)]="item.controls.DetailsNodeValues.value[origin.key]" />
         </ng-template>
       </nz-tree>
