@@ -1,0 +1,58 @@
+ <!--[routerLink]="[http.buildProductUrl(product)]"-->
+<div class="shadow product-card" 
+     style=" border-radius: 5px; border-top-right-radius: 25px; border-bottom-left-radius: 25px; overflow: hidden; border: gray 1px dashed; background-color: white ">
+  <div class="flip-box">
+    <div class="flip-box-inner">
+      <div class="flip-box-front">
+        <img *ngIf="!product.Images || product.Images?.length == 0" style="width:100%" src="../../../../assets/images/bg.jpg" />
+        <img *ngIf="product.Images?.length>0" style="width:100%" [src]="'front'+product.Images[0].Path" />
+      </div>
+      <div class="flip-box-back">
+        <img *ngIf="!product.Images || product.Images?.length <= 1" style="width:100%" src="../../../../assets/images/bg.jpg" />
+        <img *ngIf="product.Images?.length>1" style="width:100%" [src]="'front'+product.Images[1].Path" />
+      </div>
+    </div>
+
+  </div>
+  <div>
+    <div class="card-button">
+      <i nz-icon [innerHtml]="http.icons.heart" class="shadow circleIcon" style=" padding: 8px; background-color: red; color: white; font-size:20px;border-radius: 50%;"></i>
+      <i nz-icon [innerHtml]="http.icons['share-all-outline']" class="shadow circleIcon" style="background-color: white; color: red;  "></i>
+      <i nz-icon [innerHtml]="http.icons['share-variant-outline']" class="shadow circleIcon" style="  color: white; "></i>
+    </div>
+
+    <div style=" padding: 5px; color: white; background-color: #e84118" class="shadow">
+      {{product.Title}}
+    </div>
+    <div style="padding: 5px; color: black;  " class="">
+      {{product.Summary}}
+    </div>
+
+
+    <div>
+      <del style="">54455</del>
+    </div>  <div>
+      <span style="margin-left:5px;color:red;font-size:18px">
+        54455
+        تومان
+      </span>
+    </div>
+    <span style="bottom: 0px; right: 10px; ">
+      <span class="dot" style="background-color: red;" nz-tooltip nzTooltipTitle=" سبز" nzTooltipPlacement="bottom"></span>
+      <span class="dot" style="background-color: blue;" nz-tooltip nzTooltipTitle=" سبز" nzTooltipPlacement="bottom"></span>
+      <span class="dot" style="background-color: white;" nz-tooltip nzTooltipTitle="سبز " nzTooltipPlacement="bottom"></span>
+      <span class="dot" style="background-color: yellow;" nz-tooltip nzTooltipTitle="سبز " nzTooltipPlacement="bottom"></span>
+    </span>
+    <span style=" bottom: 25px; right: 10px; ">
+      <span style="padding-right:5px;" nz-tooltip nzTooltipTitle=" سبز" nzTooltipPlacement="bottom">s</span>
+      <span style="padding-right:5px;" nz-tooltip nzTooltipTitle=" سبز" nzTooltipPlacement="bottom">m</span>
+      <span style="padding-right:5px;" nz-tooltip nzTooltipTitle="سبز " nzTooltipPlacement="bottom">x</span>
+      <span style="padding-right:5px;" nz-tooltip nzTooltipTitle="سبز " nzTooltipPlacement="bottom">xl</span>
+    </span>
+  </div>
+  <nz-tag style="position:absolute;top:10px;right:10px" nzColor="#f50">فروش ویژه</nz-tag>
+  <nz-tag style="position:absolute;top:40px;right:10px" nzColor="#87d068">جدید </nz-tag>
+  <nz-tag style="position:absolute;top:70px;right:10px" nzColor="#5963a1">نمیدونم </nz-tag>
+
+
+</div>

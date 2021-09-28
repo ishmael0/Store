@@ -77,17 +77,16 @@
   color: white;
   transform: rotateY(180deg);
 }
-
+$border-color: white;
 .dot {
   height: 20px;
   width: 20px;
   margin: 3px;
-  border: 1px gray solid;
+  border: 1px $border-color solid;
   display: inline-block;
   border-radius: 50%;
 }
 
-$border-color: white;
 .roundborder {
   padding: 5px;
   height: fit-content;
@@ -124,3 +123,23 @@ $border-color: white;
 
 
 
+.shadow {
+  box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+}
+.circleIcon {
+  padding: 8px;
+  margin: 2px;
+  background-color: red;
+  color: white;
+  font-size: 20px;
+  border-radius: 50%;
+}
+
+.card-button {
+  display: none;
+  position: absolute;
+  margin-top: -50px;
+}
+.product-card:hover .card-button {
+  display: block;
+}

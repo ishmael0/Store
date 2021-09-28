@@ -51,7 +51,7 @@ import { CategoryCardComponent } from './components/category-card/category-card.
 import { ProductMiniCardComponent } from './components/product-mini-card/product-mini-card.component';
 import { CategoryTreeComponent } from './components/category-tree/category-tree.component';
 import { ProductComponent } from './product/product.component';
-import { ProductCard1Component, ProductCard2Component } from './components/product-card/product-card.component';
+import { ProductCard1Component, ProductCard2Component, ProductCard3Component } from './components/product-card/product-card.component';
 
 
 
@@ -83,6 +83,7 @@ const routes: Routes = [
     ContactUsComponent,
     ProductCard1Component,
     ProductCard2Component,
+    ProductCard3Component,
     CategoryCardComponent,
     ProductMiniCardComponent,
     CategoryTreeComponent,

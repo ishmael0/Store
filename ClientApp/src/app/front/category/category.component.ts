@@ -13,19 +13,19 @@ export class CategoryComponent implements OnInit {
   parametersObservable: any;
 
   constructor(public http: HttpService, public route: ActivatedRoute, public cdr: ChangeDetectorRef, private router: Router) {
-    this.parametersObservable = this.route.params.subscribe(params => {
+    this.parametersObservable = this.route.params.subscribe(async params => {
       this.category = this.http.getCategory(+this.http.getParam(this.route, 'categoryId'));
-      this.router.navigate([this.http.buildCategoryUrl(this.category.Id)]);
-      console.log(this.category)
+      if (await this.router.navigate([this.http.buildCategoryUrl(this.category.Id)]) !== false) {
+        this.products = await this.http.getProducts(this.category.Id);
+        this.cdr.detectChanges();
+      }
     });
   }
   category: ICategory;
   async ngOnInit(): Promise<void> {
-    this.products = await this.http.getProducts(this.category.Id);
-    this.cdr.detectChanges();
   }
   products: any[] = [];
-  viewType = 2;
+  viewType = 3;
   params: any = { SortType: 'B' };
   ngOnDestroy() {
     if (this.parametersObservable != null) {

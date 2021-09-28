@@ -1,5 +1,6 @@
 <div nz-row>
   <div nz-col
+       style="padding:5px"
        [nzXs]="24"
        [nzMd]="8">
     <div nz-row nzJustify="center">
@@ -12,11 +13,11 @@
 
       <app-category-tree nz-col [nzXs]="24"></app-category-tree>
 
-      <div class="roundborder" style="margin-top:10px"  nz-col [nzXs]="24">
-        <nz-tree [nzExpandAll]="true"	[nzData]="category.TreeNodes" nzBlockNode [nzTreeTemplate]="nzTreeTemplate">
+      <div class="roundborderr shadow" style="margin-top:10px" nz-col [nzXs]="24">
+        <nz-tree [nzExpandAll]="true" [nzData]="category.TreeNodes" nzBlockNode [nzTreeTemplate]="nzTreeTemplate">
           <ng-template #nzTreeTemplate let-node let-origin="origin">
-            <div >
-              <span class="custom-node" >
+            <div>
+              <span class="custom-node">
                 <span>
                   <span class="file-name">{{ origin.name }}</span>
                   <input />
@@ -27,6 +28,51 @@
         </nz-tree>
       </div>
 
+
+
+      <div  nz-col [nzXs]="24" class="roundborderr shadow" style="margin-top: 10px">
+        <div class="customCard">
+          <div class="customerCardHeader">
+            <i nz-icon [innerHtml]="http.icons.basket" style=" color: #FE251B;  "></i>
+            <span>
+سبد خرید
+            </span>
+          </div>
+        </div>
+        <div class="customerCardBody">
+          <app-product-card2 *ngFor="let item of [{},{},{}]"
+                             [product]="{}"
+                             nz-col
+                             style="padding:5px"
+                             [nzXs]="12"
+                            
+                             
+                             ></app-product-card2>
+        </div>
+      </div>
+
+
+
+      <div  nz-col [nzXs]="24" class="roundborderr shadow" style="margin-top: 10px">
+        <div class="customCard">
+          <div class="customerCardHeader">
+            <i nz-icon [innerHtml]="http.icons.heart" style=" color: #FE251B;  "></i>
+            <span>
+              علاقه مندی های من
+            </span>
+          </div>
+        </div>
+        <div class="customerCardBody">
+          <app-product-card2 *ngFor="let item of [{},{},{}]"
+                             [product]="{}"
+                             nz-col
+                             style="padding:5px"
+                             [nzXs]="12"
+                            
+                             
+                             ></app-product-card2>
+        </div>
+      </div>
 
 
 
@@ -52,6 +98,7 @@
       <div style="float:left">
         <i nz-icon style="font-size:24px" (click)="viewType = 1" [innerHtml]="http.icons['view-list']"></i>
         <i nz-icon style="font-size:24px" (click)="viewType = 2" [innerHtml]="http.icons['view-module']"></i>
+        <i nz-icon style="font-size:24px" (click)="viewType = 3" [innerHtml]="http.icons['view-module']"></i>
       </div>
 
 
@@ -74,11 +121,20 @@
                          [product]="item"
                          nz-col
                          style="padding:5px"
+                         [nzXs]="24"
+                         [nzSm]="12"
+                         [nzMd]="12"
+                         [nzLg]="8"></app-product-card2>
+    </div>
+    <div nz-row *ngIf="viewType == 3">
+      <app-product-card3 *ngFor="let item of products"
+                         [product]="item"
+                         nz-col
+                         style="padding:5px"
                          [nzXs]="8"
                          [nzSm]="8"
                          [nzMd]="8"
-                         [nzLg]="6"></app-product-card2>
+                         [nzLg]="6"></app-product-card3>
     </div>
-
   </div>
 </div>

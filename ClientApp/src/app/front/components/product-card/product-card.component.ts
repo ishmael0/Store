@@ -36,3 +36,16 @@ export class ProductCard2Component extends ProductCardBase {
   }
   
 }
+@Component({
+  selector: 'app-product-card3',
+  templateUrl: './product-card3.component.html',
+  styles: [
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class ProductCard3Component extends ProductCardBase {
+  constructor(public http: HttpService) {
+    super(http);
+  }
+  
+}

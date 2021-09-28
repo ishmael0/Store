@@ -1,4 +1,4 @@
-<div class="roundborder">
+<div class="roundborder shadow">
   <nz-tree    [nzData]="http.data.categoriesTree" nzBlockNode [nzTreeTemplate]="nzTreeTemplate">
     <ng-template #nzTreeTemplate let-node let-origin="origin">
       <div [routerLink]="[http.buildCategoryUrl(origin.data.Id)]">

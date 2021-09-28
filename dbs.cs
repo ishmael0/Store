@@ -109,6 +109,7 @@ namespace Store.Models
         public string Icon { set; get; }
         public int DetailsNodeValuesMaxId { set; get; }
         public int Priority { set; get; } = 0;
+        public string Color { set; get; }
 
     }
     public class ProductController : BaseController<StoreDB, Product>
