@@ -233,6 +233,8 @@ namespace Store.Models
     {
         public string name { get; set; }
         public int key { get; set; }
+        public bool Searchable { get; set; }
+        public string Type { get; set; }
         public List<TreeNode> children { get; set; }
     }
     public class Invoice : BaseModelWithTitle
