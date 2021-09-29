@@ -36,6 +36,7 @@ export const config: WebSiteConfiguration = new WebSiteConfiguration('StoreDB', 
         new PropertyConfiguration('Images', 'تصاویر  ', { value:[], Validators: [], InTable: true }),
         new PropertyConfiguration('TreeNodes', 'جزیات محصولات در این دسته بندی  ', { Validators: [], InTable: true }),
         new PropertyConfiguration('DetailsNodeValuesMaxId', 'DetailsNodeValuesMaxId  ', { value: 0, Validators: [], InTable: false }),
+        new PropertyConfiguration('Color', 'مقدار', { Type: 'color', Validators: [Validators.required], InTable: false }),
       ]
     }),
     new EntityConfiguration(ProductComponent, 'Product', "محصولات", {

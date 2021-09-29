@@ -21,7 +21,7 @@ namespace Store.Models
         public async Task<JsonResult> GetInitial()
         {
             var items = await _context.Categories.Where(c => c.Status == Core.Models.Statuses.Published)
-                .Select(c => new { c.ParentCategoryId, c.Id, c.Title, c.Description, c.Icon, c.Images, c.Summary, c.Priority,c.TreeNodes })
+                .Select(c => new { c.ParentCategoryId, c.Id,c.Color, c.Title, c.Description, c.Icon, c.Images, c.Summary, c.Priority,c.TreeNodes })
                 .ToListAsync();
             return new JsonResult(new { categories = items.OrderBy(c => c.Priority) });
         }

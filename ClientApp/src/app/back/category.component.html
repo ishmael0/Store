@@ -47,7 +47,10 @@
           <nz-form-control [nzSm]="6" [nzXs]="24" nzErrorTip="اولویت را وارد کنید">
             <input nz-input formControlName="Priority" />
           </nz-form-control>
-
+          <nz-form-label [nzSm]="2" [nzXs]="24" nzFor="Title">مقدار</nz-form-label>
+          <nz-form-control [nzSm]="6" [nzXs]="24" nzErrorTip="مقدار را وارد کنید">
+            <input type="color" nz-input formControlName="Color" />
+          </nz-form-control>
         </nz-form-item>
 
         <nz-form-item>
@@ -98,7 +101,8 @@
           <label nz-tooltip (change)="makeItDirty(item)" nzTooltipTitle=" قابلیت جستجو بر روی این گزینه؟" nz-checkbox [(ngModel)]="origin.Searchable"></label>
             <nz-select (change)="makeItDirty(item)" [(ngModel)]="origin.Type" style="width:200px" nzPlaceHolder=" نوع گزینه را مشخص کنید" >
               <nz-option nzLabel="بله/خیر" nzValue="Boolean"></nz-option>
-              <nz-option nzLabel="متن" nzValue="String"></nz-option>
+              <nz-option nzLabel="متن ساده" nzValue="String"></nz-option>
+              <nz-option nzLabel="قابلیت انتخاب" nzValue="Select"></nz-option>
               <nz-option nzLabel="عدد" nzValue="Number"></nz-option>
             </nz-select>
           

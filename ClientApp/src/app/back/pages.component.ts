@@ -21,7 +21,7 @@ export class InvoiceComponent extends BaseComponent {
   }
   provinces: any[];
   Cities: any[];
-   fill() {
+  fill() {
     this.provinces = this.dataManager.loadedData["Provinces"];
     this.Cities = this.dataManager.loadedData["Cities"];
   }
@@ -140,14 +140,22 @@ export class CategoryComponent extends BaseComponent {
       item.controls.TreeNodes.setValue([{ key: max, Name: '' }]);
     }
     else {
-      item.controls.TreeNodes.setValue([...item.controls.TreeNodes.value, { key: max, Name: '' } ]);
+      item.controls.TreeNodes.setValue([...item.controls.TreeNodes.value, { key: max, Name: '' }]);
     }
 
 
     this.makeItDirty(item);
   }
   removeNode(item: FormGroup, e: NzTreeNode) {
-    e.remove();
+    console.log(e, item.controls.TreeNodes.value);
+    if (e.level == 0) {
+      let x = item.controls.TreeNodes.value;
+      item.controls.TreeNodes.setValue(x.filter(c => c != e.origin))
+    }
+    else {
+      let parent = e.parentNode;
+      e.remove();
+    }
     this.makeItDirty(item);
   }
 
@@ -157,10 +165,9 @@ export class CategoryComponent extends BaseComponent {
     }
     let max = item.controls.DetailsNodeValuesMaxId.value + 1;
     item.controls.DetailsNodeValuesMaxId.setValue(max);
-    e.addChildren([{ key: max, Name: '' }]);
+    e.addChildren([{ key: max, Name: '', isLeaf: true }]);
     e.isExpanded = true;
     e.setExpanded(true);
-
     this.makeItDirty(item);
   }
 }
@@ -216,7 +223,7 @@ export class ProductComponent extends BaseComponent {
       n = { ...e, ...{ Id: id } };
     }
     item.controls.MaxTypeId.setValue(id);
-    item.controls.Types.setValue([...x,n]);
+    item.controls.Types.setValue([...x, n]);
     this.makeItDirty(item);
   }
   delType(item: FormGroup, t: any) {
@@ -255,8 +262,8 @@ export class ProductComponent extends BaseComponent {
 }
 
 
- 
- 
+
+
 @Component({
   selector: 'app-customer',
   templateUrl: './customer.component.html',
