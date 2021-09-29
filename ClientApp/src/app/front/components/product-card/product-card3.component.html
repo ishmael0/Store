@@ -1,5 +1,5 @@
  <!--[routerLink]="[http.buildProductUrl(product)]"-->
-<div class="shadow product-card" 
+<div class="shadow product-card"
      style=" border-radius: 5px; border-top-right-radius: 25px; border-bottom-left-radius: 25px; overflow: hidden; border: gray 1px dashed; background-color: white ">
   <div class="flip-box">
     <div class="flip-box-inner">
@@ -21,7 +21,8 @@
       <i nz-icon [innerHtml]="http.icons['share-variant-outline']" class="shadow circleIcon" style="  color: white; "></i>
     </div>
 
-    <div style=" padding: 5px; color: white; background-color: #e84118" class="shadow">
+    <div style=" padding: 5px; color: white; " class="shadow"
+         [ngStyle]="{'background-color':http.getCategory( product.CategoryId).Color}">
       {{product.Title}}
     </div>
     <div style="padding: 5px; color: black;  " class="">

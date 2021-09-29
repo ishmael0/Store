@@ -1,0 +1,17 @@
+<div class="roundborderr shadow" style="margin-top: 10px">
+  <div class="customCard">
+    <div class="customerCardHeader">
+      <i nz-icon [innerHtml]="http.icons.heart" style=" color: #FE251B;  "></i>
+      <span>
+        علاقه مندی های من
+      </span>
+    </div>
+  </div>
+  <div class="customerCardBody">
+    <app-product-card2 *ngFor="let item of [ ]"
+                       [product]="{}"
+                       nz-col
+                       style="padding:5px"
+                       [nzXs]="12"></app-product-card2>
+  </div>
+</div>

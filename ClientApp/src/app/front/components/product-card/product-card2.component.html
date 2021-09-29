@@ -41,7 +41,8 @@
       <span style="padding-right:5px;" nz-tooltip nzTooltipTitle="سبز " nzTooltipPlacement="bottom">xl</span>
     </span>-->
 
-      <div style=" padding: 5px; color: white; background-color: #e84118;width:100%; bottom: 0px;position:absolute" class="shadow">
+      <div style=" padding: 5px; color: white ;width:100%; bottom: 0px;position:absolute" class="shadow"
+           [ngStyle]="{'background-color':http.getCategory( product.CategoryId).Color}">
         {{product.Title}}
       </div>
 

@@ -1,4 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { HttpService } from '../../http.service';
 
 @Component({
   selector: 'app-basket',
@@ -9,7 +10,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 })
 export class BasketComponent implements OnInit {
 
-  constructor() { }
+  constructor(public http: HttpService) { }
 
   ngOnInit(): void {
   }

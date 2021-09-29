@@ -7,7 +7,6 @@ import { CommonModule } from "@angular/common";
 import { LayoutComponent } from './layout/layout.component';
 import { HomeComponent } from './home/home.component';
 import { CategoryComponent } from './category/category.component';
- import { BasketComponent } from './basket/basket.component';
 import { InvoiceComponent } from './invoice/invoice.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
@@ -52,6 +51,7 @@ import { ProductMiniCardComponent } from './components/product-mini-card/product
 import { CategoryTreeComponent } from './components/category-tree/category-tree.component';
 import { ProductComponent } from './product/product.component';
 import { ProductCard1Component, ProductCard2Component, ProductCard3Component } from './components/product-card/product-card.component';
+import { FavoriteComponent } from './components/favorite/favorite.component';
 
 
 
@@ -77,7 +77,6 @@ const routes: Routes = [
     HomeComponent,
     CategoryComponent,
     ProductComponent,
-    BasketComponent,
     InvoiceComponent,
     ProfileComponent,
     ContactUsComponent,
@@ -87,6 +86,7 @@ const routes: Routes = [
     CategoryCardComponent,
     ProductMiniCardComponent,
     CategoryTreeComponent,
+    FavoriteComponent,
   ],
   imports: [
     FormsModule,

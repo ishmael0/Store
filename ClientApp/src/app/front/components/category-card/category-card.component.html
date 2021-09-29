@@ -1,5 +1,7 @@
-<div [routerLink]="[ http.buildCategoryUrl(data.Id) ]"  class="roundborderr" style="width:100%; background-color: cadetblue;  position: relative; padding: 0px; overflow: hidden; border: white 1px dashed;">
-  <span style=" position: absolute; bottom: 20px; font-size: large; padding-right: 10px; color: white; background-color: #80808061; width: 100%; right: 0; ">
+<div [routerLink]="[ http.buildCategoryUrl(data.Id) ]"
+     class="roundborderr" style="width:100%; background-color: cadetblue;  position: relative; padding: 0px; overflow: hidden; border: white 1px dashed;">
+  <span style=" position: absolute; bottom: 20px; font-size: large; padding-right: 10px; color: white; width: 100%; right: 0; "
+        [ngStyle]="{'background-color': data.Color }">
     {{data.Title}}
   </span>
   <img *ngIf="!data.Images || data.Images?.length == 0"  style="width:100%" src="../../../../assets/images/bg.jpg"/>
