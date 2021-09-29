@@ -44,7 +44,6 @@ export class HttpService extends HttpClient {
     return '/category/' + category.Id + "/" + this.fixUrl(category.Title) + "/";
   }
   getCategory(id: number) {
-    console.log("getCategory", null);
     return this.data.categories.find(c => c.Id == id) ?? null;
   }
   findCategoryInTree(id: number, tree: any[] = null) {
@@ -111,10 +110,9 @@ export class HttpService extends HttpClient {
     this.data.categories = x.categories;
     this.data.categories.forEach(c => {
       c.IconSanitizer = this.domSanitizer.bypassSecurityTrustHtml(c.Icon);
-      c.Searchs = c.TreeNodes?.filter(d => d.Searchable == true).map(d => ({Type :d.Type, key:d.key,name:name }))
+      c.Searchs = c.TreeNodes?.filter(d => d.Searchable == true).map(d => ({Type :d.Type, key:d.key,name:d.name }))
     });
     this.data.categoriesTree = toTreeHelper(x.categories, 'Id', 'ParentCategoryId', null);
-    console.log("GetInitial", this);
   }
   data: Partial<IDataInterFace> = {
     isInitilized: false, products: {}

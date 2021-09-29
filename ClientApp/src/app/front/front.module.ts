@@ -3,6 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser'
 import { CommonModule } from "@angular/common";
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+
 
 import { LayoutComponent } from './layout/layout.component';
 import { HomeComponent } from './home/home.component';
@@ -10,8 +13,16 @@ import { CategoryComponent } from './category/category.component';
 import { InvoiceComponent } from './invoice/invoice.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
+import { CategoryCardComponent } from './components/category-card/category-card.component';
+import { ProductMiniCardComponent } from './components/product-mini-card/product-mini-card.component';
+import { CategoryTreeComponent } from './components/category-tree/category-tree.component';
+import { ProductComponent } from './product/product.component';
+import { ProductCard1Component, ProductCard2Component, ProductCard3Component } from './components/product-card/product-card.component';
+import { FavoriteComponent } from './components/favorite/favorite.component';
+import { BasketComponent } from './components/basket/basket.component';
 
 //
+import { NzSliderModule } from 'ng-zorro-antd/slider';
 import { NzListModule } from 'ng-zorro-antd/list';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
@@ -46,12 +57,7 @@ import { NzCascaderModule } from 'ng-zorro-antd/cascader';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzCarouselModule } from 'ng-zorro-antd/carousel';
 import { CarouselModule } from 'ngx-owl-carousel-o';
-import { CategoryCardComponent } from './components/category-card/category-card.component';
-import { ProductMiniCardComponent } from './components/product-mini-card/product-mini-card.component';
-import { CategoryTreeComponent } from './components/category-tree/category-tree.component';
-import { ProductComponent } from './product/product.component';
-import { ProductCard1Component, ProductCard2Component, ProductCard3Component } from './components/product-card/product-card.component';
-import { FavoriteComponent } from './components/favorite/favorite.component';
+
 
 
 
@@ -84,6 +90,7 @@ const routes: Routes = [
     ProductCard2Component,
     ProductCard3Component,
     CategoryCardComponent,
+    BasketComponent,
     ProductMiniCardComponent,
     CategoryTreeComponent,
     FavoriteComponent,
@@ -126,7 +133,10 @@ const routes: Routes = [
     NzCheckboxModule,
     NzCollapseModule,
     NzFormModule,
-    CarouselModule
+    CarouselModule,
+    NzSliderModule,
+    DragDropModule,
+    ScrollingModule
   ]
 })
 export class FromModule {
