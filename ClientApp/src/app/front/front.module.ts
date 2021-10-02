@@ -17,7 +17,7 @@ import { CategoryCardComponent } from './components/category-card/category-card.
 import { ProductMiniCardComponent } from './components/product-mini-card/product-mini-card.component';
 import { CategoryTreeComponent } from './components/category-tree/category-tree.component';
 import { ProductComponent } from './product/product.component';
-import { ProductCard1Component, ProductCard2Component, ProductCard3Component } from './components/product-card/product-card.component';
+import { ProductCard1Component, ProductCard2Component, ProductCard3Component,ProductCard4Component } from './components/product-card/product-card.component';
 import { FavoriteComponent } from './components/favorite/favorite.component';
 import { BasketComponent } from './components/basket/basket.component';
 
@@ -57,6 +57,7 @@ import { NzCascaderModule } from 'ng-zorro-antd/cascader';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzCarouselModule } from 'ng-zorro-antd/carousel';
 import { CarouselModule } from 'ngx-owl-carousel-o';
+import { StepperModule } from '../../../../../Santel/Core/ClientApp/projects/stepper/src/public-api';
 
 
 
@@ -89,11 +90,13 @@ const routes: Routes = [
     ProductCard1Component,
     ProductCard2Component,
     ProductCard3Component,
+    ProductCard4Component,
     CategoryCardComponent,
     BasketComponent,
     ProductMiniCardComponent,
     CategoryTreeComponent,
     FavoriteComponent,
+
   ],
   imports: [
     FormsModule,
@@ -136,7 +139,9 @@ const routes: Routes = [
     CarouselModule,
     NzSliderModule,
     DragDropModule,
-    ScrollingModule
+    ScrollingModule,
+    StepperModule
+
   ]
 })
 export class FromModule {
