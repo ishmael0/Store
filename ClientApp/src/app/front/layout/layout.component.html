@@ -19,27 +19,27 @@
     <li nz-menu-item>
       jijikala
     </li>
-    <li nz-menu-item nzSelected [routerLink]="['/home']" >
+    <li nz-menu-item nzSelected [routerLink]="['/home']">
       <i nz-icon [innerHtml]="http.icons.home"></i>
       صفحه اصلی
     </li>
 
 
-    <li nz-menu-item  nzSelected [routerLink]="['/contact']" >
+    <li nz-menu-item nzSelected [routerLink]="['/contact']">
       <i nz-icon [innerHtml]="http.icons['phone-in-talk-outline']"></i>
       تماس با ما
     </li>
 
 
-    <li nz-menu-item style="float:left"  nzSelected [routerLink]="['/profile']" >
+    <li nz-menu-item style="float:left" nzSelected [routerLink]="['/profile']">
       <i nz-icon [innerHtml]="http.icons.profile"></i>
       اطلاعات کاربری
     </li>
 
 
 
-    <li nz-menu-item style="float:left"  nzSelected [routerLink]="['/basket']" >
-      <i nz-icon [innerHtml]="http.icons['basket-fill']" style="color:green;font-size:24px" ></i>
+    <li nz-menu-item style="float:left" nzSelected [routerLink]="['/basket']">
+      <i nz-icon [innerHtml]="http.icons['basket-fill']" style="color:green;font-size:24px"></i>
       سبد خرید
     </li>
   </ul>
@@ -50,25 +50,25 @@
       دسته بندی های کالا:
     </li>
     <ng-container *ngFor="let item of http.data.categoriesTree">
-      <li nz-menu-item *ngIf="!item.children || item.children.length==0" [routerLink]="[http.buildCategoryUrl(item.data.Id)]" >
+      <li nz-menu-item *ngIf="!item.children || item.children.length==0" [routerLink]="[http.buildCategoryUrl(item.data.Id)]">
         <i nz-icon [innerHtml]="item.data.IconSanitizer" style="font-size:24px"></i>
         {{item.title}}
       </li>
 
-      <li nz-submenu [nzTitle]="cm" *ngIf="item.children && item.children.length>0" >
+      <li nz-submenu [nzTitle]="cm" *ngIf="item.children && item.children.length>0">
         <ng-template #cm>
           <i nz-icon [innerHtml]="item.data.IconSanitizer" style="font-size:24px"></i>
           {{item.title}}
         </ng-template>
         <ul>
-          <li nz-menu-item *ngFor="let item2 of item.children" [routerLink]="[http.buildCategoryUrl(item2.data.Id)]" >
+          <li nz-menu-item *ngFor="let item2 of item.children" [routerLink]="[http.buildCategoryUrl(item2.data.Id)]">
             <!--<ng-container *ngTemplateOutlet="mysubmenu;context:{item: item2}"></ng-container>-->
             <i nz-icon [innerHtml]="item2.data.IconSanitizer" style="font-size:24px"></i>
             {{item2.title}}
           </li>
-          <li nz-menu-item   [routerLink]="[http.buildCategoryUrl(item.data.Id)]" >
+          <li nz-menu-item [routerLink]="[http.buildCategoryUrl(item.data.Id)]">
             <i nz-icon [innerHtml]="item.data.IconSanitizer" style="font-size:24px"></i>
-            همه ی 
+            همه ی
             {{item.title}}
           </li>
         </ul>
@@ -83,10 +83,45 @@
   </ul>
 
   <br />
-  
+
 
   <router-outlet></router-outlet>
+  <br />
+  <div nz-row style="width: 100%; background-color: #1890ff;padding:15px">
+    <div nz-col [nzXs]="12" [nzMd]="6">
+      <h2>  پشتیبانی</h2>
+      <h3>تامین کنندگان</h3>
+      <h3>تامین کنندگان</h3>
+      <h3>تامین کنندگان</h3>
+      <h3>تامین کنندگان</h3>
+      <h3>تامین کنندگان</h3>
+    </div>
+    <div nz-col [nzXs]="12" [nzMd]="6">
+      <h2>بخش های سایت</h2>
+      <h3>تامین کنندگان</h3>
+      <h3>تامین کنندگان</h3>
+      <h3>تامین کنندگان</h3>
+      <h3>تامین کنندگان</h3>
+      <h3>تامین کنندگان</h3>
+    </div>
 
+    <div nz-col [nzXs]="12" [nzMd]="6">
+      <h2>خدمات مشتریان  </h2>
+      <h3>تامین کنندگان</h3>
+      <h3>تامین کنندگان</h3>
+      <h3>تامین کنندگان</h3>
+      <h3>تامین کنندگان</h3>
+      <h3>تامین کنندگان</h3>
+    </div>
+    <div nz-col [nzXs]="12" [nzMd]="6">
+      <h2> شبکه های مجازی  </h2>
+      <h3>تامین کنندگان</h3>
+      <h3>تامین کنندگان</h3>
+      <h3>تامین کنندگان</h3>
+      <h3>تامین کنندگان</h3>
+      <h3>تامین کنندگان</h3>
+    </div>
+  </div>
 </div>
 
 

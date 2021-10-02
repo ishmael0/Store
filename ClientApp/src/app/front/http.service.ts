@@ -44,6 +44,7 @@ export class HttpService extends HttpClient {
     return '/category/' + category.Id + "/" + this.fixUrl(category.Title) + "/";
   }
   getCategory(id: number) {
+    console.log(id, this.data.categories.find(c => c.Id == id))
     return this.data.categories.find(c => c.Id == id) ?? null;
   }
   findCategoryInTree(id: number, tree: any[] = null) {

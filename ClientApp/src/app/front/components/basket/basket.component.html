@@ -3,15 +3,15 @@
     <div class="customerCardHeader ">
       <i nz-icon [innerHtml]="http.icons['basket-fill']" style=" color: #00B74A; "></i>
       <span>
-        سبد خرید 
-      </span>  
+        سبد خرید
+      </span>
     </div>
   </div>
-  <div class="customerCardBody">
-    <app-product-card2 *ngFor="let item of [ ]"
-                       [product]="{}"
+  <div class="customerCardBody" nz-row>
+    <app-product-card4 *ngFor="let item of [{CategoryId:1, Color:'#gth45d',Title:'asdadsasd',g:1},{CategoryId:1, Color:'#gth45d',Title:'asdadsasd',g:1} ]"
+                       [product]="item"
                        nz-col
                        style="padding:5px"
-                       [nzXs]="12"></app-product-card2> 
+                       [nzXs]="24"></app-product-card4>
   </div>
 </div>
