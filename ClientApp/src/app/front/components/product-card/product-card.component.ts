@@ -48,4 +48,16 @@ export class ProductCard3Component extends ProductCardBase {
     super(http);
   }
   
+}@Component({
+  selector: 'app-product-card4',
+  templateUrl: './product-card4.component.html',
+  styles: [
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class ProductCard4Component extends ProductCardBase {
+  constructor(public http: HttpService) {
+    super(http);
+  }
+  
 }
