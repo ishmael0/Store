@@ -37,7 +37,6 @@ namespace Store.Models
             var product = await _context.Products.FirstOrDefaultAsync(c => c.Id == helper.Id && c.Status == Core.Models.Statuses.Published);
             return new JsonResult(new { product });
         }
-
         public class ProductHelper
         {
             public List<int> Categories { set; get; }

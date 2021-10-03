@@ -1,1 +1,28 @@
-{{product.Title}}
+<div nz-row>
+  <div nz-col
+       style="padding:5px"
+       [nzXs]="24"
+       [nzMd]="6">
+    <div nz-row nzJustify="center">
+      <app-category-card nz-col
+                         [nzXs]="8"
+                         [nzSm]="6"
+                         [nzMd]="12"
+                         [nzLg]="8"
+                         [data]="category"></app-category-card>
+
+      <app-category-tree nz-col [nzXs]="24"></app-category-tree>
+      <app-favorite nz-col [nzXs]="24"></app-favorite>
+      <app-basket nz-col [nzXs]="24"></app-basket>
+    </div>
+  </div>
+  <div nz-col
+       [nzXs]="24"
+       [nzMd]="18">
+    <div class="roundborderr" style="margin-right: 5px; margin-left: 5px; ">
+
+      asdasd
+
+    </div>
+  </div>
+</div>

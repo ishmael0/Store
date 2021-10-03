@@ -44,6 +44,7 @@ namespace Store.Models
     {
         public DbSet<Category> Categories { set; get; }
         public DbSet<Size> Sizes { set; get; }
+        public DbSet<Brand> Brands { set; get; }
         public DbSet<Color> Colors { set; get; }
         public DbSet<Product> Products { set; get; }
         public DbSet<Keyword> Keywords { set; get; }
@@ -72,6 +73,8 @@ namespace Store.Models
             modelBuilder.Entity<Invoice>().Property(e => e.Address).HasConversion(v => JsonConvert.SerializeObject(v), v => JsonConvert.DeserializeObject<Address>(v));
             modelBuilder.Entity<Invoice>().Property(e => e.ProductTypes).HasConversion(v => JsonConvert.SerializeObject(v), v => JsonConvert.DeserializeObject<List<ProductTypeForInvoice>>(v));
             modelBuilder.Entity<OrderedList>().Property(e => e.Products).HasConversion(v => JsonConvert.SerializeObject(v.Select(c => c.Id)), v => JsonConvert.DeserializeObject<List<int>>(v).Select(c => new ProductIdTitleHelper() { Id = c }));
+            modelBuilder.Entity<Brand>().Property(e => e.Images).HasConversion(v => JsonConvert.SerializeObject(v), v => JsonConvert.DeserializeObject<List<Images>>(v));
+
 
 
             //modelBuilder.Entity<ProductCategory>().HasKey(t => new { t.CategoryId, t.ProductId });
@@ -83,7 +86,7 @@ namespace Store.Models
     public class Color : BaseModelWithTitle
     {
         public string Value { set; get; }
-    }
+    } 
     public class Keyword : BaseModelWithTitle
     {
     }
@@ -111,6 +114,13 @@ namespace Store.Models
         public int Priority { set; get; } = 0;
         public string Color { set; get; }
 
+    }
+    [SafeToGetAll]
+    public class Brand : BaseModelWithTitle
+    {
+        public List<Images> Images { set; get; }
+        public string Description { set; get; }
+        public string Summary { set; get; }
     }
     public class ProductController : BaseController<StoreDB, Product>
     {

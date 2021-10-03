@@ -2,7 +2,7 @@
 
 <div class="product-card shadow" style="border-radius: 5px; border-top-right-radius: 25px; border-bottom-left-radius: 25px; overflow: hidden; border: gray 1px dashed; background-color: white ">
   <div style="display:flex;">
-    <div class="flip-box" style="width:20%">
+    <div class="flip-box" style="width:30%">
       <div class="flip-box-inner">
         <div class="flip-box-front">
           <img *ngIf="!product.Images || product.Images?.length == 0" style="width:100%" src="../../../../assets/images/bg.jpg" />
@@ -15,21 +15,28 @@
       </div>
 
     </div>
-    <div style="width:80%;position:relative">
-      <span>
-        product.Summary  {{product.Summary}}
-      </span>
-      <span>
-        <del style="">54455</del>
-        {{product.g}}
-      </span>
-      <lib-Stepper [min]="1" [(ngModel)]="product.g"></lib-Stepper>
+    <div style="width:70%;position:relative">
       <div>
-        <span style="margin-left:5px;color:red;font-size:18px">
+        product.Summary  {{product.Summary}}
+        <lib-Stepper style="float:left;padding:2px" [min]="1" [(ngModel)]="product.g"></lib-Stepper>
+
+
+      </div>
+
+
+      <div>
+        <span>
+          <del style="">54455</del>
+        </span>
+        <span style=" color:red;font-size:18px">
           54455
           تومان
         </span>
+
       </div>
+
+
+
       <!--<span style="bottom: 0px; right: 10px; ">
     <span class="dot" style="background-color: red;" nz-tooltip nzTooltipTitle=" سبز" nzTooltipPlacement="bottom"></span>
     <span class="dot" style="background-color: blue;" nz-tooltip nzTooltipTitle=" سبز" nzTooltipPlacement="bottom"></span>

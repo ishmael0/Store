@@ -290,3 +290,26 @@ export class OrderedListComponent extends BaseComponent {
   }
   relatedModal = false;
 }
+@Component({
+  selector: 'app-brand',
+  templateUrl: './brand.component.html',
+  styles: [
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class BrandComponent extends BaseComponent {
+  constructor(public injector: Injector) {
+    super(injector, 'Brand');
+  }
+  imageModal = false;
+  dropImage(event: any, item: FormGroup): void {
+    let x = item.controls.Images.value;
+    moveItemInArray(x, event.previousIndex, event.currentIndex);
+  }
+  async addImage(e) {
+    this.imageModal = false;
+    let x: any[] = this.selectedForm().controls.Images.value;
+    x.push({ Path: e, Description: '' });
+    this.makeItDirty(this.selectedForm());
+  }
+}

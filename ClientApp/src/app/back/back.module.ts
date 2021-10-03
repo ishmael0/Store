@@ -4,14 +4,12 @@ import { RouterModule, Routes } from '@angular/router';
 import { ComponentTypes, EntityConfiguration, PropertyConfiguration, WebSiteConfiguration } from '../../../../../Santel/Core/ClientApp/src/app/services/utils';
 import { AuthService } from '../../../../../Santel/Core/ClientApp/src/app/services/auth.service';
 import { WebSiteService } from '../../../../../Santel/Core/ClientApp/src/app/services/website.service';
-import { CategoryComponent, CityComponent, ColorComponent, CustomerComponent, InvoiceComponent, KeywordComponent, OrderedListComponent, ProductComponent, ProvinceComponent, SizeComponent } from './pages.component';
+import { BrandComponent, CategoryComponent, CityComponent, ColorComponent, CustomerComponent, InvoiceComponent, KeywordComponent, OrderedListComponent, ProductComponent, ProvinceComponent, SizeComponent } from './pages.component';
 import { defaultPropertyConfiguration, defaultPropertyWithTitleConfiguration, filesEntity, logEntity } from '../../../../../Santel/Core/ClientApp/src/app/services/properties';
 import { Validators } from '@angular/forms';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { FileManagerComponent } from '../../../../../Santel/Core/ClientApp/src/app/template/components/file-manager/file-manager.component';
 import { IconsComponent } from '../../../../../Santel/Core/ClientApp/src/app/template/components/icons/icons.component';
-//import { FileManagerComponent } from '../../../../Santel/Core/ClientApp/src/app/template/components/file-manager/file-manager.component';
-//import { IconsComponent } from '../../../../Santel/Core/ClientApp/src/app/template/components/icons/icons.component';
 import { FormGroup } from '@angular/forms';
 
 
@@ -33,21 +31,33 @@ export const config: WebSiteConfiguration = new WebSiteConfiguration('StoreDB', 
         new PropertyConfiguration('Priority', 'اولویت ', { Type: 'number', Validators: [], InTable: false }),
         new PropertyConfiguration('Summary', 'خلاصه ', { Validators: [], InTable: true }),
         new PropertyConfiguration('Description', 'شرح  ', { Validators: [], InTable: true }),
-        new PropertyConfiguration('Images', 'تصاویر  ', { value:[], Validators: [], InTable: true }),
+        new PropertyConfiguration('Images', 'تصاویر  ', { value: [], Validators: [], InTable: true }),
         new PropertyConfiguration('TreeNodes', 'جزیات محصولات در این دسته بندی  ', { Validators: [], InTable: true }),
         new PropertyConfiguration('DetailsNodeValuesMaxId', 'DetailsNodeValuesMaxId  ', { value: 0, Validators: [], InTable: false }),
         new PropertyConfiguration('Color', 'مقدار', { Type: 'color', Validators: [Validators.required], InTable: false }),
       ]
     }),
+    new EntityConfiguration(BrandComponent, 'Brand', " برند", {
+      componentType: ComponentTypes.lazytable,
+      icon: 'shape',
+      useDefaultIDStatusForm: false,
+      propertiesConfigurations: [
+        ...defaultPropertyWithTitleConfiguration,
+        new PropertyConfiguration('Summary', 'خلاصه ', { Validators: [], InTable: true }),
+        new PropertyConfiguration('Description', 'شرح  ', { Validators: [], InTable: false }),
+        new PropertyConfiguration('Images', 'تصاویر  ', { value: [], Validators: [], InTable: true }),
+      ]
+    }),
+
     new EntityConfiguration(ProductComponent, 'Product', "محصولات", {
-      neededData: { Categories: "Category", Colors: "Color", Sizes: "Size" },
+      neededData: { Categories: "Category", Brands: "Brand", Colors: "Color", Sizes: "Size" },
       componentType: ComponentTypes.lazytable,
       icon: 'archive-check-outline',
       useDefaultIDStatusForm: false,
       propertiesConfigurations: [
         ...defaultPropertyWithTitleConfiguration,
         new PropertyConfiguration('CategoryId', 'دسته بندی', { Type: 'custom', value: null, Validators: [Validators.required], InTable: true, InPicker: true }),
-        new PropertyConfiguration('SupplyCount', 'تعداد موجودی ', { value:0, Type: 'number', Validators: [], InTable: true, InPicker: true }),
+        new PropertyConfiguration('SupplyCount', 'تعداد موجودی ', { value: 0, Type: 'number', Validators: [], InTable: true, InPicker: true }),
         new PropertyConfiguration('Images', 'تصاویر  ', { value: [], Validators: [], InTable: true }),
         new PropertyConfiguration('Summary', 'خلاصه ', { Type: 'string', Validators: [], InTable: false }),
         new PropertyConfiguration('Description', 'شرح  ', { Type: 'string', Validators: [], InTable: false }),
@@ -90,7 +100,6 @@ export const config: WebSiteConfiguration = new WebSiteConfiguration('StoreDB', 
         ...defaultPropertyWithTitleConfiguration
       ]
     }),
-
     new EntityConfiguration(CityComponent, 'City', "شهرستان ", {
       neededData: { Provinces: "Province" },
       componentType: ComponentTypes.table,
@@ -100,7 +109,6 @@ export const config: WebSiteConfiguration = new WebSiteConfiguration('StoreDB', 
         new PropertyConfiguration('ProvinceId', 'استان ', { Type: 'custom', Validators: [Validators.required], InTable: true }),
       ]
     }),
-
     new EntityConfiguration(InvoiceComponent, 'Invoice', "فاکتور ", {
       componentType: ComponentTypes.lazytable,
       getTitle: (item: FormGroup) => {
@@ -140,13 +148,12 @@ export const config: WebSiteConfiguration = new WebSiteConfiguration('StoreDB', 
         new PropertyConfiguration('Addresses', '', { Type: 'custom', Validators: [], InTable: false }),
       ]
     }),
-
     new EntityConfiguration(OrderedListComponent, 'OrderedList', "چیدمان ", {
       componentType: ComponentTypes.table,
       icon: 'order-alphabetical-ascending',
       propertiesConfigurations: [
         ...defaultPropertyWithTitleConfiguration,
-        new PropertyConfiguration('Products', 'محصولات', { value:[], Type: 'custom', Validators: [], InTable: true }),
+        new PropertyConfiguration('Products', 'محصولات', { value: [], Type: 'custom', Validators: [], InTable: true }),
         new PropertyConfiguration('Color', 'رنگ', { Type: 'color', Validators: [], InTable: false }),
       ]
     }),
@@ -164,7 +171,8 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     CategoryComponent, ProductComponent, SizeComponent, KeywordComponent, CityComponent,
-    ProvinceComponent, InvoiceComponent, ColorComponent, CustomerComponent, OrderedListComponent
+    ProvinceComponent, InvoiceComponent, ColorComponent, CustomerComponent, OrderedListComponent,
+    BrandComponent
   ],
   imports: [
     TemplateModule, CKEditorModule,

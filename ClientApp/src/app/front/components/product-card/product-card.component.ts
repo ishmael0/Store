@@ -50,7 +50,7 @@ export class ProductCard3Component extends ProductCardBase {
   
 }@Component({
   selector: 'app-product-card4',
-  templateUrl: './product-card4.component.html',
+  templateUrl: './product-card-basket.component.html',
   styles: [
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
