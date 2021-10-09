@@ -30,6 +30,17 @@
   <ItemGroup>
     <Folder Include="ClientApp\src\app\front\" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Update="ClientApp\angular.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+    <Content Update="ClientApp\tsconfig.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+    <Content Update="ClientApp\tslint.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 </Project>
 
 <!--

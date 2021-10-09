@@ -34,7 +34,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist",
+            "outputPath": "../bin/release/net5.0/ClientApp",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -63,7 +63,7 @@
                 "bundleName": "dark",
                 "inject": false
               }
-  
+
             ],
             "stylePreprocessorOptions": {
               "includePaths": [ "../../Santel/Core/ClientApp/src/styles/themes" ]
