@@ -13,14 +13,14 @@ const routes: Routes = [
   },
   //{ path: '', redirectTo: 'shopify', pathMatch: 'full' },
   {
-    path: 'myaccstore', loadChildren: () => import('../../../../Santel/Core/ClientApp/src/app/account-manager/account-manager.module').then(m => m.AccountManagerModule),
+    path: 'MonizaAcc'.toLowerCase(), loadChildren: () => import('../../../../Santel/Core/ClientApp/src/app/account-manager/account-manager.module').then(m => m.AccountManagerModule),
     data: {
-      key: 'myAccstore', label: 'مدیریت کاربران', isAcc: true
+      key: 'MonizaAcc', label: 'مدیریت کاربران', isAcc: true
     }
   },
   {
-    path: 'storedb', loadChildren: () => import('./back/back.module').then(m => m.BackModule), 
-    data: { key: 'StoreDB', label: ' مدیریت وب سایت' }
+    path: 'MonizaDB'.toLowerCase(), loadChildren: () => import('./back/back.module').then(m => m.BackModule),
+    data: { key: 'MonizaDB', label: ' مدیریت وب سایت' }
   },
 
   { path: 'webselector', component: WebSelectorComponent },
@@ -42,7 +42,7 @@ export class AppModule {
     wss.appConfig = {
       description: '',
       fullName: '',
-      logInDesc: 'فروشگاه اینترنتی ...'
+      logInDesc: 'فروشگاه اینترنتی مونیزا'
     }
   }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Store.MyAccStoreMigration
+namespace Store.MonizaAccMigration
 {
     public partial class _1 : Migration
     {
@@ -36,6 +36,7 @@ namespace Store.MyAccStoreMigration
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     MelliCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PinCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -57,6 +58,23 @@ namespace Store.MyAccStoreMigration
                 });
 
             migrationBuilder.CreateTable(
+                name: "DBBAckUps",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Path = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    Create = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DBBAckUps", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "LogEntities",
                 columns: table => new
                 {
@@ -68,6 +86,7 @@ namespace Store.MyAccStoreMigration
                     EntityId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserIP = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Value = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     EntityState = table.Column<int>(type: "int", nullable: false)
                 },
@@ -306,6 +325,9 @@ namespace Store.MyAccStoreMigration
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "DBBAckUps");
 
             migrationBuilder.DropTable(
                 name: "LogEntities");

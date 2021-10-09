@@ -14,9 +14,9 @@ using System.Threading.Tasks;
 
 namespace Store.Models
 {
-    public class MyAccStore : BaseAccountDBContext<BaseApplicationUser, BaseApplicationRole>
+    public class MonizaAcc : BaseAccountDBContext<BaseApplicationUser, BaseApplicationRole>
     {
-        public MyAccStore(DbContextOptions<MyAccStore> options) : base(options)
+        public MonizaAcc(DbContextOptions<MonizaAcc> options) : base(options)
         {
         }
         protected override void OnModelCreating(ModelBuilder builder)
@@ -24,23 +24,23 @@ namespace Store.Models
             base.OnModelCreating(builder);
         }
     }
-    public class MyAccStoreContextFactory : IDesignTimeDbContextFactory<MyAccStore>
+    public class MyAccStoreContextFactory : IDesignTimeDbContextFactory<MonizaAcc>
     {
-        public MyAccStore CreateDbContext(string[] args)
+        public MonizaAcc CreateDbContext(string[] args)
         {
-            var o = AppSetting.GetDbContextOptionsBuilder<MyAccStore>("Store");
-            return new MyAccStore(o.Options);
+            var o = AppSetting.GetDbContextOptionsBuilder<MonizaAcc>("Store");
+            return new MonizaAcc(o.Options);
         }
     }
-    public class StoreContextFactory : IDesignTimeDbContextFactory<StoreDB>
+    public class StoreContextFactory : IDesignTimeDbContextFactory<MonizaDB>
     {
-        public StoreDB CreateDbContext(string[] args)
+        public MonizaDB CreateDbContext(string[] args)
         {
-            var o = AppSetting.GetDbContextOptionsBuilder<StoreDB>("Store");
-            return new StoreDB(o.Options);
+            var o = AppSetting.GetDbContextOptionsBuilder<MonizaDB>("Store");
+            return new MonizaDB(o.Options);
         }
     }
-    public class StoreDB : BaseWebSiteDBContext
+    public class MonizaDB : BaseWebSiteDBContext
     {
         public DbSet<Category> Categories { set; get; }
         public DbSet<Size> Sizes { set; get; }
@@ -53,7 +53,7 @@ namespace Store.Models
         public DbSet<Customer> Customers { set; get; }
         public DbSet<Invoice> Invoices { set; get; }
         public DbSet<OrderedList> OrderedLists { set; get; }
-        public StoreDB(DbContextOptions<StoreDB> options) : base(options)
+        public MonizaDB(DbContextOptions<MonizaDB> options) : base(options)
         {
 
         }
@@ -122,9 +122,9 @@ namespace Store.Models
         public string Description { set; get; }
         public string Summary { set; get; }
     }
-    public class ProductController : BaseController<StoreDB, Product>
+    public class ProductController : BaseController<MonizaDB, Product>
     {
-        public ProductController(StoreDB dbContext, UserPermissionManager upm) : base(dbContext, upm)
+        public ProductController(MonizaDB dbContext, UserPermissionManager upm) : base(dbContext, upm)
         {
         }
         [NonAction]

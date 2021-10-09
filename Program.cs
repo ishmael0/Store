@@ -21,7 +21,7 @@ namespace Store
         public static IHostBuilder CreateHostBuilder(string[] args) => Host.CreateDefaultBuilder(args).ConfigureWebHostDefaults(webBuilder =>
         {
             //seed();
-            webBuilder.UseStartup<BaseStartup<MyAccStore, BaseApplicationUser, BaseApplicationRole>>();
+            webBuilder.UseStartup<BaseStartup<MonizaAcc, BaseApplicationUser, BaseApplicationRole>>();
         });
     }
 }

@@ -10,9 +10,9 @@ namespace Store
     {
         public static void seed()
         {
-            BaseStartup<MyAccStore, BaseApplicationUser, BaseApplicationRole>.seeds.Add(async (_serviceProvider) =>
+            BaseStartup<MonizaAcc, BaseApplicationUser, BaseApplicationRole>.seeds.Add(async (_serviceProvider) =>
             {
-                var _context = _serviceProvider.GetService<StoreDB>();
+                var _context = _serviceProvider.GetService<MonizaDB>();
                 _context.Add(new Province() { Title = "آذربایجان شرقی" });
                 _context.Add(new Province() { Title = "آذربایجان غربی" });
                 _context.Add(new Province() { Title = "اردبیل" });

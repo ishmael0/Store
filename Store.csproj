@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
@@ -44,9 +44,9 @@
 </Project>
 
 <!--
-add-migration -context MyAccStore -verbose -o MyAccStoreMigration
-update-database -context MyAccStore  -verbose
+add-migration -context MonizaAcc  -verbose -o MonizaAccMigration
+update-database -context MonizaAcc  -verbose
 
-add-migration -context StoreDB -verbose -o StoreDBMigration
-update-database -context StoreDB  -verbose
+add-migration -context MonizaDB -verbose -o MonizaDBMigration
+update-database -context MonizaDB  -verbose
 -->

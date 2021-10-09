@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Store.Models;
 
-namespace Store.StoreDBMigration
+namespace Store.MonizaDBMigration
 {
-    [DbContext(typeof(StoreDB))]
-    [Migration("20211003054621__8")]
-    partial class _8
+    [DbContext(typeof(MonizaDB))]
+    [Migration("20211009183415__1")]
+    partial class _1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -79,6 +79,9 @@ namespace Store.StoreDBMigration
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Value")

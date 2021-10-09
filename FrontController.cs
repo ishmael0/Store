@@ -10,8 +10,8 @@ namespace Store.Models
     [Route("api/[controller]/[action]")]
     public class FrontController : Controller
     {
-        public StoreDB _context { get; }
-        public FrontController(StoreDB dB)
+        public MonizaDB _context { get; }
+        public FrontController(MonizaDB dB)
         {
             this._context = dB;
         }
