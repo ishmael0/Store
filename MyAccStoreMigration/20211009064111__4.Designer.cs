@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Store.Models;
 
 namespace Store.MyAccStoreMigration
 {
     [DbContext(typeof(MyAccStore))]
-    partial class MyAccStoreModelSnapshot : ModelSnapshot
+    [Migration("20211009064111__4")]
+    partial class _4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -155,10 +157,10 @@ namespace Store.MyAccStoreMigration
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserName")
+                    b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Value")
+                    b.Property<string>("userName")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
