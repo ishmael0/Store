@@ -25,11 +25,13 @@ namespace Store.Models
         [HttpGet]
         public async Task<JsonResult> Init()
         {
-            var Categories = _context.Categories.Where(c => c.Status == Statuses.Published).ToListAsync();
-            var Products = _context.Products.Where(c => c.Status == Statuses.Published).ToListAsync();
-            var Customers = _context.Customers.Where(c => c.Status == Statuses.Published).ToListAsync();
-            await Task.WhenAll(Categories);
-            return JR(StatusCodes.Status200OK, "", new { Categories = Categories.Result, Products= Products.Result, Customers= Customers.Result });
+            var Categories =await _context.Categories.Where(c => c.Status == Statuses.Published).CountAsync();
+            var Products = await _context.Products.Where(c => c.Status == Statuses.Published).CountAsync();
+            var Customers = await _context.Customers.Where(c => c.Status == Statuses.Published).CountAsync();
+            var Brands = await _context.Brands.Where(c => c.Status == Statuses.Published).CountAsync();
+            //await Task.WhenAll(Categories, Products, Customers);
+            //return JR(StatusCodes.Status200OK, "", new { Categories = Categories.Result, Products= Products.Result, Customers= Customers.Result });
+            return JR(StatusCodes.Status200OK, "", new { Categories, Products, Customers, Brands });
         }
     }
     public class MonizaAcc : BaseAccountDBContext<BaseApplicationUser, BaseApplicationRole>

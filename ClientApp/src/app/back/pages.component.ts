@@ -1,10 +1,11 @@
-import { Component, OnInit, ChangeDetectionStrategy, Injector } from '@angular/core';
-import { toTreeHelper } from '../../../../../Santel/Core/ClientApp/src/app/services/utils';
+import { Component, OnInit, ChangeDetectionStrategy, Injector, ChangeDetectorRef } from '@angular/core';
+import { HTTPTypes, RequestPlus, toTreeHelper } from '../../../../../Santel/Core/ClientApp/src/app/services/utils';
 import { BaseComponent } from '../../../../../Santel/Core/ClientApp/src/app/template/base/base.component';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { FormGroup } from '@angular/forms';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { NzTreeNode } from 'ng-zorro-antd/tree';
+import { HttpRequestService } from '../../../../../Santel/Core/ClientApp/src/app/services/http-request.service';
 
 
 
@@ -319,10 +320,40 @@ export class BrandComponent extends BaseComponent {
   selector: 'app-welcome',
   templateUrl: './welcome.component.html',
   styles: [
+    `   .nz-badge-card {
+        width: 150px;
+        color:black;
+        height: 50px;
+        border-radius: 4px;
+        background: #eee;
+        padding:10px;
+        padding-top: 20px;
+        vertical-align: middle;
+      }
+.mainwelcome{
+}
+.mainwelcome nz-badge{
+margin:10px;
+}
+`
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class WelcomeComponent   {
-  constructor(public injector: Injector) {
-   }
+export class WelcomeComponent implements OnInit {
+  constructor(public http: HttpRequestService, public cdr: ChangeDetectorRef) {
+  }
+  async ngOnInit() {
+    await this.http.AddAndTry(new RequestPlus(HTTPTypes.GET, 'welcome', {
+      action: 'Init', onSuccess: (m, d) => {
+        this.res.Categories = d.Categories + 1;
+        this.res.Customers = d.Customers;
+        this.res.Products = d.Products;
+        this.res.Brands = d.Brands;
+      }
+    }));
+    this.cdr.detectChanges();
+  }
+  res: any = {};
+
+
 }
