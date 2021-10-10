@@ -14,6 +14,24 @@ using System.Threading.Tasks;
 
 namespace Store.Models
 {
+    [Route("api/[controller]/[action]")]
+    public class WelcomeController : BaseBaseController
+    {
+        public WelcomeController(MonizaDB db)
+        {
+            _context = db;
+        }
+        public MonizaDB _context { get; }
+        [HttpGet]
+        public async Task<JsonResult> Init()
+        {
+            var Categories = _context.Categories.Where(c => c.Status == Statuses.Published).ToListAsync();
+            var Products = _context.Products.Where(c => c.Status == Statuses.Published).ToListAsync();
+            var Customers = _context.Customers.Where(c => c.Status == Statuses.Published).ToListAsync();
+            await Task.WhenAll(Categories);
+            return JR(StatusCodes.Status200OK, "", new { Categories = Categories.Result, Products= Products.Result, Customers= Customers.Result });
+        }
+    }
     public class MonizaAcc : BaseAccountDBContext<BaseApplicationUser, BaseApplicationRole>
     {
         public MonizaAcc(DbContextOptions<MonizaAcc> options) : base(options)
@@ -86,7 +104,7 @@ namespace Store.Models
     public class Color : BaseModelWithTitle
     {
         public string Value { set; get; }
-    } 
+    }
     public class Keyword : BaseModelWithTitle
     {
     }

@@ -313,3 +313,16 @@ export class BrandComponent extends BaseComponent {
     this.makeItDirty(this.selectedForm());
   }
 }
+
+
+@Component({
+  selector: 'app-welcome',
+  templateUrl: './welcome.component.html',
+  styles: [
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class WelcomeComponent   {
+  constructor(public injector: Injector) {
+   }
+}

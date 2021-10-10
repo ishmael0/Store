@@ -4,19 +4,23 @@ import { RouterModule, Routes } from '@angular/router';
 import { ComponentTypes, EntityConfiguration, PropertyConfiguration, WebSiteConfiguration } from '../../../../../Santel/Core/ClientApp/src/app/services/utils';
 import { AuthService } from '../../../../../Santel/Core/ClientApp/src/app/services/auth.service';
 import { WebSiteService } from '../../../../../Santel/Core/ClientApp/src/app/services/website.service';
-import { BrandComponent, CategoryComponent, CityComponent, ColorComponent, CustomerComponent, InvoiceComponent, KeywordComponent, OrderedListComponent, ProductComponent, ProvinceComponent, SizeComponent } from './pages.component';
-import { defaultPropertyConfiguration, defaultPropertyWithTitleConfiguration, filesEntity, logEntity } from '../../../../../Santel/Core/ClientApp/src/app/services/properties';
+import { BrandComponent, CategoryComponent, CityComponent, ColorComponent, CustomerComponent, InvoiceComponent, KeywordComponent, OrderedListComponent, ProductComponent, ProvinceComponent, SizeComponent, WelcomeComponent } from './pages.component';
+import { defaultPropertyConfiguration, defaultPropertyWithTitleConfiguration, filesEntity, logEntity, socialMediaEntity, toDoEntity } from '../../../../../Santel/Core/ClientApp/src/app/services/properties';
 import { Validators } from '@angular/forms';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { FileManagerComponent } from '../../../../../Santel/Core/ClientApp/src/app/template/components/file-manager/file-manager.component';
 import { IconsComponent } from '../../../../../Santel/Core/ClientApp/src/app/template/components/icons/icons.component';
 import { FormGroup } from '@angular/forms';
+ 
 
 
 
-
-export const config: WebSiteConfiguration = new WebSiteConfiguration('StoreDB', 'مدیریت وب سایت ', ' ',
+export const config: WebSiteConfiguration = new WebSiteConfiguration('MonizaDB', 'مدیریت وب سایت ', ' ',
   [
+    new EntityConfiguration(WelcomeComponent, 'Welcome', "خوش آمدید", {
+      icon: 'monitor',
+      useDefaultIDStatusForm: false,
+    }),
     new EntityConfiguration(CategoryComponent, 'Category', "دسته بندی", {
       componentType: ComponentTypes.tree,
       icon: 'shape',
@@ -48,7 +52,6 @@ export const config: WebSiteConfiguration = new WebSiteConfiguration('StoreDB', 
         new PropertyConfiguration('Images', 'تصاویر  ', { value: [], Validators: [], InTable: true }),
       ]
     }),
-
     new EntityConfiguration(ProductComponent, 'Product', "محصولات", {
       neededData: { Categories: "Category", Brands: "Brand", Colors: "Color", Sizes: "Size" },
       componentType: ComponentTypes.lazytable,
@@ -159,6 +162,8 @@ export const config: WebSiteConfiguration = new WebSiteConfiguration('StoreDB', 
     }),
     logEntity,
     filesEntity,
+    socialMediaEntity,
+    toDoEntity,
     new EntityConfiguration(FileManagerComponent, 'FileManager', 'FileManager', { icon: 'folder' }),
     new EntityConfiguration(IconsComponent, 'Icons', 'Icons', { icon: 'format-list-checkbox' })
   ]
@@ -172,11 +177,11 @@ const routes: Routes = [
   declarations: [
     CategoryComponent, ProductComponent, SizeComponent, KeywordComponent, CityComponent,
     ProvinceComponent, InvoiceComponent, ColorComponent, CustomerComponent, OrderedListComponent,
-    BrandComponent
+    BrandComponent, WelcomeComponent
   ],
   imports: [
     TemplateModule, CKEditorModule,
-    RouterModule.forChild(buildPath(routes, true))
+    RouterModule.forChild(buildPath(routes))
   ]
 })
 export class BackModule {
