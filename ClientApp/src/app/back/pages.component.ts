@@ -208,7 +208,7 @@ export class ProductComponent extends BaseComponent {
   addType(item: FormGroup, e: any = null) {
     let x = item.controls.Types.value;
     let n: any = {};
-    let id = Number(item.controls.MaxTypeId.value) + 1;
+    let id = 0;
     if (e == null) {
       n = {
         Id: id,
@@ -218,12 +218,12 @@ export class ProductComponent extends BaseComponent {
         Amount: 0,
         Sells: 0,
         MaxAllowedBuy: 0,
+        Status:'Active'
       };
     }
     else {
       n = { ...e, ...{ Id: id } };
     }
-    item.controls.MaxTypeId.setValue(id);
     item.controls.Types.setValue([...x, n]);
     this.makeItDirty(item);
   }
@@ -345,7 +345,7 @@ export class WelcomeComponent implements OnInit {
   async ngOnInit() {
     await this.http.AddAndTry(new RequestPlus(HTTPTypes.GET, 'welcome', {
       action: 'Init', onSuccess: (m, d) => {
-        this.res.Categories = d.Categories + 1;
+        this.res.Categories = d.Categories;
         this.res.Customers = d.Customers;
         this.res.Products = d.Products;
         this.res.Brands = d.Brands;

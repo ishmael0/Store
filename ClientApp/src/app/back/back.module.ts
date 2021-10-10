@@ -69,8 +69,7 @@ export const config: WebSiteConfiguration = new WebSiteConfiguration('MonizaDB',
         new PropertyConfiguration('Types', 'انواع  ', { Type: 'custom', value: [], Validators: [], InTable: false }),
         new PropertyConfiguration('DetailsNodeValues', 'ویژگی ها', { Type: 'custom', value: {}, Validators: [], InTable: false }),
         new PropertyConfiguration('KeyWords', ' کلید واژه ها', { Type: 'custom', value: [], Validators: [], InTable: false }),
-        new PropertyConfiguration('MaxTypeId', 'MaxTypeId', { Type: 'custom', value: 0, Validators: [], InTable: false }),
-        new PropertyConfiguration('Weight', '   وزن', { Type: 'number', value: 0, Validators: [], InTable: false }),
+         new PropertyConfiguration('Weight', '   وزن', { Type: 'number', value: 0, Validators: [], InTable: false }),
       ]
     }),
     new EntityConfiguration(ColorComponent, 'Color', "رنگ", {

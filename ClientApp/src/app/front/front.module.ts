@@ -58,6 +58,7 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzCarouselModule } from 'ng-zorro-antd/carousel';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { StepperModule } from '../../../../../Santel/Core/ClientApp/projects/stepper/src/public-api';
+import { BrandComponent } from './brand/brand.component';
 
 
 
@@ -96,6 +97,7 @@ const routes: Routes = [
     ProductMiniCardComponent,
     CategoryTreeComponent,
     FavoriteComponent,
+    BrandComponent,
 
   ],
   imports: [

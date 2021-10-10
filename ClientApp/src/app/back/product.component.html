@@ -82,7 +82,6 @@
             <th width="5%">     تعداد فروش  </th>
             <th width="10%">      توضیحات  </th>
             <th width="5%">      سایر مشخصات  </th>
-            <th width="5%">   امکانات   </th>
           </tr>
           <!--<tr>
             <th>رنگ</th>
@@ -96,10 +95,14 @@
           <tr *ngFor="let t of typesTable.data" cdkDrag>
             <td>
               <nz-tag [nzColor]="'cyan'" style="width:30px"> {{t.Id}}</nz-tag>
+              <nz-select (ngModelChange)="makeItDirty(item)"  [(ngModel)]="t.Status" nzPlaceHolder="وضعیت" nzShowSearch>
+                <nz-option *ngFor="let item of cs.Statuses" [nzValue]="item.title" [nzLabel]="item.label">
+                </nz-option>
+              </nz-select>
             </td>
             <td>
               <input nz-input [(ngModel)]="t.Title" placeholder="عنوان" />
-
+              <button nz-button nz-col nzType="dashed" (click)="addType(item,t)">ایجاد کپی</button>
             </td>
             <td>
               <nz-input-number (ngModelChange)="makeItDirty(item)" placeholder="قیمت" [(ngModel)]="t.Price" [nzMin]="0" [nzMax]="100" [nzStep]="1"></nz-input-number>
@@ -142,11 +145,13 @@
                   <i [style.background-color]="selected.nzValue" style="padding-left:23px;margin-left:5px">      </i>{{ selected.nzLabel }}
                 </ng-template>
               </nz-select>
+
+  
+
+
+
             </td>
-            <td>
-              <button nz-button nz-col nzType="dashed" nzDanger (click)="delType(item,t)">حذف</button>
-              <button nz-button nz-col nzType="dashed" (click)="addType(item,t)">ایجاد کپی</button>
-            </td>
+  
           </tr>
         </tbody>
       </nz-table>
