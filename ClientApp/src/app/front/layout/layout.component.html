@@ -49,31 +49,55 @@
       <i nz-icon [innerHtml]="http.icons.home"></i>
       دسته بندی های کالا:
     </li>
+    <!--<ng-container  *ngFor="let item of http.data.categoriesTree">
+
+      <ng-container *ngTemplateOutlet="mysubmenu;context:{item: item}"></ng-container>
+    </ng-container>-->
+
     <ng-container *ngFor="let item of http.data.categoriesTree">
-      <li nz-menu-item *ngIf="!item.children || item.children.length==0" [routerLink]="[http.buildCategoryUrl(item.data.Id)]">
+    <li nz-menu-item *ngIf="!item.children || item.children.length==0" [routerLink]="[http.buildCategoryUrl(item.data.Id)]">
+      <i nz-icon [innerHtml]="item.data.IconSanitizer" style="font-size:24px"></i>
+      {{item.title}}
+    </li>
+
+    <li nz-submenu [nzTitle]="cm" *ngIf="item.children && item.children.length>0">
+      <ng-template #cm>
         <i nz-icon [innerHtml]="item.data.IconSanitizer" style="font-size:24px"></i>
         {{item.title}}
-      </li>
+      </ng-template>
+      <ul>
+        <ng-container *ngFor="let item2 of item.children">
 
-      <li nz-submenu [nzTitle]="cm" *ngIf="item.children && item.children.length>0">
-        <ng-template #cm>
-          <i nz-icon [innerHtml]="item.data.IconSanitizer" style="font-size:24px"></i>
-          {{item.title}}
-        </ng-template>
-        <ul>
-          <li nz-menu-item *ngFor="let item2 of item.children" [routerLink]="[http.buildCategoryUrl(item2.data.Id)]">
-            <!--<ng-container *ngTemplateOutlet="mysubmenu;context:{item: item2}"></ng-container>-->
+          <li *ngIf="!item2.children || item2.children.length==0" nz-menu-item [routerLink]="[http.buildCategoryUrl(item2.data.Id)]">
+
             <i nz-icon [innerHtml]="item2.data.IconSanitizer" style="font-size:24px"></i>
             {{item2.title}}
           </li>
+          <li *ngIf="item2.children && item2.children.length>0" nz-submenu [nzTitle]="cm2" >
+            <ng-template #cm2>
+              <i nz-icon [innerHtml]="item2.data.IconSanitizer" style="font-size:24px"></i>
+              {{item2.title}}
+            </ng-template>
+            <ul>
+              <li *ngFor="let item3 of item2.children" nz-menu-item>
+                {{item3.title}}
+              </li>
+            </ul>
+          </li>
+
+
+
           <li nz-menu-item [routerLink]="[http.buildCategoryUrl(item.data.Id)]">
             <i nz-icon [innerHtml]="item.data.IconSanitizer" style="font-size:24px"></i>
             همه ی
             {{item.title}}
           </li>
-        </ul>
-      </li>
-    </ng-container>
+        </ng-container>
+  
+       
+      </ul>
+    </li>
+  </ng-container>
 
     <li nz-menu-item style="float:left;width:300px">
       <input nz-input placeholder="جستجو" style="width:100%" />
@@ -123,7 +147,19 @@
     </div>
   </div>
 </div>
+<ng-template #mysubmenu let-item="item">
 
+  <li nz-menu-item *ngIf="!item.children || item.children.length==0" [routerLink]="[http.buildCategoryUrl(item.data.Id)]">
+    <i nz-icon [innerHtml]="item.data.IconSanitizer" style="font-size:24px"></i>
+    {{item.title}}
+  </li>
+  <li nz-submenu [nzTitle]="cm" *ngIf="item.children && item.children.length>0">
+    <ng-template #cm>
+      <i nz-icon [innerHtml]="item.data.IconSanitizer" style="font-size:24px"></i>
+      {{item.title}}
+    </ng-template>
+  </li>
+</ng-template>
 
 <!--<br />
 <div nz-row>

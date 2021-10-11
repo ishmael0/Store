@@ -214,15 +214,13 @@ export class ProductComponent extends BaseComponent {
   }
   async onGet(m: string, d: any) {
     super.onGet(m, d);
-    let ProductLabel:any[] = this.dataManager.loadedData.ProductLabels;
-    this.dataManager.ViewRecords.forEach(c => {
+     this.dataManager.ViewRecords.forEach(c => {
       let mycat = this.categories.find(d => d.Id == c.CategoryId);
       c.Category_ = mycat.Title;
       if (!c.DetailsNodeValues) c.DetailsNodeValues = {};
       c.DetailsNodeValuesLength = Object.keys(c.DetailsNodeValues).length;
 
-      c.Labels.forEach(d => d.Title = ProductLabel.find(e => e.Id == d.Id)?.Title);
-
+ 
     })
   }
   addType(item: FormGroup, e: any = null) {
