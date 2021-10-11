@@ -12,6 +12,8 @@ namespace Store.Models
     }
     public class Keyword : BaseModelWithTitle
     {
+        public ICollection<Product> Products { set; get; }
+        public IEnumerable<ProductKeyword> ProductKeyWords { set; get; }
     }
     [SafeToGetAll]
     public class Size : BaseModelWithTitle
@@ -70,9 +72,15 @@ namespace Store.Models
         public List<Images> Images { set; get; }
         public Dictionary<int, string> DetailsNodeValues { set; get; }
         public IEnumerable<ProductIdTitleHelper> Relateds { set; get; }
-        public IEnumerable<ProductIdTitleHelper> KeyWords { set; get; }
+
+
+
+
+        public ICollection<Keyword> KeyWords { set; get; }
+        public IEnumerable<ProductKeyword> ProductKeyWords { set; get; }
+
         public ICollection<Label> Labels { set; get; }
-        public List<ProductLabel> ProductLabels { get; set; }
+        public IEnumerable<ProductLabel> ProductLabels { get; set; }
 
     }
     public class ProductType : BaseModel
@@ -104,6 +112,17 @@ namespace Store.Models
         public int LabelId { get; set; }
         [ForeignKey("LabelId")]
         public Label Label { get; set; }
+    }   
+    
+    public class ProductKeyword
+    {
+        public int ProductId { get; set; }
+        [ForeignKey("ProductId")]
+        public Product Product { get; set; }
+
+        public int KeywordId { get; set; }
+        [ForeignKey("KeywordId")]
+        public Keyword Keyword { get; set; }
     }
 
 

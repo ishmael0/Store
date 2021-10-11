@@ -31,14 +31,14 @@ export const config: WebSiteConfiguration = new WebSiteConfiguration('MonizaDB',
         new PropertyConfiguration('ParentCategoryId', '  دسته بندی    ', {
           Validators: []
         }),
-        new PropertyConfiguration('Icon', 'خلاصه ', { Validators: [], InTable: true }),
+        new PropertyConfiguration('Icon', 'آیکون ', { value:'', Validators: [], InTable: true }),
         new PropertyConfiguration('Priority', 'اولویت ', { value:0, Type: 'number', Validators: [], InTable: false }),
         new PropertyConfiguration('Summary', 'خلاصه ', { Validators: [], InTable: true }),
         new PropertyConfiguration('Description', 'شرح  ', { Validators: [], InTable: true }),
         new PropertyConfiguration('Images', 'تصاویر  ', { value: [], Validators: [], InTable: true }),
         new PropertyConfiguration('TreeNodes', 'جزیات محصولات در این دسته بندی  ', { Validators: [], InTable: true }),
         new PropertyConfiguration('DetailsNodeValuesMaxId', 'DetailsNodeValuesMaxId  ', { value: 0, Validators: [], InTable: false }),
-        new PropertyConfiguration('Color', 'مقدار', { Type: 'color', Validators: [Validators.required], InTable: false }),
+        new PropertyConfiguration('Color', 'مقدار', { value:'#000000', Type: 'color', Validators: [Validators.required], InTable: false }),
       ]
     }),
     new EntityConfiguration(BrandComponent, 'Brand', " برند", {
@@ -53,7 +53,7 @@ export const config: WebSiteConfiguration = new WebSiteConfiguration('MonizaDB',
       ]
     }),
     new EntityConfiguration(ProductComponent, 'Product', "محصولات", {
-      neededData: { Categories: "Category", Brands: "Brand", Colors: "Color", Sizes: "Size", ProductLabels: "ProductLabel" },
+      neededData: { Categories: "Category", Brands: "Brand", Colors: "Color", Sizes: "Size", Labels: "Label" },
       componentType: ComponentTypes.lazytable,
       icon: 'archive-check-outline',
       useDefaultIDStatusForm: false,
