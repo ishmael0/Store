@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Store.MonizaDBMigration
 {
-    public partial class c : Migration
+    public partial class _1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -125,6 +125,22 @@ namespace Store.MonizaDBMigration
                 });
 
             migrationBuilder.CreateTable(
+                name: "Labels",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Color = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    Create = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Labels", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "LogEntities",
                 columns: table => new
                 {
@@ -238,12 +254,9 @@ namespace Store.MonizaDBMigration
                     SupplyCount = table.Column<int>(type: "int", nullable: false),
                     SoldCount = table.Column<int>(type: "int", nullable: false),
                     PurchasesCount = table.Column<int>(type: "int", nullable: false),
-                    MaxTypeId = table.Column<int>(type: "int", nullable: false),
                     Weight = table.Column<int>(type: "int", nullable: false),
                     Summary = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Labels = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Types = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Images = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DetailsNodeValues = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Relateds = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -313,6 +326,60 @@ namespace Store.MonizaDBMigration
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "ProductLabel",
+                columns: table => new
+                {
+                    ProductId = table.Column<int>(type: "int", nullable: false),
+                    LabelId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductLabel", x => new { x.ProductId, x.LabelId });
+                    table.ForeignKey(
+                        name: "FK_ProductLabel_Labels_LabelId",
+                        column: x => x.LabelId,
+                        principalTable: "Labels",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ProductLabel_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProductTypes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Color = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Decription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Price = table.Column<int>(type: "int", nullable: false),
+                    Off = table.Column<int>(type: "int", nullable: false),
+                    TotalPriceAfterOff = table.Column<int>(type: "int", nullable: false),
+                    SupplyCount = table.Column<int>(type: "int", nullable: false),
+                    SoldCount = table.Column<int>(type: "int", nullable: false),
+                    MaxAllowedBuy = table.Column<int>(type: "int", nullable: false),
+                    ProductId = table.Column<int>(type: "int", nullable: true),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    Create = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductTypes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ProductTypes_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Categories_ParentCategoryId",
                 table: "Categories",
@@ -329,9 +396,19 @@ namespace Store.MonizaDBMigration
                 column: "CustomerId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ProductLabel_LabelId",
+                table: "ProductLabel",
+                column: "LabelId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Products_CategoryId",
                 table: "Products",
                 column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductTypes_ProductId",
+                table: "ProductTypes",
+                column: "ProductId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -361,7 +438,10 @@ namespace Store.MonizaDBMigration
                 name: "OrderedLists");
 
             migrationBuilder.DropTable(
-                name: "Products");
+                name: "ProductLabel");
+
+            migrationBuilder.DropTable(
+                name: "ProductTypes");
 
             migrationBuilder.DropTable(
                 name: "Sizes");
@@ -377,6 +457,12 @@ namespace Store.MonizaDBMigration
 
             migrationBuilder.DropTable(
                 name: "Customers");
+
+            migrationBuilder.DropTable(
+                name: "Labels");
+
+            migrationBuilder.DropTable(
+                name: "Products");
 
             migrationBuilder.DropTable(
                 name: "Categories");

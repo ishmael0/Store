@@ -92,9 +92,24 @@ export class SizeComponent extends BaseComponent {
 export class ColorComponent extends BaseComponent {
   constructor(public injector: Injector) {
     super(injector, 'Color');
-
   }
 }
+
+
+@Component({
+  selector: 'app-label',
+  templateUrl: './product-label.component.html',
+  styles: [
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class LabelComponent extends BaseComponent {
+  constructor(public injector: Injector) {
+    super(injector, 'Label');
+  }
+}
+
+
 @Component({
   selector: 'app-keyword',
   templateUrl: './keyword.component.html',
@@ -187,6 +202,7 @@ export class ProductComponent extends BaseComponent {
     language: 'fa'
   }
   imageModal = false;
+  labelModal = false;
   keywordModal = false;
   relatedModal = false;
   Editor = ClassicEditor;
@@ -198,11 +214,15 @@ export class ProductComponent extends BaseComponent {
   }
   async onGet(m: string, d: any) {
     super.onGet(m, d);
+    let ProductLabel:any[] = this.dataManager.loadedData.ProductLabels;
     this.dataManager.ViewRecords.forEach(c => {
       let mycat = this.categories.find(d => d.Id == c.CategoryId);
       c.Category_ = mycat.Title;
       if (!c.DetailsNodeValues) c.DetailsNodeValues = {};
       c.DetailsNodeValuesLength = Object.keys(c.DetailsNodeValues).length;
+
+      c.Labels.forEach(d => d.Title = ProductLabel.find(e => e.Id == d.Id)?.Title);
+
     })
   }
   addType(item: FormGroup, e: any = null) {
@@ -215,8 +235,8 @@ export class ProductComponent extends BaseComponent {
         Price: 0,
         Off: 0,
         TotalPriceAfterOff: 0,
-        Amount: 0,
-        Sells: 0,
+        SupplyCount: 0,
+        SoldCount: 0,
         MaxAllowedBuy: 0,
         Status:'Active'
       };
@@ -239,11 +259,17 @@ export class ProductComponent extends BaseComponent {
       this.makeItDirty(item);
     }
   }
-
   keywordSelected(e: any) {
     let item = this.selectedForm();
     if (!item.controls.KeyWords.value?.some(c => c.Id == e.Id)) {
       item.controls.KeyWords.setValue([...item.controls.KeyWords.value, { Id: e.Id, Title: e.Title }]);
+      this.makeItDirty(item);
+    }
+  }
+  labelSelected(e: any) {
+    let item = this.selectedForm();
+    if (!item.controls.Labels.value?.some(c => c.Id == e.Id)) {
+      item.controls.Labels.setValue([...item.controls.Labels.value, { Id: e.Id, Title: e.Title }]);
       this.makeItDirty(item);
     }
   }

@@ -10,15 +10,15 @@ using Store.Models;
 namespace Store.MonizaDBMigration
 {
     [DbContext(typeof(MonizaDB))]
-    [Migration("20211009183310_c")]
-    partial class c
+    [Migration("20211011113458__1")]
+    partial class _1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.9")
+                .HasAnnotation("ProductVersion", "5.0.10")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Core.Models.FilesEntity", b =>
@@ -388,6 +388,31 @@ namespace Store.MonizaDBMigration
                     b.ToTable("Keywords");
                 });
 
+            modelBuilder.Entity("Store.Models.Label", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Color")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("Create")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Labels");
+                });
+
             modelBuilder.Entity("Store.Models.OrderedList", b =>
                 {
                     b.Property<int>("Id")
@@ -441,12 +466,6 @@ namespace Store.MonizaDBMigration
                     b.Property<string>("KeyWords")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Labels")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("MaxTypeId")
-                        .HasColumnType("int");
-
                     b.Property<int>("PurchasesCount")
                         .HasColumnType("int");
 
@@ -469,9 +488,6 @@ namespace Store.MonizaDBMigration
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Types")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("Weight")
                         .HasColumnType("int");
 
@@ -480,6 +496,71 @@ namespace Store.MonizaDBMigration
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("Store.Models.ProductLabel", b =>
+                {
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LabelId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProductId", "LabelId");
+
+                    b.HasIndex("LabelId");
+
+                    b.ToTable("ProductLabel");
+                });
+
+            modelBuilder.Entity("Store.Models.ProductType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Color")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("Create")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Decription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("MaxAllowedBuy")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Off")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SoldCount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SupplyCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TotalPriceAfterOff")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductTypes");
                 });
 
             modelBuilder.Entity("Store.Models.Province", b =>
@@ -569,6 +650,44 @@ namespace Store.MonizaDBMigration
                         .IsRequired();
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("Store.Models.ProductLabel", b =>
+                {
+                    b.HasOne("Store.Models.Label", "Label")
+                        .WithMany("ProductLabels")
+                        .HasForeignKey("LabelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Store.Models.Product", "Product")
+                        .WithMany("ProductLabels")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Label");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("Store.Models.ProductType", b =>
+                {
+                    b.HasOne("Store.Models.Product", null)
+                        .WithMany("Types")
+                        .HasForeignKey("ProductId");
+                });
+
+            modelBuilder.Entity("Store.Models.Label", b =>
+                {
+                    b.Navigation("ProductLabels");
+                });
+
+            modelBuilder.Entity("Store.Models.Product", b =>
+                {
+                    b.Navigation("ProductLabels");
+
+                    b.Navigation("Types");
                 });
 #pragma warning restore 612, 618
         }

@@ -3,7 +3,7 @@ using Core.StartUp;
 using Store.Models;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
-
+using System.Linq;
 namespace Store
 {
     public partial class Program
@@ -13,7 +13,10 @@ namespace Store
             BaseStartup<MonizaAcc, BaseApplicationUser, BaseApplicationRole>.seeds.Add(async (_serviceProvider) =>
             {
                 var _context = _serviceProvider.GetService<MonizaDB>();
+
+                //var test =await _context.Products.Where(c => c.Labels.Any(d => d == 1)).ToListAsync();
                 var e = await _context.Provinces.AnyAsync(c => c.Id > 0);
+
                 if (!e)
                 {
                     _context.Add(new Province() { Title = "آذربایجان شرقی" });

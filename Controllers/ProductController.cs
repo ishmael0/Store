@@ -18,10 +18,21 @@ namespace Store.Models
         [NonAction]
         public override IQueryable<Product> BuildRequest(IDictionary<string, string> param)
         {
-            return base.BuildRequest(param).Include(c=>c.Types.Where(c=>c.Status!=0));
+            return base.BuildRequest(param)
+                .Include(c=>c.Types.Where(c=>c.Status!=0))
+                .Include(c=>c.Labels.Where(c=>c.Status!=0));
         }
 
+        public override async Task<JsonResult> Set([FromQuery] IDictionary<string, string> param, [FromBody] Product t)
+        {
 
+            if (t.Id > 0)
+            { 
+                _context.RemoveRange(_context.ProductLabels.Where(c => c.ProductId == t.Id));
+                await _context.SaveChangesAsync();
+            }
+             return await base.Set(param, t);
+        }
         [NonAction]
         public override async Task<JsonResult> GetHandler([FromQuery] IDictionary<string, string> param, Product currentItem)
         {
@@ -52,14 +63,9 @@ namespace Store.Models
                         {
                             r.Title = titles.FirstOrDefault(t => t.Id == r.Id)?.Title;
                         });
-
                     });
-
-
                 }
-
             }
-
             return JR(StatusCodes.Status200OK, data: new { Records = x.Item2, TotalRecords = x.Item1, Model = currentItem });
         }
     }

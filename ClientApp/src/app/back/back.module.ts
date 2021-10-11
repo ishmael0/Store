@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ComponentTypes, EntityConfiguration, PropertyConfiguration, WebSiteConfiguration } from '../../../../../Santel/Core/ClientApp/src/app/services/utils';
 import { AuthService } from '../../../../../Santel/Core/ClientApp/src/app/services/auth.service';
 import { WebSiteService } from '../../../../../Santel/Core/ClientApp/src/app/services/website.service';
-import { BrandComponent, CategoryComponent, CityComponent, ColorComponent, CustomerComponent, InvoiceComponent, KeywordComponent, OrderedListComponent, ProductComponent, ProvinceComponent, SizeComponent, WelcomeComponent } from './pages.component';
+import { BrandComponent, CategoryComponent, CityComponent, ColorComponent, CustomerComponent, InvoiceComponent, KeywordComponent, OrderedListComponent, ProductComponent, LabelComponent, ProvinceComponent, SizeComponent, WelcomeComponent } from './pages.component';
 import { defaultPropertyConfiguration, defaultPropertyWithTitleConfiguration, filesEntity, logEntity, socialMediaEntity, toDoEntity } from '../../../../../Santel/Core/ClientApp/src/app/services/properties';
 import { Validators } from '@angular/forms';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
@@ -32,7 +32,7 @@ export const config: WebSiteConfiguration = new WebSiteConfiguration('MonizaDB',
           Validators: []
         }),
         new PropertyConfiguration('Icon', 'خلاصه ', { Validators: [], InTable: true }),
-        new PropertyConfiguration('Priority', 'اولویت ', { Type: 'number', Validators: [], InTable: false }),
+        new PropertyConfiguration('Priority', 'اولویت ', { value:0, Type: 'number', Validators: [], InTable: false }),
         new PropertyConfiguration('Summary', 'خلاصه ', { Validators: [], InTable: true }),
         new PropertyConfiguration('Description', 'شرح  ', { Validators: [], InTable: true }),
         new PropertyConfiguration('Images', 'تصاویر  ', { value: [], Validators: [], InTable: true }),
@@ -53,7 +53,7 @@ export const config: WebSiteConfiguration = new WebSiteConfiguration('MonizaDB',
       ]
     }),
     new EntityConfiguration(ProductComponent, 'Product', "محصولات", {
-      neededData: { Categories: "Category", Brands: "Brand", Colors: "Color", Sizes: "Size" },
+      neededData: { Categories: "Category", Brands: "Brand", Colors: "Color", Sizes: "Size", ProductLabels: "ProductLabel" },
       componentType: ComponentTypes.lazytable,
       icon: 'archive-check-outline',
       useDefaultIDStatusForm: false,
@@ -70,6 +70,14 @@ export const config: WebSiteConfiguration = new WebSiteConfiguration('MonizaDB',
         new PropertyConfiguration('DetailsNodeValues', 'ویژگی ها', { Type: 'custom', value: {}, Validators: [], InTable: false }),
         new PropertyConfiguration('KeyWords', ' کلید واژه ها', { Type: 'custom', value: [], Validators: [], InTable: false }),
          new PropertyConfiguration('Weight', '   وزن', { Type: 'number', value: 0, Validators: [], InTable: false }),
+      ]
+    }),
+    new EntityConfiguration(LabelComponent, 'Label', "لیبل ها", {
+      componentType: ComponentTypes.lazytable,
+      icon: 'palette',
+      propertiesConfigurations: [
+        ...defaultPropertyWithTitleConfiguration,
+        new PropertyConfiguration('Color', 'رنگ', { Type: 'color', Validators: [Validators.required], InTable: true }),
       ]
     }),
     new EntityConfiguration(ColorComponent, 'Color', "رنگ", {
@@ -176,7 +184,7 @@ const routes: Routes = [
   declarations: [
     CategoryComponent, ProductComponent, SizeComponent, KeywordComponent, CityComponent,
     ProvinceComponent, InvoiceComponent, ColorComponent, CustomerComponent, OrderedListComponent,
-    BrandComponent, WelcomeComponent
+    BrandComponent, WelcomeComponent, LabelComponent
   ],
   imports: [
     TemplateModule, CKEditorModule,

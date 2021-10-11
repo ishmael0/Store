@@ -66,14 +66,16 @@ namespace Store.Models
         public int Weight { set; get; }
         public string Summary { set; get; }
         public string Description { set; get; }
-        public List<ProductLabel> Labels { set; get; }
         public List<ProductType> Types { set; get; }
         public List<Images> Images { set; get; }
         public Dictionary<int, string> DetailsNodeValues { set; get; }
         public IEnumerable<ProductIdTitleHelper> Relateds { set; get; }
         public IEnumerable<ProductIdTitleHelper> KeyWords { set; get; }
+        public ICollection<Label> Labels { set; get; }
+        public List<ProductLabel> ProductLabels { get; set; }
+
     }
-    public class ProductType :BaseModel
+    public class ProductType : BaseModel
     {
         public string Title { set; get; }
         public string Color { set; get; }
@@ -83,14 +85,28 @@ namespace Store.Models
         public int TotalPriceAfterOff { set; get; }
         public int SupplyCount { set; get; }
         public int SoldCount { set; get; }
-        public int PurchasesCount { set; get; }
+        //public int PurchasesCount { set; get; }
         public int MaxAllowedBuy { set; get; }
+    }
+    [SafeToGetAll]
+    public class Label : BaseModelWithTitle
+    {
+        public string Color { set; get; }
+        public ICollection<Product> Products { set; get; }
+        public List<ProductLabel> ProductLabels { get; set; }
     }
     public class ProductLabel
     {
-        public string Label { set; get; }
-        public string Color { set; get; }
+        public int ProductId { get; set; }
+        [ForeignKey("ProductId")]
+        public Product Product { get; set; }
+
+        public int LabelId { get; set; }
+        [ForeignKey("LabelId")]
+        public Label Label { get; set; }
     }
+
+
     public class Images
     {
         public string Path { set; get; }

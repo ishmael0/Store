@@ -386,6 +386,31 @@ namespace Store.MonizaDBMigration
                     b.ToTable("Keywords");
                 });
 
+            modelBuilder.Entity("Store.Models.Label", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Color")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("Create")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Labels");
+                });
+
             modelBuilder.Entity("Store.Models.OrderedList", b =>
                 {
                     b.Property<int>("Id")
@@ -439,9 +464,6 @@ namespace Store.MonizaDBMigration
                     b.Property<string>("KeyWords")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Labels")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("PurchasesCount")
                         .HasColumnType("int");
 
@@ -474,6 +496,21 @@ namespace Store.MonizaDBMigration
                     b.ToTable("Products");
                 });
 
+            modelBuilder.Entity("Store.Models.ProductLabel", b =>
+                {
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LabelId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProductId", "LabelId");
+
+                    b.HasIndex("LabelId");
+
+                    b.ToTable("ProductLabels");
+                });
+
             modelBuilder.Entity("Store.Models.ProductType", b =>
                 {
                     b.Property<int>("Id")
@@ -500,9 +537,6 @@ namespace Store.MonizaDBMigration
                         .HasColumnType("int");
 
                     b.Property<int?>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PurchasesCount")
                         .HasColumnType("int");
 
                     b.Property<int>("SoldCount")
@@ -616,6 +650,25 @@ namespace Store.MonizaDBMigration
                     b.Navigation("Category");
                 });
 
+            modelBuilder.Entity("Store.Models.ProductLabel", b =>
+                {
+                    b.HasOne("Store.Models.Label", "Label")
+                        .WithMany("ProductLabels")
+                        .HasForeignKey("LabelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Store.Models.Product", "Product")
+                        .WithMany("ProductLabels")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Label");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("Store.Models.ProductType", b =>
                 {
                     b.HasOne("Store.Models.Product", null)
@@ -623,8 +676,15 @@ namespace Store.MonizaDBMigration
                         .HasForeignKey("ProductId");
                 });
 
+            modelBuilder.Entity("Store.Models.Label", b =>
+                {
+                    b.Navigation("ProductLabels");
+                });
+
             modelBuilder.Entity("Store.Models.Product", b =>
                 {
+                    b.Navigation("ProductLabels");
+
                     b.Navigation("Types");
                 });
 #pragma warning restore 612, 618
