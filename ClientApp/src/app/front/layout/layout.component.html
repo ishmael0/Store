@@ -42,9 +42,13 @@
       <i nz-icon [innerHtml]="http.icons['basket-fill']" style="color:green;font-size:24px"></i>
       سبد خرید
     </li>
+
+    <li nz-menu-item style="float:left">
+      <input nz-input placeholder="جستجو" style="width:100%" />
+    </li>
   </ul>
 
-  <ul nz-menu nzMode="horizontal">
+  <ul nz-menu nzMode="horizontal" class="megamenu">
     <li nz-menu-item>
       <i nz-icon [innerHtml]="http.icons.home"></i>
       دسته بندی های کالا:
@@ -55,54 +59,73 @@
     </ng-container>-->
 
     <ng-container *ngFor="let item of http.data.categoriesTree">
-    <li nz-menu-item *ngIf="!item.children || item.children.length==0" [routerLink]="[http.buildCategoryUrl(item.data.Id)]">
-      <i nz-icon [innerHtml]="item.data.IconSanitizer" style="font-size:24px"></i>
-      {{item.title}}
-    </li>
-
-    <li nz-submenu [nzTitle]="cm" *ngIf="item.children && item.children.length>0">
-      <ng-template #cm>
+      <li nz-menu-item *ngIf="!item.children || item.children.length==0" [routerLink]="[http.buildCategoryUrl(item.data.Id)]">
         <i nz-icon [innerHtml]="item.data.IconSanitizer" style="font-size:24px"></i>
         {{item.title}}
-      </ng-template>
-      <ul>
-        <ng-container *ngFor="let item2 of item.children">
-
-          <li *ngIf="!item2.children || item2.children.length==0" nz-menu-item [routerLink]="[http.buildCategoryUrl(item2.data.Id)]">
-
-            <i nz-icon [innerHtml]="item2.data.IconSanitizer" style="font-size:24px"></i>
-            {{item2.title}}
-          </li>
-          <li *ngIf="item2.children && item2.children.length>0" nz-submenu [nzTitle]="cm2" >
-            <ng-template #cm2>
-              <i nz-icon [innerHtml]="item2.data.IconSanitizer" style="font-size:24px"></i>
-              {{item2.title}}
-            </ng-template>
-            <ul>
-              <li *ngFor="let item3 of item2.children" nz-menu-item>
+      </li>
+      <!--nzPopoverTrigger="click"-->
+      <li nz-menu-item *ngIf="item.children || item.children.length>0" nz-popover
+          [nzPopoverContent]="contentTemplate"
+          nzPopoverPlacement="bottom"
+          [routerLink]="[http.buildCategoryUrl(item.data.Id)]">
+        <i nz-icon [innerHtml]="item.data.IconSanitizer" style="font-size:24px"></i>
+        {{item.title}}
+        <ng-template #contentTemplate>
+          <div style="display:flex" class="submegamenu">
+            <ul *ngFor="let item2 of item.children" nz-menu style="border:none;margin-right:5px">
+              <li nzSelected nz-menu-item [routerLink]="[http.buildCategoryUrl(item2.data.Id)]">
+                <i nz-icon [innerHtml]="item2.data.IconSanitizer" style="font-size:24px"></i>
+                {{item2.title}}
+              </li>
+              <li *ngFor="let item3 of item2.children" nz-menu-item [routerLink]="[http.buildCategoryUrl(item3.data.Id)]">
+                <i nz-icon [innerHtml]="item3.data.IconSanitizer" style="font-size:24px"></i>
                 {{item3.title}}
               </li>
+
             </ul>
-          </li>
+          </div>
+        </ng-template>
+      </li>
+
+      <!--<li nz-submenu [nzTitle]="cm" *ngIf="item.children && item.children.length>0">
+    <ng-template #cm>
+      <i nz-icon [innerHtml]="item.data.IconSanitizer" style="font-size:24px"></i>
+      {{item.title}}
+    </ng-template>
+    <ul>
+      <ng-container *ngFor="let item2 of item.children">
+
+        <li *ngIf="!item2.children || item2.children.length==0" nz-menu-item [routerLink]="[http.buildCategoryUrl(item2.data.Id)]">
+
+          <i nz-icon [innerHtml]="item2.data.IconSanitizer" style="font-size:24px"></i>
+          {{item2.title}}
+        </li>
+        <li *ngIf="item2.children && item2.children.length>0" nz-submenu [nzTitle]="cm2">
+          <ng-template #cm2>
+            <i nz-icon [innerHtml]="item2.data.IconSanitizer" style="font-size:24px"></i>
+            {{item2.title}}
+          </ng-template>
+          <ul>
+            <li *ngFor="let item3 of item2.children" nz-menu-item>
+              <i nz-icon [innerHtml]="item3.data.IconSanitizer" style="font-size:24px"></i>
+              {{item3.title}}
+            </li>
+          </ul>
+        </li>-->
+      <!--<li nz-menu-item [routerLink]="[http.buildCategoryUrl(item.data.Id)]">
+    <i nz-icon [innerHtml]="item.data.IconSanitizer" style="font-size:24px"></i>
+    همه ی
+    {{item.title}}
+  </li>-->
+      <!--</ng-container>
+    </ul>
+    <ul>
+      <li nz-menu-item style="float:right">sss</li>
+    </ul>
+  </li>-->
+    </ng-container>
 
 
-
-          <li nz-menu-item [routerLink]="[http.buildCategoryUrl(item.data.Id)]">
-            <i nz-icon [innerHtml]="item.data.IconSanitizer" style="font-size:24px"></i>
-            همه ی
-            {{item.title}}
-          </li>
-        </ng-container>
-  
-       
-      </ul>
-    </li>
-  </ng-container>
-
-    <li nz-menu-item style="float:left;width:300px">
-      <input nz-input placeholder="جستجو" style="width:100%" />
-
-    </li>
 
   </ul>
 
@@ -121,13 +144,18 @@
       <h3>تامین کنندگان</h3>
     </div>
     <div nz-col [nzXs]="12" [nzMd]="6">
-      <h2>بخش های سایت</h2>
+      ">
+      >ب
+      <h2>">
+      >بخش های سایت</h2>
       <h3>تامین کنندگان</h3>
       <h3>تامین کنندگان</h3>
       <h3>تامین کنندگان</h3>
       <h3>تامین کنندگان</h3>
       <h3>تامین کنندگان</h3>
     </div>
+
+    l
 
     <div nz-col [nzXs]="12" [nzMd]="6">
       <h2>خدمات مشتریان  </h2>

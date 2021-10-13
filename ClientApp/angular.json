@@ -34,7 +34,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "../bin/release/net5.0/ClientApp/dist",
+            "outputPath": "../bin/release/net5.0/publish/ClientApp/dist",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
