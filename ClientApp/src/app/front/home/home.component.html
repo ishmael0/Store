@@ -5,9 +5,25 @@
        [nzSm]="24"
        [nzMd]="12"
        [nzLg]="12"
+       [nzXl]="10"
+       [nzXXl]="10">
+    <div nz-row nzJustify="center">
+      <div class="roundborder" style="height:80px;width:100%;background-color:lightgray"></div>
+      <app-category-card nz-col
+                         [nzXs]="6"
+                         *ngFor="let item of http.data.categoriesTree" [data]="item.data"></app-category-card>
+    </div>
+
+
+  </div>
+
+  <div nz-col
+       [nzXs]="24"
+       [nzSm]="24"
+       [nzMd]="12"
+       [nzLg]="12"
        [nzXl]="14"
        [nzXXl]="14">
-    <div class="roundborder" style="height:80px;width:100%;background-color:lightgray"></div>
 
     <owl-carousel-o [options]="customOptions">
       <ng-template carouselSlide *ngFor="let index of [1,2,3,4]">
@@ -20,22 +36,6 @@
   </div>
 
 
-  <div nz-col
-       [nzXs]="24"
-       [nzSm]="24"
-       [nzMd]="12"
-       [nzLg]="12"
-       [nzXl]="10"
-       [nzXXl]="10">
-
-    <div nz-row nzJustify="center">
-      <app-category-card nz-col
-                         [nzXs]="12"
-                         *ngFor="let item of http.data.categoriesTree" [data]="item.data"></app-category-card>
-    </div>
-
-
-  </div>
 
 </div>
 

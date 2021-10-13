@@ -13,6 +13,7 @@ export class CategoryCardComponent implements OnInit {
   constructor(public http: HttpService) { }
   @Input() data: any = {};
   ngOnInit(): void {
+    console.log(this.data)
   }
 
 }

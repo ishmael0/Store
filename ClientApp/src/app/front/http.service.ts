@@ -31,12 +31,24 @@ export interface IImage {
   Path: string;
   Description: string;
 }
+export interface IAppDate {
+  url: string;
+  ShortName: string;
+  FullName: string;
+  logo: string;
+}
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpService extends HttpClient {
+  AppDate: IAppDate = {
+    logo:'',
+    url: 'moniza.ir',
+    ShortName: 'moniza',
+    FullName:'moniza'
+  };
   icons = icons;
   ///category
   buildCategoryUrl(id: number) {
@@ -44,8 +56,7 @@ export class HttpService extends HttpClient {
     return '/category/' + category.Id + "/" + this.fixUrl(category.Title) + "/";
   }
   getCategory(id: number) {
-    console.log(id, this.data.categories.find(c => c.Id == id))
-    return this.data.categories.find(c => c.Id == id) ?? null;
+     return this.data.categories.find(c => c.Id == id) ?? null;
   }
   findCategoryInTree(id: number, tree: any[] = null) {
     if (tree == null) tree = this.data.categoriesTree;

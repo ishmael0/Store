@@ -4,14 +4,14 @@
        [nzXs]="24"
        [nzMd]="6">
     <div nz-row nzJustify="center">
-      <app-category-card nz-col
+      <app-category-tree nz-col [nzXs]="24"></app-category-tree>
+
+      <app-category-card  nz-col
                          [nzXs]="8"
                          [nzSm]="6"
                          [nzMd]="12"
                          [nzLg]="8"
                          [data]="category"></app-category-card>
-
-      <app-category-tree nz-col [nzXs]="24"></app-category-tree>
       <app-favorite nz-col [nzXs]="24"></app-favorite>
       <app-basket nz-col [nzXs]="24"></app-basket>
     </div>
@@ -19,10 +19,27 @@
   <div nz-col
        [nzXs]="24"
        [nzMd]="18">
-    <div class="roundborderr" style="margin-right: 5px; margin-left: 5px; ">
+    <nz-spin nzTip="Loading..."  [nzDelay]="500" [nzSpinning]="!product">
 
-      asdasd
-
-    </div>
+      <div *ngIf="product" nz-row class="roundborderr" style="margin-right: 5px; margin-left: 5px; ">
+        <div nz-col [nzSm]="12">
+          <owl-carousel-o [options]="customOptions">
+            <ng-template carouselSlide *ngFor="let item of product.Images">
+              <div class="roundborderr" style=" overflow: hidden;padding:0px;">
+                <img [src]="'front'+item.Path" style="width:100%" />
+              </div>
+            </ng-template>
+          </owl-carousel-o>
+        </div>
+        <div nz-col [nzSm]="12" style="padding:10px">
+          <h1 style="text-align:right">
+            {{product.Title}}
+          </h1>
+          <h2 style="text-align:right">
+            {{product.Summary}}
+          </h2>
+        </div>
+      </div>
+      </nz-spin>
   </div>
 </div>

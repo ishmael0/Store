@@ -64,7 +64,7 @@
         {{item.title}}
       </li>
       <!--nzPopoverTrigger="click"-->
-      <li nz-menu-item *ngIf="item.children || item.children.length>0" nz-popover
+      <li nz-menu-item *ngIf="item.children && item.children.length>0" nz-popover
           [nzPopoverContent]="contentTemplate"
           nzPopoverPlacement="bottom"
           [routerLink]="[http.buildCategoryUrl(item.data.Id)]">
@@ -72,7 +72,7 @@
         {{item.title}}
         <ng-template #contentTemplate>
           <div style="display:flex" class="submegamenu">
-            <ul *ngFor="let item2 of item.children" nz-menu style="border:none;margin-right:5px">
+            <ul *ngFor="let item2 of item.children" nz-menu style="border:none;margin-right:5px;width:150px;">
               <li nzSelected nz-menu-item [routerLink]="[http.buildCategoryUrl(item2.data.Id)]">
                 <i nz-icon [innerHtml]="item2.data.IconSanitizer" style="font-size:24px"></i>
                 {{item2.title}}
@@ -144,10 +144,7 @@
       <h3>تامین کنندگان</h3>
     </div>
     <div nz-col [nzXs]="12" [nzMd]="6">
-      ">
-      >ب
-      <h2>">
-      >بخش های سایت</h2>
+      <h2>بخش های سایت</h2>
       <h3>تامین کنندگان</h3>
       <h3>تامین کنندگان</h3>
       <h3>تامین کنندگان</h3>
@@ -155,7 +152,6 @@
       <h3>تامین کنندگان</h3>
     </div>
 
-    l
 
     <div nz-col [nzXs]="12" [nzMd]="6">
       <h2>خدمات مشتریان  </h2>
