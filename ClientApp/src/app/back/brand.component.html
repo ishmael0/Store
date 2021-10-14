@@ -98,7 +98,6 @@
   <nz-modal [(nzVisible)]="imageModal" [nzFooter]="mainTemplate.modalEmptyFooter" nzTitle="افزودن تصویر" (nzOnCancel)="imageModal = false">
     <ng-container *nzModalContent>
       <app-image-uploader-card key="MonizaDB/Product" Id="1" (onOk)="addImage($event)"></app-image-uploader-card>
-      <button style="float:left" nz-button nzType="primary" (click)="imageModal = false">تایید </button>
-    </ng-container>
+     </ng-container>
   </nz-modal>
 </ng-container>
