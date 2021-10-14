@@ -167,7 +167,7 @@ https://www.iconpacks.net/search/?icon=man
   <nz-tag [nzColor]="'#f50'">{{ item.Id }}</nz-tag>
   <nz-tag [nzColor]="'#130fffc9'">{{ item.Priority }}</nz-tag>
   {{ item.Title }}
-  <!--<i nz-icon class="larger" [innerHtml]="item.Icon "></i>-->
+  <i nz-icon class="larger" [innerHtml]="item.Icon |sanitizeHtml "></i>
   <ng-container *ngTemplateOutlet="mainTemplate?.statusView;context:{value:statusView(item.Status)}"></ng-container>
   {{ item.Create_}}
 </ng-template>
