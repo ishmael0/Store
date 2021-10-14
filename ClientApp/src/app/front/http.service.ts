@@ -125,6 +125,17 @@ export class HttpService extends HttpClient {
       c.Searchs = c.TreeNodes?.filter(d => d.Searchable == true).map(d => ({Type :d.Type, key:d.key,name:d.name }))
     });
     this.data.categoriesTree = toTreeHelper(x.categories, 'Id', 'ParentCategoryId', null);
+    console.log(this.data.categoriesTree)
+    for (var i = 0; i < this.data.categoriesTree.length; i++) {
+      this.data.categoriesTree[i].flag = true;
+      for (var j = 0; j < this.data.categoriesTree[i].children.length; j++) {
+        let x = this.data.categoriesTree[i].children[j];
+        if (x && x.children && x.children.length > 0)
+          this.data.categoriesTree[i].flag =  false;
+      }
+    }
+
+
   }
   data: Partial<IDataInterFace> = {
     isInitilized: false, products: {}
