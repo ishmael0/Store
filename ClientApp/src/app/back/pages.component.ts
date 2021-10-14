@@ -133,6 +133,25 @@ export class CategoryComponent extends BaseComponent {
   constructor(public injector: Injector) {
     super(injector, 'Category');
   }
+  loadFile(e: any, item: FormGroup) {
+    console.log(e);
+    var reader = new FileReader();
+    var myFile = e.target.files[0];
+    reader.addEventListener('load', function (e) {
+      var parser = new DOMParser();
+      var doc = parser.parseFromString(e.target.result.toString(), 'text/html');
+      var svg = doc.getElementsByTagName('svg');
+      while (true) {
+        let x = svg[0].getElementsByTagName('text');
+        if (x.length == 0) break;
+        x[0].parentNode.removeChild(x[0]);
+      }
+      item.controls.Icon.setValue(svg[0].outerHTML);
+     });
+    reader.readAsBinaryString(myFile);
+    e.target.value = ''
+
+  }
   config = {
     language: 'fa'
   }

@@ -70,21 +70,26 @@
           [routerLink]="[http.buildCategoryUrl(item.data.Id)]">
         <i nz-icon [innerHtml]="item.data.IconSanitizer" style="font-size:24px"></i>
         {{item.title}}
-        <ng-template #contentTemplate>
-          <div style="display:flex" class="submegamenu">
-            <ul *ngFor="let item2 of item.children" nz-menu style="border:none;margin-right:5px;width:150px;">
-              <li nzSelected nz-menu-item [routerLink]="[http.buildCategoryUrl(item2.data.Id)]">
-                <i nz-icon [innerHtml]="item2.data.IconSanitizer" style="font-size:24px"></i>
-                {{item2.title}}
-              </li>
-              <li *ngFor="let item3 of item2.children" nz-menu-item [routerLink]="[http.buildCategoryUrl(item3.data.Id)]">
-                <i nz-icon [innerHtml]="item3.data.IconSanitizer" style="font-size:24px"></i>
-                {{item3.title}}
-              </li>
-
-            </ul>
-          </div>
-        </ng-template>
+      <ng-template #contentTemplate>
+        <div *ngIf="!item.flag" style="display:flex" class="submegamenu">
+          <ul *ngFor="let item2 of item.children" nz-menu style="border:none;margin-right:5px;width:150px;">
+            <li nzSelected nz-menu-item [routerLink]="[http.buildCategoryUrl(item2.data.Id)]">
+              <i nz-icon [innerHtml]="item2.data.IconSanitizer" style="font-size:24px"></i>
+              {{item2.title}}
+            </li>
+            <li *ngFor="let item3 of item2.children" nz-menu-item [routerLink]="[http.buildCategoryUrl(item3.data.Id)]">
+              <i nz-icon [innerHtml]="item3.data.IconSanitizer" style="font-size:24px"></i>
+              {{item3.title}}
+            </li>
+          </ul>
+        </div>
+        <ul nz-menu *ngIf="item.flag" style="border:none">
+          <li *ngFor="let item2 of item.children" nz-menu-item>
+            <i nz-icon [innerHtml]="item2.data.IconSanitizer" style="font-size:24px"></i>
+            {{item2.title}}
+          </li>
+        </ul>
+      </ng-template>
       </li>
 
       <!--<li nz-submenu [nzTitle]="cm" *ngIf="item.children && item.children.length>0">
