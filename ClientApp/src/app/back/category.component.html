@@ -66,23 +66,25 @@ https://www.iconpacks.net/search/?icon=man
 
           <nz-form-label [nzSm]="2" [nzXs]="24" nzFor="email">
             آیکون
-            <i [innerHtml]="item.controls.Icon.value | sanitizeHtml"></i>
+            <i [innerHtml]="item.controls.Icon.value | sanitizeHtml"style="font-size:24px" nz-icon></i>
           </nz-form-label>
           <nz-form-control [nzSm]="6" [nzXs]="24" nzErrorTip="The input is not valid E-mail!">
-            <textarea nz-input formControlName="Icon"></textarea>
-
+            <textarea nz-input formControlName="Icon" ></textarea>
             <!--<nz-select formControlName="Icon" [nzCustomTemplate]="iconSelectedTemplate">
-              <nz-option *ngFor="let icon of icons | keyvalue" nzCustomContent [nzValue]="icon.key">
-                  <i nz-icon [innerHtml]="icon.value"  ></i>
-                  {{icon.key}}
-              </nz-option>
-            </nz-select>
-            <ng-template #iconSelectedTemplate let-selected>
-              <i nz-icon [innerHtml]="icons[selected.nzValue]"></i>
-              {{ selected.nzValue }}
-            </ng-template>-->
+      <nz-option *ngFor="let icon of icons | keyvalue" nzCustomContent [nzValue]="icon.key">
+          <i nz-icon [innerHtml]="icon.value"  ></i>
+          {{icon.key}}
+      </nz-option>
+    </nz-select>
+    <ng-template #iconSelectedTemplate let-selected>
+      <i nz-icon [innerHtml]="icons[selected.nzValue]"></i>
+      {{ selected.nzValue }}
+    </ng-template>-->
           </nz-form-control>
-          m>
+          <button nz-button nzType="primary" (click)="fileselector.click()">
+            <i nz-icon [innerHtml]="icons['plus-thick']"></i>
+          </button>
+          <input type="file" #fileselector style="display:none" (change)="loadFile($event, item)" />
         </nz-form-item>
 
 
