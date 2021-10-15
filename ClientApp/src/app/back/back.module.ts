@@ -74,10 +74,12 @@ export const config: WebSiteConfiguration = new WebSiteConfiguration('MonizaDB',
     }),
     new EntityConfiguration(LabelComponent, 'Label', "لیبل ها", {
       componentType: ComponentTypes.lazytable,
+      useDefaultIDStatusForm: false,
       icon: 'palette',
       propertiesConfigurations: [
         ...defaultPropertyWithTitleConfiguration,
         new PropertyConfiguration('Color', 'رنگ', { Type: 'color', Validators: [Validators.required], InTable: true }),
+        new PropertyConfiguration('ProductLabels', 'محصولات', { value:[], Type: 'custom', Validators: [Validators.required], InTable: true }),
       ]
     }),
     new EntityConfiguration(ColorComponent, 'Color', "رنگ", {

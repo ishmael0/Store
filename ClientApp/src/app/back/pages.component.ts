@@ -98,7 +98,7 @@ export class ColorComponent extends BaseComponent {
 
 @Component({
   selector: 'app-label',
-  templateUrl: './product-label.component.html',
+  templateUrl: './label.component.html',
   styles: [
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -106,6 +106,14 @@ export class ColorComponent extends BaseComponent {
 export class LabelComponent extends BaseComponent {
   constructor(public injector: Injector) {
     super(injector, 'Label');
+  }
+  inModal = false;
+  relatedProductSelected(e: any) {
+    let item = this.selectedForm();
+    if (!item.controls.ProductLabels.value?.some(c => c.Id == e.Id)) {
+      item.controls.ProductLabels.setValue([...item.controls.ProductLabels.value, { Id: e.Id, Title: e.Title }]);
+      this.makeItDirty(item);
+    }
   }
 }
 
