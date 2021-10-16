@@ -4,12 +4,43 @@ using Core.StartUp;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Z.EntityFramework.Plus;
 
 namespace Store.Models
 {
+    public class LabelController : BaseController<MonizaDB, Label>
+    {
+
+        public LabelController(MonizaDB dbContext, UserPermissionManager upm) : base(dbContext, upm)
+        {
+        }
+        [NonAction]
+        public override IQueryable<Label> BuildRequest(IDictionary<string, string> param)
+        {
+            return base.BuildRequest(param)
+                .Include(c => c.Products);
+        }
+        public override async Task<JsonResult> Set([FromQuery] IDictionary<string, string> param, [FromBody] Label t)
+        {
+            using var transaction = _context.Database.BeginTransaction();
+            if (t.Id > 0)
+            {
+                await _context.ProductLabels.Where(c => c.LabelId == t.Id).DeleteAsync();
+            }
+            if (t == null)
+                return JR(StatusCodes.Status403Forbidden, "مشکل ناشناخته ای روی داده است");
+            if (t.Id != 0 && HasAccessToId(upm, t.Id) != true)
+                return JR(StatusCodes.Status403Forbidden, "دسترسی غیر مجاز");
+            ts.AddOrUpdate(t, _context);
+            await _context.SaveChangesAsync();
+            transaction.Commit();
+            return await GetHandler(param, t);
+        }
+    }
     public class ProductController : BaseController<MonizaDB, Product>
     {
         public ProductController(MonizaDB dbContext, UserPermissionManager upm) : base(dbContext, upm)
@@ -26,11 +57,20 @@ namespace Store.Models
 
         public override async Task<JsonResult> Set([FromQuery] IDictionary<string, string> param, [FromBody] Product t)
         {
+
+            using var transaction = _context.Database.BeginTransaction();
             if (t.Id > 0)
             {
                 _context.RemoveRange(_context.ProductLabels.Where(c => c.ProductId == t.Id));
             }
-            return await base.Set(param, t);
+            if (t == null)
+                return JR(StatusCodes.Status403Forbidden, "مشکل ناشناخته ای روی داده است");
+            if (t.Id != 0 && HasAccessToId(upm, t.Id) != true)
+                return JR(StatusCodes.Status403Forbidden, "دسترسی غیر مجاز");
+            ts.AddOrUpdate(t, _context);
+            await _context.SaveChangesAsync();
+            transaction.Commit();
+            return await GetHandler(param, t);
         }
         [NonAction]
         public override async Task<JsonResult> GetHandler([FromQuery] IDictionary<string, string> param, Product currentItem)

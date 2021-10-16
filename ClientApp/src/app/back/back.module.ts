@@ -73,8 +73,8 @@ export const config: WebSiteConfiguration = new WebSiteConfiguration('MonizaDB',
       icon: 'palette',
       propertiesConfigurations: [
         ...defaultPropertyWithTitleConfiguration,
-        new PropertyConfiguration('Color', 'رنگ', { Type: 'color', Validators: [Validators.required], InTable: true }),
-        new PropertyConfiguration('ProductLabels', 'محصولات', { value:[], Type: 'custom', Validators: [Validators.required], InTable: true }),
+        new PropertyConfiguration('Color', 'رنگ', { value: '#000000', Type: 'color', Validators: [], InTable: true }),
+        new PropertyConfiguration('Products', 'محصولات', { value:[], Type: 'custom', Validators: [], InTable: true }),
       ]
     }),
     new EntityConfiguration(ColorComponent, 'Color', "رنگ", {

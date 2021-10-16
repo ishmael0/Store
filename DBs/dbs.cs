@@ -72,13 +72,8 @@ namespace Store.Models
         public List<Images> Images { set; get; }
         public Dictionary<int, string> DetailsNodeValues { set; get; }
         public IEnumerable<ProductIdTitleHelper> Relateds { set; get; }
-
-
-
-
         public ICollection<Keyword> KeyWords { set; get; }
         public IEnumerable<ProductKeyword> ProductKeyWords { set; get; }
-
         public ICollection<Label> Labels { set; get; }
         public IEnumerable<ProductLabel> ProductLabels { get; set; }
 
@@ -103,7 +98,7 @@ namespace Store.Models
         public ICollection<Product> Products { set; get; }
         public List<ProductLabel> ProductLabels { get; set; }
     }
-    public class ProductLabel
+    public class ProductLabel : BaseModel
     {
         public int ProductId { get; set; }
         [ForeignKey("ProductId")]
@@ -112,8 +107,9 @@ namespace Store.Models
         public int LabelId { get; set; }
         [ForeignKey("LabelId")]
         public Label Label { get; set; }
-    }   
-    
+        public int Priority { set; get; }
+    }
+
     public class ProductKeyword
     {
         public int ProductId { get; set; }

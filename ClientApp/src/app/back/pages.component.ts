@@ -110,15 +110,14 @@ export class LabelComponent extends BaseComponent {
   inModal = false;
   relatedProductSelected(e: any) {
     let item = this.selectedForm();
-    let x = item.controls.ProductLabels.value;
-    let y = { Id: e.Id, Title: e.Title };
+    let x = item.controls.Products.value;
     if (!x) {
-      item.controls.ProductLabels.setValue([y]);
+      item.controls.Products.setValue([e]);
       this.makeItDirty(item);
     }
     else if (!x.some(c => c.Id == e.Id)) {
-      x.push(y);
-      item.controls.ProductLabels.setValue(x);
+      x.push(e);
+      item.controls.Products.setValue(x);
       this.makeItDirty(item);
     }
   }
