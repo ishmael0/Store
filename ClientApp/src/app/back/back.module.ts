@@ -19,12 +19,10 @@ export const config: WebSiteConfiguration = new WebSiteConfiguration('MonizaDB',
   [
     new EntityConfiguration(WelcomeComponent, 'Welcome', "خوش آمدید", {
       icon: 'monitor',
-      useDefaultIDStatusForm: false,
     }),
     new EntityConfiguration(CategoryComponent, 'Category', "دسته بندی", {
       componentType: ComponentTypes.tree,
       icon: 'shape',
-      useDefaultIDStatusForm: false,
       treeParentKey: "ParentCategoryId",
       propertiesConfigurations: [
         ...defaultPropertyWithTitleConfiguration,
@@ -44,7 +42,6 @@ export const config: WebSiteConfiguration = new WebSiteConfiguration('MonizaDB',
     new EntityConfiguration(BrandComponent, 'Brand', " برند", {
       componentType: ComponentTypes.lazytable,
       icon: 'shape',
-      useDefaultIDStatusForm: false,
       propertiesConfigurations: [
         ...defaultPropertyWithTitleConfiguration,
         new PropertyConfiguration('Summary', 'خلاصه ', { Validators: [], InTable: true }),
@@ -56,7 +53,6 @@ export const config: WebSiteConfiguration = new WebSiteConfiguration('MonizaDB',
       neededData: { Categories: "Category", Brands: "Brand", Colors: "Color", Sizes: "Size", Labels: "Label" },
       componentType: ComponentTypes.lazytable,
       icon: 'archive-check-outline',
-      useDefaultIDStatusForm: false,
       propertiesConfigurations: [
         ...defaultPropertyWithTitleConfiguration,
         new PropertyConfiguration('CategoryId', 'دسته بندی', { Type: 'custom', value: null, Validators: [Validators.required], InTable: true, InPicker: true }),
@@ -74,7 +70,6 @@ export const config: WebSiteConfiguration = new WebSiteConfiguration('MonizaDB',
     }),
     new EntityConfiguration(LabelComponent, 'Label', "لیبل ها", {
       componentType: ComponentTypes.lazytable,
-      useDefaultIDStatusForm: false,
       icon: 'palette',
       propertiesConfigurations: [
         ...defaultPropertyWithTitleConfiguration,

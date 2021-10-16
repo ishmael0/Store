@@ -3,6 +3,7 @@
 <ng-template #form let-item="item">
   <nz-tabset [nzAnimated]="false">
     <nz-tab nzTitle="محتوای اصلی">
+      <ng-container *ngTemplateOutlet="mainTemplate?.defaultIDStatusForm;context:{  item:item}"></ng-container>
       <form nz-form [formGroup]="item">
         <nz-form-item>
           <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Title">عنوان</nz-form-label>
@@ -18,13 +19,16 @@
         </nz-form-item>
       </form>
     </nz-tab>
-    <nz-tab nzTitle="محصولات موجود">
-      <div nz-row>
+    <nz-tab nzTitle="محصولات ({{item.controls.ProductLabels.value?.length}})">
+      <div nz-row *ngIf="item.controls.Id.value==0">
+        <nz-alert nzType="error" class="alertInTopOfTable" nzMessage=" ابتدا لیبل را ذخیره کنید، بعد از آن میتوانید نسبت به اضافه کردن محصولات اقدام کنید"></nz-alert>
+      </div>
+      <div nz-row *ngIf="item.controls.Id.value>0">
         <div nz-col [nzXs]="24" [nzMd]="8" [nzLg]="6" style="text-align:center">
           <nz-form-label>محصولات  </nz-form-label>
           <br />
-          <nz-alert nzType="info" class="alertInTopOfTable" nzMessage=" میتوانید با کشیدن و رها کردن ترتیب محصولات مشابه را تغییر دهید"></nz-alert>
-          <button nz-button nzType="dashed" (click)="inModal = true "> اضافه کردن محصولات مشابه</button>
+          <nz-alert nzType="info" class="alertInTopOfTable" nzMessage=" میتوانید با کشیدن و رها کردن ترتیب محصولات  را تغییر دهید"></nz-alert>
+          <button nz-button nzType="dashed" (click)="inModal = true "> اضافه کردن محصولات </button>
         </div>
         <div nz-col [nzXs]="24" [nzMd]="16" [nzLg]="12">
           <ng-container *ngTemplateOutlet="mainTemplate?.listWithDragDropTemplate;context:{com: this, item:item, name:'ProductLabels'}"></ng-container>

@@ -110,8 +110,15 @@ export class LabelComponent extends BaseComponent {
   inModal = false;
   relatedProductSelected(e: any) {
     let item = this.selectedForm();
-    if (!item.controls.ProductLabels.value?.some(c => c.Id == e.Id)) {
-      item.controls.ProductLabels.setValue([...item.controls.ProductLabels.value, { Id: e.Id, Title: e.Title }]);
+    let x = item.controls.ProductLabels.value;
+    let y = { Id: e.Id, Title: e.Title };
+    if (!x) {
+      item.controls.ProductLabels.setValue([y]);
+      this.makeItDirty(item);
+    }
+    else if (!x.some(c => c.Id == e.Id)) {
+      x.push(y);
+      item.controls.ProductLabels.setValue(x);
       this.makeItDirty(item);
     }
   }
@@ -155,7 +162,7 @@ export class CategoryComponent extends BaseComponent {
         x[0].parentNode.removeChild(x[0]);
       }
       item.controls.Icon.setValue(svg[0].outerHTML);
-     });
+    });
     reader.readAsBinaryString(myFile);
     e.target.value = ''
 
@@ -241,13 +248,13 @@ export class ProductComponent extends BaseComponent {
   }
   async onGet(m: string, d: any) {
     super.onGet(m, d);
-     this.dataManager.ViewRecords.forEach(c => {
+    this.dataManager.ViewRecords.forEach(c => {
       let mycat = this.categories.find(d => d.Id == c.CategoryId);
       c.Category_ = mycat.Title;
       if (!c.DetailsNodeValues) c.DetailsNodeValues = {};
       c.DetailsNodeValuesLength = Object.keys(c.DetailsNodeValues).length;
 
- 
+
     })
   }
   addType(item: FormGroup, e: any = null) {
@@ -263,7 +270,7 @@ export class ProductComponent extends BaseComponent {
         SupplyCount: 0,
         SoldCount: 0,
         MaxAllowedBuy: 0,
-        Status:'Active'
+        Status: 'Active'
       };
     }
     else {

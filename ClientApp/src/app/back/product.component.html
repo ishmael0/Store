@@ -4,32 +4,8 @@
 
   <nz-tabset [nzAnimated]="false">
     <nz-tab nzTitle="محتوای اصلی">
+      <ng-container *ngTemplateOutlet="mainTemplate?.defaultIDStatusForm;context:{  item:item}"></ng-container>
       <form nz-form [formGroup]="item">
-
-
-        <nz-form-item>
-          <nz-form-label [nzMd]="6" [nzXs]="24" nzFor="Id">شناسه</nz-form-label>
-          <nz-tag [nzColor]="'#f50'">{{item.controls.Id.value}}</nz-tag>
-          <nz-form-control [nzSm]="4" [nzXs]="24" nzErrorTip="وضعیت معتبر نیست">
-            <nz-select formControlName="Status" nzPlaceHolder="Select OS" nzShowSearch nzAllowClear [nzCustomTemplate]="statusTemplate">
-              <nz-option *ngFor="let item of cs.Statuses" [nzValue]="item.title" nzCustomContent>
-                {{item.label}}
-                <i [style.color]="item.color" nz-icon [innerHtml]="icons[item.icon]"></i>
-              </nz-option>
-            </nz-select>
-            <ng-template #statusTemplate let-selected>
-              <ng-container *ngFor="let item of cs.Statuses">
-                <div *ngIf="selected.nzValue==item.title">
-                  {{item.label}}
-                  <i nz-icon [style.color]="item.color" [innerHtml]="icons[item.icon]"></i>
-                </div>
-              </ng-container>
-            </ng-template>
-          </nz-form-control>
-        </nz-form-item>
-
-
-
         <nz-form-item>
           <nz-form-label [nzMd]="6" [nzXs]="24" nzFor="Title">عنوان</nz-form-label>
           <nz-form-control [nzMd]="6" [nzXs]="24" nzErrorTip="عنوان را وارد کنید">
@@ -99,7 +75,7 @@
           <tr *ngFor="let t of typesTable.data" cdkDrag>
             <td>
               <nz-tag [nzColor]="'cyan'" style="width:30px"> {{t.Id}}</nz-tag>
-      
+
               <!--<button nz-button nz-col nzType="dashed" nzDanger (click)="t.Status = 'Deleted'">حذف</button>-->
             </td>
             <td>
@@ -112,7 +88,7 @@
 
             </td>
             <td>
-              <nz-input-number nzPlaceHolder="قیمت" (change)="makeItDirty(item);t.TotalPriceAfterOff = t.Price*(100-t.Off)/100"   placeholder="قیمت" [(ngModel)]="t.Price" [nzMin]="0" [nzStep]="1"></nz-input-number>
+              <nz-input-number nzPlaceHolder="قیمت" (change)="makeItDirty(item);t.TotalPriceAfterOff = t.Price*(100-t.Off)/100" placeholder="قیمت" [(ngModel)]="t.Price" [nzMin]="0" [nzStep]="1"></nz-input-number>
               <nz-input-number nzPlaceHolder="تخفیف%" (change)="makeItDirty(item);t.TotalPriceAfterOff = t.Price*(100-t.Off)/100" [(ngModel)]="t.Off" [nzMin]="0" [nzMax]="100" [nzStep]="1"></nz-input-number>
               <nz-input-number nzPlaceHolder="قیمت کل" (change)="makeItDirty(item)" [(ngModel)]="t.TotalPriceAfterOff" [nzMin]="0" [nzMax]="1000000000" [nzStep]="1"></nz-input-number>
             </td>
@@ -146,12 +122,12 @@
                 </ng-template>
               </nz-select>
 
-  
+
 
 
 
             </td>
-  
+
           </tr>
         </tbody>
       </nz-table>
@@ -280,7 +256,7 @@
   <nz-modal [(nzVisible)]="imageModal" [nzFooter]="mainTemplate.modalEmptyFooter" nzTitle="افزودن تصویر" (nzOnCancel)="imageModal = false">
     <ng-container *nzModalContent>
       <app-image-uploader-card key="MonizaDB/Product" Id="1" (onOk)="addImage($event)"></app-image-uploader-card>
-     </ng-container>
+    </ng-container>
   </nz-modal>
 
 
