@@ -19,7 +19,7 @@
         </nz-form-item>
       </form>
     </nz-tab>
-    <nz-tab nzTitle="محصولات ({{item.controls.Products.value?.length}})">
+    <nz-tab nzTitle="محصولات ({{item.controls.ProductLabels.value?.length}})">
       <div nz-row *ngIf="item.controls.Id.value==0">
         <nz-alert nzType="error" class="alertInTopOfTable" nzMessage=" ابتدا لیبل را ذخیره کنید، بعد از آن میتوانید نسبت به اضافه کردن محصولات اقدام کنید"></nz-alert>
       </div>
@@ -31,7 +31,7 @@
           <button nz-button nzType="dashed" (click)="inModal = true "> اضافه کردن محصولات </button>
         </div>
         <div nz-col [nzXs]="24" [nzMd]="16" [nzLg]="12">
-          <ng-container *ngTemplateOutlet="mainTemplate?.listWithDragDropTemplate;context:{com: this, item:item, name:'Products'}"></ng-container>
+          <ng-container *ngTemplateOutlet="mainTemplate?.listWithDragDropTemplate;context:{com: this, item:item, name:'ProductLabels'}"></ng-container>
         </div>
       </div>
     </nz-tab>

@@ -98,7 +98,7 @@ namespace Store.Models
         public ICollection<Product> Products { set; get; }
         public List<ProductLabel> ProductLabels { get; set; }
     }
-    public class ProductLabel : BaseModel
+    public class ProductLabel
     {
         public int ProductId { get; set; }
         [ForeignKey("ProductId")]

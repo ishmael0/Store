@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Store.Models;
 
 namespace Store.MonizaDBMigration
 {
     [DbContext(typeof(MonizaDB))]
-    partial class MonizaDBModelSnapshot : ModelSnapshot
+    [Migration("20211017052259__6")]
+    partial class _6
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -516,7 +518,16 @@ namespace Store.MonizaDBMigration
                     b.Property<int>("LabelId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("Create")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
                     b.Property<int>("Priority")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.HasKey("ProductId", "LabelId");

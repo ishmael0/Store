@@ -11,7 +11,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { FileManagerComponent } from '../../../../../Santel/Core/ClientApp/src/app/template/components/file-manager/file-manager.component';
 import { IconsComponent } from '../../../../../Santel/Core/ClientApp/src/app/template/components/icons/icons.component';
 import { FormGroup } from '@angular/forms';
- 
+
 
 
 
@@ -29,14 +29,14 @@ export const config: WebSiteConfiguration = new WebSiteConfiguration('MonizaDB',
         new PropertyConfiguration('ParentCategoryId', '  دسته بندی    ', {
           Validators: []
         }),
-        new PropertyConfiguration('Icon', 'آیکون ', { value:'', Validators: [], InTable: true }),
-        new PropertyConfiguration('Priority', 'اولویت ', { value:0, Type: 'number', Validators: [], InTable: false }),
+        new PropertyConfiguration('Icon', 'آیکون ', { value: '', Validators: [], InTable: true }),
+        new PropertyConfiguration('Priority', 'اولویت ', { value: 0, Type: 'number', Validators: [], InTable: false }),
         new PropertyConfiguration('Summary', 'خلاصه ', { Validators: [], InTable: true }),
         new PropertyConfiguration('Description', 'شرح  ', { Validators: [], InTable: true }),
         new PropertyConfiguration('Images', 'تصاویر  ', { value: [], Validators: [], InTable: true }),
         new PropertyConfiguration('TreeNodes', 'جزیات محصولات در این دسته بندی  ', { Validators: [], InTable: true }),
         new PropertyConfiguration('DetailsNodeValuesMaxId', 'DetailsNodeValuesMaxId  ', { value: 0, Validators: [], InTable: false }),
-        new PropertyConfiguration('Color', 'مقدار', { value:'#000000', Type: 'color', Validators: [Validators.required], InTable: false }),
+        new PropertyConfiguration('Color', 'مقدار', { value: '#000000', Type: 'color', Validators: [Validators.required], InTable: false }),
       ]
     }),
     new EntityConfiguration(BrandComponent, 'Brand', " برند", {
@@ -65,16 +65,16 @@ export const config: WebSiteConfiguration = new WebSiteConfiguration('MonizaDB',
         new PropertyConfiguration('Types', 'انواع  ', { Type: 'custom', value: [], Validators: [], InTable: false }),
         new PropertyConfiguration('DetailsNodeValues', 'ویژگی ها', { Type: 'custom', value: {}, Validators: [], InTable: false }),
         new PropertyConfiguration('KeyWords', ' کلید واژه ها', { Type: 'custom', value: [], Validators: [], InTable: false }),
-         new PropertyConfiguration('Weight', '   وزن', { Type: 'number', value: 0, Validators: [], InTable: false }),
+        new PropertyConfiguration('Weight', '   وزن', { Type: 'number', value: 0, Validators: [], InTable: false }),
       ]
     }),
     new EntityConfiguration(LabelComponent, 'Label', "لیبل ها", {
-      componentType: ComponentTypes.lazytable,
+      componentType: ComponentTypes.table,
       icon: 'palette',
       propertiesConfigurations: [
         ...defaultPropertyWithTitleConfiguration,
         new PropertyConfiguration('Color', 'رنگ', { value: '#000000', Type: 'color', Validators: [], InTable: true }),
-        new PropertyConfiguration('Products', 'محصولات', { value:[], Type: 'custom', Validators: [], InTable: true }),
+        new PropertyConfiguration('ProductLabels', 'محصولات', { value: [], Type: 'custom', Validators: [], InTable: true }),
       ]
     }),
     new EntityConfiguration(ColorComponent, 'Color', "رنگ", {
