@@ -100,6 +100,7 @@ namespace Store.Models
     }
     public class ProductLabel
     {
+
         public int ProductId { get; set; }
         [ForeignKey("ProductId")]
         public Product Product { get; set; }

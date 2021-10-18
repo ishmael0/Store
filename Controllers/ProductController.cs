@@ -26,25 +26,17 @@ namespace Store.Models
         }
         public override async Task<JsonResult> Set([FromQuery] IDictionary<string, string> param, [FromBody] Label t)
         {
-            if (t == null)
-                return JR(StatusCodes.Status403Forbidden, "مشکل ناشناخته ای روی داده است");
-            if (t.Id != 0 && HasAccessToId(upm, t.Id) != true)
-                return JR(StatusCodes.Status403Forbidden, "دسترسی غیر مجاز");
-            using var transaction = _context.Database.BeginTransaction();
-            var pl = t.ProductLabels;
-            t.ProductLabels = null;
             if (t.Id > 0)
             {
-                //var list = await _context.ProductLabels.Where(c => c.LabelId == t.Id).AsNoTracking().ToListAsync();
-                //pl.Where(c => list.Select(c => new { c.LabelId, c.ProductId }).Contains(new { c.LabelId, c.ProductId })).ToList().ForEach(c => _context.ProductLabels.Update(c));
-                //pl.Where(c => !list.Select(c => new { c.LabelId, c.ProductId }).Contains(new { c.LabelId, c.ProductId })).ToList().ForEach(c => _context.ProductLabels.Add(c));
-                //#warning
-                //list.Where(c => !pl.Select(d => new { d.LabelId, d.ProductId }).Contains(new { c.LabelId, c.ProductId })).ToList().ForEach(c => _context.ProductLabels.Remove(c));
+                var cu = t.ProductLabels.Select(c => c.ProductId);
+                var missingRows = _context.ProductLabels.Where(c => c.LabelId == t.Id && !cu.Contains(c.ProductId));
+                _context.ProductLabels.RemoveRange(missingRows);
             }
-            ts.AddOrUpdate(t, _context);
-            await _context.SaveChangesAsync();
-            transaction.Commit();
-            return await GetHandler(param, t);
+            for (int i = 0; i < t.ProductLabels.Count; i++)
+            {
+                t.ProductLabels[i].Priority = t.ProductLabels.Count - i;
+            }
+            return await base.Set(param, t);
         }
     }
     public class ProductController : BaseController<MonizaDB, Product>

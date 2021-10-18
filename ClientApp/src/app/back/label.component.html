@@ -31,7 +31,7 @@
           <button nz-button nzType="dashed" (click)="inModal = true "> اضافه کردن محصولات </button>
         </div>
         <div nz-col [nzXs]="24" [nzMd]="16" [nzLg]="12">
-          <ng-container *ngTemplateOutlet="mainTemplate?.listWithDragDropTemplate;context:{com: this, item:item, name:'ProductLabels'}"></ng-container>
+          <ng-container *ngTemplateOutlet="mainTemplate?.listWithDragDropTemplate;context:{com: this, item:item, name:'ProductLabels', id:'ProductId'}"></ng-container>
         </div>
       </div>
     </nz-tab>
