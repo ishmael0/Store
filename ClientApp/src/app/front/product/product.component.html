@@ -1,12 +1,12 @@
 <div nz-row>
-  <div nz-col
+  <!--<div nz-col
        style="padding:5px"
        [nzXs]="24"
        [nzMd]="6">
     <div nz-row nzJustify="center">
       <app-category-tree nz-col [nzXs]="24"></app-category-tree>
 
-      <app-category-card  nz-col
+      <app-category-card nz-col
                          [nzXs]="8"
                          [nzSm]="6"
                          [nzMd]="12"
@@ -15,12 +15,11 @@
       <app-favorite nz-col [nzXs]="24"></app-favorite>
       <app-basket nz-col [nzXs]="24"></app-basket>
     </div>
-  </div>
+  </div>-->
   <div nz-col
        [nzXs]="24"
        [nzMd]="18">
-    <nz-spin nzTip="Loading..."  [nzDelay]="500" [nzSpinning]="!product">
-
+    <nz-spin nzTip="Loading..." [nzDelay]="500" [nzSpinning]="!product">
       <div *ngIf="product" nz-row class="roundborderr" style="margin-right: 5px; margin-left: 5px; ">
         <div nz-col [nzSm]="12">
           <owl-carousel-o [options]="customOptions">
@@ -32,14 +31,131 @@
           </owl-carousel-o>
         </div>
         <div nz-col [nzSm]="12" style="padding:10px">
-          <h1 style="text-align:right">
-            {{product.Title}}
-          </h1>
-          <h2 style="text-align:right">
-            {{product.Summary}}
-          </h2>
+          <nz-breadcrumb>
+            <nz-breadcrumb-item *ngFor="let item of bread">
+              {{item}}
+            </nz-breadcrumb-item>
+            <nz-breadcrumb-item>  {{category.Title}}</nz-breadcrumb-item>
+          </nz-breadcrumb>
+
+
+          <br />
+          <br />
+          <div style="display:flex">
+            <div style="width:50%">
+              <h1 style="text-align:start">
+                {{product.Title}}
+              </h1>
+              <h2 style="text-align:start;">
+                {{product.Summary}}
+              </h2>
+            </div>
+            <div style="width: 50%;text-align:end">
+
+              <nz-rate [nzDisabled]="true" [ngModel]="3.5"></nz-rate>
+              <br />
+              از 200 رای
+              <br />
+              400 نظر
+              <br />
+              25 سوال پاسخ داده شده
+            </div>
+          </div>
+
+
+          <div style="text-align:start;padding:20px">
+            <div *ngFor="let item of category.Searchs">
+              <span>
+                {{item.name}}:
+              </span>
+              <span style="font-size:large">
+                {{product.DetailsNodeValues[item.key]}}
+              </span>
+            </div>
+          </div>
+
+          <div style="text-align:start;padding:20px">
+            <button *ngFor="let item of product.Types" nz-button nzType="primary" class="npicked" [class.picked]="item.selected === true" (click)="selecttype(item)">
+              <i nz-icon *ngIf="item.selected" style="color:#00a744;" [innerHtml]="http.icons.check"></i>
+              {{item.Title}}
+            </button>
+          </div>
+
         </div>
       </div>
-      </nz-spin>
+      <br />
+      <div class="roundborder" style="width:100%;padding:10px">
+        <nz-tabset>
+          <nz-tab nzTitle=" مشخصات">
+            <nz-tree [nzExpandAll]="true" [nzData]="category?.TreeNodes" nzBlockNode [nzTreeTemplate]="nzTreeTemplate">
+              <ng-template #nzTreeTemplate let-node let-origin="origin">
+                <span style="width:150px">
+                  {{origin.name}}:
+                </span>
+                <span style="font-size:large">
+                  {{product.DetailsNodeValues[origin.key]}}
+                </span>
+              </ng-template>
+            </nz-tree>
+          </nz-tab>
+          <nz-tab nzTitle="نظرات ">
+
+          </nz-tab>
+          <nz-tab nzTitle=" پرسش و پاسخ">
+
+          </nz-tab>
+        </nz-tabset>
+      </div>
+    </nz-spin>
+  </div>
+  <div nz-col
+       style="padding:5px"
+       [nzXs]="24"
+       [nzMd]="6">
+    <div nz-row nzJustify="center">
+      <app-category-card nz-col
+                         [nzXs]="8"
+                         [nzSm]="6"
+                         [nzMd]="12"
+                         [nzLg]="8"
+                         [data]="category"></app-category-card>
+      <br />
+      <br />
+      <div class="roundborder" style="width:100%">
+        <button nz-button nzType="primary" class="npicked picked" style="width:100%">
+          <i nz-icon style="color:#00a744;" [innerHtml]="http.icons['check-all']"></i>
+          {{selectedType.Title}}
+        </button>
+        <span style="font-size:larger">
+          {{selectedType.Price}}
+        </span>
+        <span>
+          ریال
+        </span>
+        <br />
+
+        <br />
+        <button nz-button nzType="default" nzDanger style="width:100%">
+          افزودن به سبد خرید
+        </button>
+        <br />
+        ارسال از یک روز کاری آینده
+        امکان ارسال فوری
+
+      </div>
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+  <div nz-col
+       [nzXs]="24">
+    <br />
+
   </div>
 </div>

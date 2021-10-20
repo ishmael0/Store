@@ -23,18 +23,19 @@ namespace Store.Models
             var items = await _context.Categories.Where(c => c.Status == Core.Models.Statuses.Published)
                 .Select(c => new { c.ParentCategoryId, c.Id,c.Color, c.Title, c.Description, c.Icon, c.Images, c.Summary, c.Priority,c.TreeNodes })
                 .ToListAsync();
-            return new JsonResult(new { categories = items.OrderBy(c => c.Priority) });
+            var labels = await _context.Labels.ToListAsync();
+            return new JsonResult(new { categories = items.OrderBy(c => c.Priority) , labels });
         }
         [HttpPost]
         public async Task<JsonResult> GetProducts([FromBody] ProductHelper helper)
         {
-            var products = await _context.Products.Where(c => c.Status == Core.Models.Statuses.Published && helper.Categories.Contains(c.CategoryId)).ToListAsync();
+            var products = await _context.Products.Include(c=>c.Types).Where(c => c.Status == Core.Models.Statuses.Published && helper.Categories.Contains(c.CategoryId)).ToListAsync();
             return new JsonResult(new { products = products.OrderBy(c => c.Create) });
         }
         [HttpPost]
         public async Task<JsonResult> GetProduct([FromBody] ProductHelper2 helper)
         {
-            var product = await _context.Products.FirstOrDefaultAsync(c => c.Id == helper.Id && c.Status == Core.Models.Statuses.Published);
+            var product = await _context.Products.Include(c => c.Types).FirstOrDefaultAsync(c => c.Id == helper.Id && c.Status == Core.Models.Statuses.Published);
             return new JsonResult(new { product });
         }
         public class ProductHelper

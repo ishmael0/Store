@@ -79,7 +79,7 @@
               <!--<button nz-button nz-col nzType="dashed" nzDanger (click)="t.Status = 'Deleted'">حذف</button>-->
             </td>
             <td>
-              <input nz-input [(ngModel)]="t.Title" placeholder="عنوان" />
+              <input (ngModelChange)="makeItDirty(item)" nz-input [(ngModel)]="t.Title" placeholder="عنوان" />
               <nz-select (ngModelChange)="makeItDirty(item)" [(ngModel)]="t.Status" nzPlaceHolder="وضعیت" nzShowSearch style="min-width:100px">
                 <nz-option *ngFor="let item of cs.Statuses" [nzValue]="item.title" [nzLabel]="item.label">
                 </nz-option>
