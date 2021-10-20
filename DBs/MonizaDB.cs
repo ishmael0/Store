@@ -34,7 +34,7 @@ namespace Store.Models
             modelBuilder.Entity<Product>().Property(e => e.DetailsNodeValues).HasConversion(v => JsonConvert.SerializeObject(v), v => JsonConvert.DeserializeObject<Dictionary<int, string>>(v));
             //modelBuilder.Entity<Product>().Property(e => e.Types).HasConversion(v => JsonConvert.SerializeObject(v), v => JsonConvert.DeserializeObject<List<ProductType>>(v));
             modelBuilder.Entity<Product>().Property(e => e.Images).HasConversion(v => JsonConvert.SerializeObject(v), v => JsonConvert.DeserializeObject<List<Images>>(v));
-            modelBuilder.Entity<Product>().Property(e => e.Relateds).HasConversion(v => JsonConvert.SerializeObject(v.Select(c => c.Id)), v => JsonConvert.DeserializeObject<List<int>>(v).Select(c => new ProductIdTitleHelper() { Id = c }));
+            //modelBuilder.Entity<Product>().Property(e => e.Relateds).HasConversion(v => JsonConvert.SerializeObject(v.Select(c => c.Id)), v => JsonConvert.DeserializeObject<List<int>>(v).Select(c => new ProductIdTitleHelper() { Id = c }));
 
             modelBuilder.Entity<Category>().Property(e => e.TreeNodes).HasConversion(v => JsonConvert.SerializeObject(v), v => JsonConvert.DeserializeObject<List<TreeNode>>(v));
             modelBuilder.Entity<Category>().Property(e => e.Images).HasConversion(v => JsonConvert.SerializeObject(v), v => JsonConvert.DeserializeObject<List<Images>>(v));
@@ -54,10 +54,16 @@ namespace Store.Models
             modelBuilder.Entity<Product>().HasMany(p => p.KeyWords).WithMany(p => p.Products).UsingEntity<ProductKeyword>(
          j => j.HasOne(pt => pt.Keyword).WithMany(t => t.ProductKeyWords).HasForeignKey(pt => pt.KeywordId),
          j => j.HasOne(pt => pt.Product).WithMany(p => p.ProductKeyWords).HasForeignKey(pt => pt.ProductId),
-         j => { j.HasKey(t => new { t.ProductId, t.KeywordId }); });
+         j => { j.HasKey(t => new { t.ProductId, t.KeywordId }); });     
+            
+            
+         //   modelBuilder.Entity<Product>().HasMany(p => p.Products).WithMany(p => p.Products).UsingEntity<ProductProduct>(
+         //j => j.HasOne(pt => pt.RelatedProduct).WithMany(t => t.RelatedProducts).HasForeignKey(pt => pt.RelatedProductId),
+         //j => j.HasOne(pt => pt.Product).WithMany(p => p.RelatedProducts).HasForeignKey(pt => pt.ProductId),
+         //j => { j.HasKey(t => new { t.ProductId, t.RelatedProductId }); });
 
 
-
+ 
             //modelBuilder.Entity<ProductCategory>().HasKey(t => new { t.CategoryId, t.ProductId });
             //modelBuilder.Entity<ProductCategory>().HasOne(pt => pt.Product).WithMany(p => p.ProductCategory).HasForeignKey(pt => pt.ProductId);
             //modelBuilder.Entity<ProductCategory>().HasOne(pt => pt.Category).WithMany(t => t.ProductCategory).HasForeignKey(pt => pt.CategoryId);

@@ -49,6 +49,12 @@
 
 </ng-template>
 
+<ng-template #tableBodyPicker let-item="item">
+  <td>{{ item.Id }}</td>
+  <td>{{ item.Title }}</td>
+</ng-template>
+
+
 
 <ng-template #tableBody let-item="item">
   <td>{{ item.Id }}</td>
@@ -73,7 +79,7 @@
 
   <nz-modal [nzWidth]="'80%'" [(nzVisible)]="inModal" [nzFooter]="mainTemplate.modalEmptyFooter" nzTitle="افزودن محصولات " (nzOnCancel)="inModal = false">
     <ng-container *nzModalContent>
-      <app-product (select)="relatedProductSelected($event)"></app-product>
+      <app-product (select)="productSelected($event)"></app-product>
       <button style="float:left" nz-button nzType="primary" (click)="inModal = false">تایید </button>
     </ng-container>
   </nz-modal>

@@ -189,7 +189,7 @@
         </div>
       </div>
     </nz-tab>
-    <nz-tab nzTitle=" لیبل ها  ({{item.controls.Labels.value?.length}})">
+    <nz-tab nzTitle=" لیبل ها  ({{item.controls.ProductLabels.value?.length}})">
       <div nz-row>
         <div nz-col [nzXs]="24" [nzMd]="8" [nzLg]="6" style="text-align:center">
           <nz-form-label>لیبل ها </nz-form-label>
@@ -198,11 +198,11 @@
           <button nz-button nzType="dashed" (click)="labelModal = true ">اضافه کردن  لیبل</button>
         </div>
         <div nz-col [nzXs]="24" [nzMd]="16" [nzLg]="12">
-          <ng-container *ngTemplateOutlet="mainTemplate?.listWithDragDropTemplate;context:{com: this, item:item, name:'Labels'}"></ng-container>
+          <ng-container *ngTemplateOutlet="mainTemplate?.listWithDragDropTemplate;context:{com: this, item:item, name:'ProductLabels'}"></ng-container>
         </div>
       </div>
     </nz-tab>
-    <nz-tab nzTitle=" کلمات کلیدی ({{item.controls.KeyWords.value?.length}})">
+    <nz-tab nzTitle=" کلمات کلیدی ({{item.controls.ProductKeyWords.value?.length}})">
       <div nz-row>
         <div nz-col [nzXs]="24" [nzMd]="8" [nzLg]="6" style="text-align:center">
           <nz-form-label>کلمات کلیدی</nz-form-label>
@@ -211,7 +211,7 @@
           <button nz-button nzType="dashed" (click)="keywordModal = true ">اضافه کردن کلیدواژه</button>
         </div>
         <div nz-col [nzXs]="24" [nzMd]="16" [nzLg]="12">
-          <ng-container *ngTemplateOutlet="mainTemplate?.listWithDragDropTemplate;context:{com: this, item:item, name:'KeyWords'}"></ng-container>
+          <ng-container *ngTemplateOutlet="mainTemplate?.listWithDragDropTemplate;context:{com: this, item:item, name:'ProductKeyWords'}"></ng-container>
         </div>
       </div>
     </nz-tab>

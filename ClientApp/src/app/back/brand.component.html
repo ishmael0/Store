@@ -3,29 +3,9 @@
 <ng-template #form let-item="item">
   <nz-tabset [nzAnimated]="false">
     <nz-tab nzTitle="محتوای اصلی">
+      <ng-container *ngTemplateOutlet="mainTemplate?.defaultIDStatusForm;context:{  item:item}"></ng-container>
+
       <form nz-form [formGroup]="item">
-        <nz-form-item>
-          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Id">شناسه</nz-form-label>
-          <nz-tag [nzColor]="'#f50'">{{item.controls.Id.value}}</nz-tag>
-          <nz-form-control [nzSm]="4" [nzXs]="24" nzErrorTip="وضعیت معتبر نیست">
-            <nz-select formControlName="Status"  nzPlaceHolder="Select OS" nzShowSearch nzAllowClear [nzCustomTemplate]="statusTemplate">
-              <nz-option *ngFor="let item of cs.Statuses" [nzValue]="item.title" nzCustomContent>
-                {{item.label}}
-                <i [style.color]="item.color" nz-icon [innerHtml]="icons[item.icon]"></i>
-              </nz-option>
-            </nz-select>
-            <ng-template #statusTemplate let-selected>
-              <ng-container *ngFor="let item of cs.Statuses">
-                <div *ngIf="selected.nzValue==item.title">
-                  {{item.label}}
-                  <i nz-icon [style.color]="item.color" [innerHtml]="icons[item.icon]"></i>
-                </div>
-              </ng-container>
-            </ng-template>
-          </nz-form-control>
-        </nz-form-item>
-
-
         <nz-form-item>
           <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Title">عنوان</nz-form-label>
           <nz-form-control [nzSm]="6" [nzXs]="24" nzErrorTip="عنوان را وارد کنید">
@@ -38,7 +18,7 @@
         </nz-form-item>
 
 
- 
+
       </form>
     </nz-tab>
     <nz-tab nzTitle=" تصاویر  ({{item.controls.Images.value?.length}})">

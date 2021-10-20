@@ -107,11 +107,22 @@ export class LabelComponent extends BaseComponent {
   constructor(public injector: Injector) {
     super(injector, 'Label');
   }
+  async set(back = false) {
+    let item = this.selectedForm();
+    let x: any[] = item.controls.ProductLabels.value;
+    x.forEach((c, index) => c.Priority = index);
+    await super.set(back);
+  }
+  onOpen(m: string, d: any, item: any) {
+    console.log(item);
+    item.ProductLabels = d.List;
+    super.onOpen(m, d, item);
+  }
   inModal = false;
-  relatedProductSelected(e: any) {
+  productSelected(e: any) {
     let item = this.selectedForm();
     let x = item.controls.ProductLabels.value;
-    let y = { ProductId: e.Id, LabelId: 0, Priority: 0, Title:e.Title };
+    let y = { ProductId: e.Id, LabelId: 0, Priority: 0, Title: e.Title };
     if (!x) {
       item.controls.ProductLabels.setValue([y]);
       this.makeItDirty(item);
@@ -242,6 +253,20 @@ export class ProductComponent extends BaseComponent {
   Editor = ClassicEditor;
   categoryTree: any;
   categories: any[];
+
+  onOpen(m: string, d: any, item: any) {
+    console.log(d);
+    item.Types = d.Types;
+    item.ProductLabels = d.ProductLabels;
+    let labels = this.dataManager.loadedData["Labels"]
+    item.ProductLabels.forEach(c => {
+      c.Title = labels.find(d => d.Id == c.LabelId).Title
+    });
+    item.ProductKeyWords = d.ProductKeyWords;
+    super.onOpen(m, d, item);
+  }
+
+
   fill() {
     this.categoryTree = toTreeHelper(this.dataManager.loadedData.Categories, "Id", "ParentCategoryId", null);
     this.categories = this.dataManager.loadedData["Categories"];
@@ -253,8 +278,6 @@ export class ProductComponent extends BaseComponent {
       c.Category_ = mycat.Title;
       if (!c.DetailsNodeValues) c.DetailsNodeValues = {};
       c.DetailsNodeValuesLength = Object.keys(c.DetailsNodeValues).length;
-
-
     })
   }
   addType(item: FormGroup, e: any = null) {
@@ -300,11 +323,19 @@ export class ProductComponent extends BaseComponent {
   }
   labelSelected(e: any) {
     let item = this.selectedForm();
-    if (!item.controls.Labels.value?.some(c => c.Id == e.Id)) {
-      item.controls.Labels.setValue([...item.controls.Labels.value, { Id: e.Id, Title: e.Title }]);
+    let x = item.controls.ProductLabels.value;
+    let y = { LabelId: e.Id, Title: e.Title };
+    if (!x) {
+      item.controls.ProductLabels.setValue([y]);
+      this.makeItDirty(item);
+    }
+    else if (!x.some(c => c.ProductId == e.Id)) {
+      x.push(y);
+      item.controls.ProductLabels.setValue(x);
       this.makeItDirty(item);
     }
   }
+
   async addImage(e) {
     this.imageModal = false;
     let x: any[] = this.selectedForm().controls.Images.value;

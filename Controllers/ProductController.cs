@@ -14,15 +14,17 @@ namespace Store.Models
 {
     public class LabelController : BaseController<MonizaDB, Label>
     {
-
+        [HttpGet]
+        public override async Task<JsonResult> GetSingle([FromQuery] int id)
+        {
+            var list = await _context.ProductLabels.Where(c => c.LabelId == id).ToListAsync();
+            var ids = list.Select(c => c.ProductId);
+            var titles = await _context.Products.Where(c => ids.Contains(c.Id)).Select(c => new { c.Id, c.Title }).ToListAsync();
+            list.ForEach(c => c.Title = titles.FirstOrDefault(d => d.Id == c.ProductId).Title);
+            return JR(StatusCodes.Status200OK, "", new { List = list });
+        }
         public LabelController(MonizaDB dbContext, UserPermissionManager upm) : base(dbContext, upm)
         {
-        }
-        [NonAction]
-        public override IQueryable<Label> BuildRequest(IDictionary<string, string> param)
-        {
-            return base.BuildRequest(param)
-                .Include(c => c.ProductLabels);
         }
         public override async Task<JsonResult> Set([FromQuery] IDictionary<string, string> param, [FromBody] Label t)
         {
@@ -32,10 +34,6 @@ namespace Store.Models
                 var missingRows = _context.ProductLabels.Where(c => c.LabelId == t.Id && !cu.Contains(c.ProductId));
                 _context.ProductLabels.RemoveRange(missingRows);
             }
-            for (int i = 0; i < t.ProductLabels.Count; i++)
-            {
-                t.ProductLabels[i].Priority = t.ProductLabels.Count - i;
-            }
             return await base.Set(param, t);
         }
     }
@@ -44,53 +42,28 @@ namespace Store.Models
         public ProductController(MonizaDB dbContext, UserPermissionManager upm) : base(dbContext, upm)
         {
         }
-        [NonAction]
-        public override IQueryable<Product> BuildRequest(IDictionary<string, string> param)
+        [HttpGet]
+        public override async Task<JsonResult> GetSingle([FromQuery] int id)
         {
-            return base.BuildRequest(param)
-                .Include(c => c.Types.Where(c => c.Status != 0))
-                .Include(c => c.KeyWords.Where(c => c.Status != 0))
-                .Include(c => c.Labels.Where(c => c.Status != 0));
+            var item = await _context.Products
+                .Include(c => c.ProductLabels)
+                //.Include(c => c.RelatedProducts)
+                .Include(c => c.Types)
+                .Include(c => c.KeyWords)
+                .FirstOrDefaultAsync(c => c.Id == id);
+            var ProductKeyWords = item.KeyWords.Select(c => new { ProductId = id, KeywordId = c.Id, Title = c.Title });
+            return JR(StatusCodes.Status200OK, "", new { ProductKeyWords, item.ProductLabels, item.Types });
         }
-
+        [HttpPost]
         public override async Task<JsonResult> Set([FromQuery] IDictionary<string, string> param, [FromBody] Product t)
         {
-
-            using var transaction = _context.Database.BeginTransaction();
             if (t.Id > 0)
             {
-                _context.RemoveRange(_context.ProductLabels.Where(c => c.ProductId == t.Id));
+                var cu = t.ProductLabels.Select(c => c.LabelId);
+                var missingRows = _context.ProductLabels.Where(c => c.ProductId == t.Id && !cu.Contains(c.LabelId));
+                _context.ProductLabels.RemoveRange(missingRows);
             }
-            if (t == null)
-                return JR(StatusCodes.Status403Forbidden, "مشکل ناشناخته ای روی داده است");
-            if (t.Id != 0 && HasAccessToId(upm, t.Id) != true)
-                return JR(StatusCodes.Status403Forbidden, "دسترسی غیر مجاز");
-            ts.AddOrUpdate(t, _context);
-            await _context.SaveChangesAsync();
-            transaction.Commit();
-            return await GetHandler(param, t);
-        }
-        [NonAction]
-        public override async Task<JsonResult> GetHandler([FromQuery] IDictionary<string, string> param, Product currentItem)
-        {
-            var x = await PostRequest(param);
-            if (x.Item2.Count > 0)
-            {
-                var ids = x.Item2.Where(c => c.Relateds != null).SelectMany(c => c.Relateds).Select(c => c.Id).Distinct().ToList();
-                if (ids.Count > 0)
-                {
-                    var titles = await _context.Products.Where(c => ids.Contains(c.Id)).Select(c => new { c.Title, c.Id }).ToListAsync();
-                    x.Item2.ForEach(c =>
-                    {
-                        c.Relateds.ToList().ForEach(r =>
-                        {
-                            r.Title = titles.FirstOrDefault(t => t.Id == r.Id)?.Title;
-                        });
-
-                    });
-                }
-            }
-            return JR(StatusCodes.Status200OK, data: new { Records = x.Item2, TotalRecords = x.Item1, Model = currentItem });
+            return await base.Set(param, t);
         }
     }
 

@@ -71,7 +71,12 @@ namespace Store.Models
         public List<ProductType> Types { set; get; }
         public List<Images> Images { set; get; }
         public Dictionary<int, string> DetailsNodeValues { set; get; }
-        public IEnumerable<ProductIdTitleHelper> Relateds { set; get; }
+
+
+
+        //public ICollection<Product> Products { set; get; }
+        //public IEnumerable<ProductProduct> RelatedProducts { set; get; }
+
         public ICollection<Keyword> KeyWords { set; get; }
         public IEnumerable<ProductKeyword> ProductKeyWords { set; get; }
         public ICollection<Label> Labels { set; get; }
@@ -100,7 +105,8 @@ namespace Store.Models
     }
     public class ProductLabel
     {
-
+        [NotMapped]
+        public virtual string Title { get; set; }
         public int ProductId { get; set; }
         [ForeignKey("ProductId")]
         public Product Product { get; set; }
@@ -120,6 +126,17 @@ namespace Store.Models
         public int KeywordId { get; set; }
         [ForeignKey("KeywordId")]
         public Keyword Keyword { get; set; }
+    }  
+    
+    public class ProductProduct
+    {
+        public int ProductId { get; set; }
+        [ForeignKey("ProductId")]
+        public Product Product { get; set; }   
+        
+        public int RelatedProductId { get; set; }
+        [ForeignKey("RelatedProductId")]
+        public Product RelatedProduct { get; set; }
     }
 
 

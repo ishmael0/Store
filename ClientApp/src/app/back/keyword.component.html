@@ -1,23 +1,14 @@
 
 
 <ng-template #form let-item="item">
+  <ng-container *ngTemplateOutlet="mainTemplate?.defaultIDStatusForm;context:{  item:item}"></ng-container>
   <form nz-form [formGroup]="item">
-
-
-
-
-
     <nz-form-item>
       <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Title">عنوان</nz-form-label>
       <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="عنوان را وارد کنید">
         <input nz-input formControlName="Title" />
       </nz-form-control>
     </nz-form-item>
-
-
-
-
-
   </form>
 </ng-template>
 
@@ -25,11 +16,6 @@
   آیدی: 012331323
 </ng-template>
 <ng-template #search>
-
-
-
-
-
 </ng-template>
 
 
