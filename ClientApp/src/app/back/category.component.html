@@ -85,15 +85,20 @@ https://www.iconpacks.net/search/?icon=man
       <nz-tree *ngIf="item.controls.TreeNodes.value" [nzData]="item.controls.TreeNodes.value" nzDraggable nzBlockNode [nzTreeTemplate]="nzTreeTemplate">
         <ng-template #nzTreeTemplate let-node let-origin="origin">
           <label nz-tooltip (change)="makeItDirty(item)" nzTooltipTitle=" قابلیت جستجو بر روی این گزینه؟" nz-checkbox [(ngModel)]="origin.Searchable"></label>
-          <nz-select (change)="makeItDirty(item)" [(ngModel)]="origin.Type" style="width:200px" nzPlaceHolder=" نوع گزینه را مشخص کنید">
-            <nz-option nzLabel="بله/خیر" nzValue="Boolean"></nz-option>
+          <nz-select (ngModelChange)="makeItDirty(item);TypeChanged($event, origin)" [(ngModel)]="origin.Type" style="width:200px" nzPlaceHolder=" نوع گزینه را مشخص کنید">
+            <nz-option nzLabel="دارد/ندارد" nzValue="SelectH"></nz-option>
+            <nz-option nzLabel="بله/خیر" nzValue="SelectT"></nz-option>
             <nz-option nzLabel="متن ساده" nzValue="String"></nz-option>
             <nz-option nzLabel="قابلیت انتخاب" nzValue="Select"></nz-option>
             <nz-option nzLabel="عدد" nzValue="Number"></nz-option>
           </nz-select>
 
           <nz-tag [nzColor]="'magenta'" style="width:30px"> {{origin.key}}</nz-tag>
-          <input (change)="makeItDirty(item)" [(ngModel)]="origin.name" />
+          <input  (ngModelChange)="makeItDirty(item)" [(ngModel)]="origin.name" />
+
+          <nz-select *ngIf="origin.Type != 'String'" style="width:300px" [(ngModel)]="origin.Items" (change)="makeItDirty(item)"
+                     nzMode="tags" nzPlaceHolder="انواع را وراد کنید و اینتر بزنید">
+          </nz-select>
           <button (click)="removeNode(item, node)" nz-button nzDanger nzType="primary">
             <i nz-icon
                [innerHtml]="icons['delete']"></i>

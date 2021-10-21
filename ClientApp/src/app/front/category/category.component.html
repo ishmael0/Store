@@ -55,12 +55,15 @@
               <container-element [ngSwitch]="origin.Type" style="width:100%">
                 <input *ngSwitchCase="'String'" nz-input />
                 <nz-select *ngSwitchCase="'Select'" nzAllowClear nzPlaceHolder="همه موارد">
-                  <nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
+                  <nz-option *ngFor="let s of origin.Items" [nzValue]="s" [nzLabel]="s"></nz-option>
                 </nz-select>
-                <nz-select *ngSwitchCase="'Boolean'" nzAllowClear nzPlaceHolder="همه موارد">
-                  <nz-option nzValue="True" nzLabel="دارد"></nz-option>
-                  <nz-option nzValue="False" nzLabel="ندارد"></nz-option>
+                <nz-select *ngSwitchCase="'SelectT'" nzAllowClear nzPlaceHolder="همه موارد">
+                  <nz-option *ngFor="let s of origin.Items" [nzValue]="s" [nzLabel]="s"></nz-option>
                 </nz-select>
+                <nz-select *ngSwitchCase="'SelectH'" nzAllowClear nzPlaceHolder="همه موارد">
+                  <nz-option *ngFor="let s of origin.Items" [nzValue]="s" [nzLabel]="s"></nz-option>
+                </nz-select>
+
                 <input *ngSwitchDefault nz-input />
               </container-element>
             </div>

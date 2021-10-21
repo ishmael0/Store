@@ -122,7 +122,7 @@ export class HttpService extends HttpClient {
     this.data.categories = x.categories;
     this.data.categories.forEach(c => {
       c.IconSanitizer = this.domSanitizer.bypassSecurityTrustHtml(c.Icon);
-      c.Searchs = c.TreeNodes?.filter(d => d.Searchable == true).map(d => ({Type :d.Type, key:d.key,name:d.name }))
+      c.Searchs = c.TreeNodes?.filter(d => d.Searchable == true).map(d => ({Type :d.Type, key:d.key,name:d.name, Items:d.Items }))
     });
     this.data.categoriesTree = toTreeHelper(x.categories, 'Id', 'ParentCategoryId', null);
     console.log(this.data.categoriesTree)

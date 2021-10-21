@@ -231,6 +231,12 @@ export class CategoryComponent extends BaseComponent {
     e.setExpanded(true);
     this.makeItDirty(item);
   }
+  TypeChanged(e:any, origin) {
+    console.log(e);
+    if (e == 'SelectT') origin.Items = ['بله', 'خیر'];
+    if (e == 'SelectH') origin.Items = ['دارد', 'ندارد'];
+    if (e == 'Select') origin.Items = [ ];
+  }
 }
 @Component({
   selector: 'app-product',

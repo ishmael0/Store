@@ -60,6 +60,7 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
 import { StepperModule } from '../../../../../Santel/Core/ClientApp/projects/stepper/src/public-api';
 import { BrandComponent } from './brand/brand.component';
 import { NzRateModule } from 'ng-zorro-antd/rate';
+import { NzCommentModule } from 'ng-zorro-antd/comment';
 
 
 
@@ -144,7 +145,8 @@ const routes: Routes = [
     DragDropModule,
     ScrollingModule,
     StepperModule,
-    NzRateModule
+    NzRateModule,
+    NzCommentModule
   ]
 })
 export class FromModule {
