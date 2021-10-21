@@ -76,7 +76,7 @@
 
           <div style="text-align:start;padding:20px">
             <button *ngFor="let item of product.Types" nz-button nzType="primary" class="npicked" [class.picked]="item.selected === true" (click)="selecttype(item)">
-              <i nz-icon *ngIf="item.selected" style="color:#00a744;" [innerHtml]="http.icons.check"></i>
+              <i nz-icon *ngIf="item.selected" style="color:white;" [innerHtml]="http.icons.check"></i>
               {{item.Title}}
             </button>
           </div>
@@ -130,36 +130,30 @@
                          [nzMd]="12"
                          [nzLg]="8"
                          [data]="category"></app-category-card>
-      <div class="roundborder" style="width:100%;margin-top:10px">
+      <br />
+      <div class="roundborder" style="width:100%;margin-top:10px;padding:20px">
         <button nz-button nzType="primary" class="npicked picked" style="width:100%">
-          <i nz-icon style="color:#00a744;" [innerHtml]="http.icons['check-all']"></i>
+          <i nz-icon [innerHtml]="http.icons['check-all']"></i>
           {{selectedType.Title}}
         </button>
-        <span style="font-size:larger">
-          {{selectedType.Price}}
-        </span>
-        <span>
+        <div style="text-align:start">
+          ارسال از یک روز کاری آینده
+        </div>
+        <div style="text-align:start">
+          امکان ارسال فوری
+        </div>
+        <div>
+          <span style="font-size:24px">
+            {{selectedType.Price}}
+          </span>
           ریال
-        </span>
-        <br />
-
+        </div>
         <br />
         <button nz-button nzType="default" nzSize="large" nzDanger style="width: 100%; color: white; background-color: #ff4d4f">
           افزودن به سبد خرید
         </button>
         <br />
-        ارسال از یک روز کاری آینده
-        امکان ارسال فوری
-
       </div>
-
-
-
-
-
-
-
-
     </div>
   </div>
   <div nz-col

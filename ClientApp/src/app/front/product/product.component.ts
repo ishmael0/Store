@@ -9,8 +9,8 @@ const sleep = (milliseconds) => {
   selector: 'app-product',
   templateUrl: './product.component.html',
   styles: [
-    `.picked{background-color: #00b74a;border-color: #00a744;}`+
-    `.npicked{border-color: #00a744;color:black;background-color: white;margin:5px;}`
+    `.npicked{border-color: #00a744;color:black;background-color: white;margin:5px;}` +
+    `.picked{background-color: #00b74a;border-color: #00a744;color:white;}`
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
