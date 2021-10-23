@@ -88,17 +88,21 @@ https://www.iconpacks.net/search/?icon=man
           <nz-select (ngModelChange)="makeItDirty(item);TypeChanged($event, origin)" [(ngModel)]="origin.Type" style="width:200px" nzPlaceHolder=" نوع گزینه را مشخص کنید">
             <nz-option nzLabel="دارد/ندارد" nzValue="SelectH"></nz-option>
             <nz-option nzLabel="بله/خیر" nzValue="SelectT"></nz-option>
-            <nz-option nzLabel="متن ساده" nzValue="String"></nz-option>
             <nz-option nzLabel="قابلیت انتخاب" nzValue="Select"></nz-option>
             <nz-option nzLabel="عدد" nzValue="Number"></nz-option>
+            <nz-option nzLabel="متن ساده" nzValue="String"></nz-option>
           </nz-select>
 
           <nz-tag [nzColor]="'magenta'" style="width:30px"> {{origin.key}}</nz-tag>
-          <input  (ngModelChange)="makeItDirty(item)" [(ngModel)]="origin.name" />
+          <input (ngModelChange)="makeItDirty(item)" [(ngModel)]="origin.name" />
 
-          <nz-select *ngIf="origin.Type != 'String'" style="width:300px" [(ngModel)]="origin.Items" (change)="makeItDirty(item)"
+          <nz-select *ngIf="origin.Type == 'SelectH'||origin.Type == 'Select'||origin.Type == 'SelectT'"
+                     style="width:300px" [(ngModel)]="origin.Items" (change)="makeItDirty(item)"
                      nzMode="tags" nzPlaceHolder="انواع را وراد کنید و اینتر بزنید">
           </nz-select>
+          <input placeholder="از" *ngIf="origin.Type == 'Number'" (ngModelChange)="makeItDirty(item)" [(ngModel)]="origin.Items[0]" />
+          <input placeholder="تا" *ngIf="origin.Type == 'Number'" (ngModelChange)="makeItDirty(item)" [(ngModel)]="origin.Items[1]" />
+
           <button (click)="removeNode(item, node)" nz-button nzDanger nzType="primary">
             <i nz-icon
                [innerHtml]="icons['delete']"></i>

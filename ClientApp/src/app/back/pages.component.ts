@@ -236,6 +236,7 @@ export class CategoryComponent extends BaseComponent {
     if (e == 'SelectT') origin.Items = ['بله', 'خیر'];
     if (e == 'SelectH') origin.Items = ['دارد', 'ندارد'];
     if (e == 'Select') origin.Items = [ ];
+    if (e == 'Number') origin.Items = [0,100000 ];
   }
 }
 @Component({

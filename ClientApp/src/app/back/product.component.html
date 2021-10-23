@@ -169,13 +169,41 @@
       <nz-alert nzType="info" class="alertInTopOfTable" nzMessage="برای انتخاب ویژگی ها حتما باید دسته بندی انتخاب شده باشد"></nz-alert>
       <br />
       <nz-tree *ngIf="item.controls.CategoryId.value" [nzData]="getCatNodes(item.controls.CategoryId.value)" nzBlockNode [nzTreeTemplate]="nzTreeTemplate">
-        <ng-template #nzTreeTemplate let-node let-origin="origin">
-          <nz-tag [nzColor]="'magenta'" style="width:50px"> {{origin.key}}</nz-tag>
-          <nz-tag [nzColor]="'cyan'" style="width:200px"> {{origin.name}}</nz-tag>
-          <input (change)="makeItDirty(item)" [(ngModel)]="item.controls.DetailsNodeValues.value[origin.key]" />
+        <ng-template #nzTreeTemplate let-node let-origin="origin" style="display:flex">
+          <div style="display:flex">
+            <nz-tag [nzColor]="'magenta'" style="width:50px"> {{origin.key}}</nz-tag>
+            <nz-tag [nzColor]="'cyan'" style="width:200px"> {{origin.name}}</nz-tag>
+            <container-element [ngSwitch]="origin.Type"  style="width:200px">
+              <nz-select *ngSwitchCase="'Select'"
+                         [(ngModel)]="item.controls.DetailsNodeValues.value[origin.key]"
+                         nzAllowClear (ngModelChange)="makeItDirty(item)" nzPlaceHolder="همه موارد">
+                <nz-option *ngFor="let s of origin.Items" [nzValue]="s" [nzLabel]="s"></nz-option>
+              </nz-select>
+              <nz-select *ngSwitchCase="'SelectT'" 
+                         [(ngModel)]="item.controls.DetailsNodeValues.value[origin.key]"
+                         nzAllowClear (ngModelChange)="makeItDirty(item)" nzPlaceHolder="همه موارد">
+                <nz-option *ngFor="let s of origin.Items" [nzValue]="s" [nzLabel]="s"></nz-option>
+              </nz-select>
+              <nz-select *ngSwitchCase="'SelectH'" 
+                         [(ngModel)]="item.controls.DetailsNodeValues.value[origin.key]"
+                         nzAllowClear (ngModelChange)="makeItDirty(item)" nzPlaceHolder="همه موارد">
+                <nz-option *ngFor="let s of origin.Items" [nzValue]="s" [nzLabel]="s"></nz-option>
+              </nz-select>
+              <span *ngSwitchCase="'Number'" >
+                <nz-input-number nzPlaceHolder="{{origin.Items[0]}}-{{origin.Items[1]}}" [(ngModel)]="item.controls.DetailsNodeValues.value[origin.key]"
+                                 (change)="makeItDirty(item)" [nzMin]="origin.Items[0]" [nzMax]="origin.Items[1]" [nzStep]="1"></nz-input-number>
+              </span>
+              <input *ngSwitchDefault nz-input (change)="makeItDirty(item)"  [(ngModel)]="item.controls.DetailsNodeValues.value[origin.key]" />
+            </container-element>
+          </div>
+
         </ng-template>
       </nz-tree>
     </nz-tab>
+
+
+
+
     <nz-tab nzTitle=" محصولات مشابه ({{item.controls.Relateds.value?.length}})">
       <div nz-row>
         <div nz-col [nzXs]="24" [nzMd]="8" [nzLg]="6" style="text-align:center">
