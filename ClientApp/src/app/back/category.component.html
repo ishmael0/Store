@@ -82,7 +82,7 @@ https://www.iconpacks.net/search/?icon=man
            [innerHtml]="icons['plus-thick']"></i>
         ایجاد
       </button>
-      <nz-tree *ngIf="item.controls.TreeNodes.value" [nzData]="item.controls.TreeNodes.value" nzDraggable nzBlockNode [nzTreeTemplate]="nzTreeTemplate">
+      <nz-tree *ngIf="item.controls.TreeNodes.value" [nzExpandAll]="true"	[nzData]="item.controls.TreeNodes.value" nzDraggable nzBlockNode [nzTreeTemplate]="nzTreeTemplate">
         <ng-template #nzTreeTemplate let-node let-origin="origin">
           <label nz-tooltip (change)="makeItDirty(item)" nzTooltipTitle=" قابلیت جستجو بر روی این گزینه؟" nz-checkbox [(ngModel)]="origin.Searchable"></label>
           <nz-select (ngModelChange)="makeItDirty(item);TypeChanged($event, origin)" [(ngModel)]="origin.Type" style="width:200px" nzPlaceHolder=" نوع گزینه را مشخص کنید">
@@ -100,8 +100,8 @@ https://www.iconpacks.net/search/?icon=man
                      style="width:300px" [(ngModel)]="origin.Items" (change)="makeItDirty(item)"
                      nzMode="tags" nzPlaceHolder="انواع را وراد کنید و اینتر بزنید">
           </nz-select>
-          <input placeholder="از" *ngIf="origin.Type == 'Number'" (ngModelChange)="makeItDirty(item)" [(ngModel)]="origin.Items[0]" />
-          <input placeholder="تا" *ngIf="origin.Type == 'Number'" (ngModelChange)="makeItDirty(item)" [(ngModel)]="origin.Items[1]" />
+          <input style="width:150px" placeholder="از" *ngIf="origin.Type == 'Number'" (ngModelChange)="makeItDirty(item)" [(ngModel)]="origin.Items[0]" />
+          <input style="width:150px" placeholder="تا" *ngIf="origin.Type == 'Number'" (ngModelChange)="makeItDirty(item)" [(ngModel)]="origin.Items[1]" />
 
           <button (click)="removeNode(item, node)" nz-button nzDanger nzType="primary">
             <i nz-icon
