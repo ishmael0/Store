@@ -173,10 +173,11 @@ export class CategoryComponent extends BaseComponent {
         x[0].parentNode.removeChild(x[0]);
       }
       item.controls.Icon.setValue(svg[0].outerHTML);
+      
     });
-    reader.readAsBinaryString(myFile);
+    this.makeItDirty(item);
+    //reader.readAsBinaryString(myFile);
     e.target.value = ''
-
   }
   config = {
     language: 'fa'
