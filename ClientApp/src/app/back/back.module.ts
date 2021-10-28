@@ -50,7 +50,7 @@ export const config: WebSiteConfiguration = new WebSiteConfiguration('MonizaDB',
       ]
     }),
     new EntityConfiguration(ProductComponent, 'Product', "محصولات", {
-      neededData: { Categories: "Category", Brands: "Brand", Colors: "Color", Sizes: "Size", Labels: "Label" },
+      neededData: ["Category", "Brand", "Color", "Size", "Label"],
       componentType: ComponentTypes.lazytable,
       icon: 'archive-check-outline',
       hasOnOpen: true,
@@ -110,7 +110,7 @@ export const config: WebSiteConfiguration = new WebSiteConfiguration('MonizaDB',
       ]
     }),
     new EntityConfiguration(CityComponent, 'City', "شهرستان ", {
-      neededData: { Provinces: "Province" },
+      neededData: ["Province"],
       componentType: ComponentTypes.table,
       icon: 'home-city',
       propertiesConfigurations: [

@@ -23,8 +23,8 @@ export class InvoiceComponent extends BaseComponent {
   provinces: any[];
   Cities: any[];
   fill() {
-    this.provinces = this.dataManager.loadedData["Provinces"];
-    this.Cities = this.dataManager.loadedData["Cities"];
+    this.provinces = this.dataManager.loadedData["Provinc"];
+    this.Cities = this.dataManager.loadedData["City"];
   }
   customerIdModal = false;
   customerIdModalSelected(e: any) {
@@ -60,7 +60,7 @@ export class CityComponent extends BaseComponent {
   }
   provinces: any[];
   fill() {
-    this.provinces = this.dataManager.loadedData["Provinces"];
+    this.provinces = this.dataManager.loadedData["Province"];
   }
   async onGet(m: string, d: any) {
     super.onGet(m, d);
@@ -266,7 +266,7 @@ export class ProductComponent extends BaseComponent {
     console.log(d);
     item.Types = d.Types;
     item.ProductLabels = d.ProductLabels;
-    let labels = this.dataManager.loadedData["Labels"]
+    let labels = this.dataManager.loadedData["Label"]
     item.ProductLabels.forEach(c => {
       c.Title = labels.find(d => d.Id == c.LabelId).Title
     });
@@ -276,8 +276,8 @@ export class ProductComponent extends BaseComponent {
 
 
   fill() {
-    this.categoryTree = toTreeHelper(this.dataManager.loadedData.Categories, "Id", "ParentCategoryId", null);
-    this.categories = this.dataManager.loadedData["Categories"];
+    this.categoryTree = toTreeHelper(this.dataManager.loadedData.Category, "Id", "ParentCategoryId", null);
+    this.categories = this.dataManager.loadedData["Category"];
   }
   async onGet(m: string, d: any) {
     super.onGet(m, d);
