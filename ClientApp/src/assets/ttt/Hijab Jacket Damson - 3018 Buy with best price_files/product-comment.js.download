@@ -1,0 +1,235 @@
+function bindProductComment() {
+    window.VueComponent = window.VueComponent || {};
+    window.VueComponent.ProductComment = new Vue({
+        el: '#product-comment',
+        name: 'ProductComment',
+        data: {
+            commentServiceUrl: '/srv/service/product-detail/comments/',
+            productId: PRODUCT_DATA[0].id ? PRODUCT_DATA[0].id : document.getElementById('urun-id').value,
+            translate: '',
+            google_recaptcha: {
+                token: ''
+            },
+            LOADING: true,
+            COMMENTS: {
+                META: {
+                    START: 0,
+                    LIMIT: 0,
+                    CURRENT_PAGE: 0,
+                    TOTAL_PAGE: 0
+                }
+            }
+        },
+        methods: {
+            assignData: function (data) {
+                this.COMMENTS = data;
+
+                if(!this.COMMENTS.META) {
+                    this.COMMENTS.META = {
+                        START: 0,
+                        LIMIT: 0,
+                        CURRENT_PAGE: 0,
+                        TOTAL_PAGE: 0
+                    }
+                }
+            },
+            writeComment: function () {
+                let self = this;
+                fetch(self.commentServiceUrl + self.productId + '/1').then(function (res) {
+                    return res.json();
+                }).then(function (res) {
+                    self.assignData(res);
+                });
+            },
+            afterLoad: function (type = '') {
+                let self = this;              
+                type = type != '' ? type : 2;
+                fetch(self.commentServiceUrl + self.productId + '/' + type).then(function (res) {
+                    return res.json();
+                }).then(function (res) {
+                    self.assignData(res);
+                    if(self.COMMENTS.DISPLAY_CAPTCHA && self.COMMENTS.GOOGLE_RECAPTCHA){
+                        $.getScript('https://www.google.com/recaptcha/api.js', function(data,status){
+                            if(status == 'success'){ 
+                                self.renderRecaptcha();
+                            }
+                        });
+                    }
+                });
+            },
+            renderRecaptcha: function(){
+                let self = this;
+                if (typeof window.grecaptcha == 'undefined' || typeof window.grecaptcha.render == 'undefined') {
+                    setTimeout(function(){
+                        self.renderRecaptcha();
+                    },500);
+                }else{
+                    window.grecaptcha.render('security_code', {
+                        sitekey: self.COMMENTS.GOOGLE_RECAPTCHA_CLIENT_KEY,
+                        callback: function(response){
+                            self.google_recaptcha.token = response;
+                        }
+                    });
+                }
+            },
+            fileSelect: function () {
+                $('#newComment #file').trigger('click');
+            },
+            selectedFiles: function () {
+                const fileDom = document.getElementById('newComment').querySelector('#file')
+                const files = fileDom.files;
+                if (files.length > 1) {
+                    document.getElementById('newComment').querySelector('.srcText').innerHTML = files.length + ' files';
+                } else {
+                    const selectedFile = fileDom.value.split('\\')[fileDom.value.split('\\').length - 1];
+                    document.getElementById('newComment').querySelector('.srcText').innerHTML = selectedFile;
+                }
+            },
+            saveComment: function () {
+                let self = this;
+                const prId = self.productId;
+                const fileRules = {
+                    extensions: ["image/jpeg", "image/png"],
+                    size: 8388608
+                };
+
+                var formData = new FormData();
+
+                formData.append('prId', prId);
+                formData.append('rate', $("#rate").val());
+                formData.append('title', $("#title").val());
+                formData.append('text', $("#text").val());
+                formData.append('displayName', document.querySelector('[name="displayName"]:checked').value);
+                formData.append('csrf_token', $("#product_comment_csrf").val());
+                              
+                if(this.COMMENTS.DISPLAY_CAPTCHA == true){
+                    if(this.COMMENTS.GOOGLE_RECAPTCHA == true){
+                        formData.append('captchaCode', this.google_recaptcha.token);
+                    }else{
+                        formData.append('captchaCode', document.querySelector('[name="security_code"]').value);
+                    }
+                }
+
+                if ($('#newComment #file').length > 0) {
+                    var fileDom = $('#newComment #file');
+                    if (fileDom.val() !== '') {
+                        for (var i = 0; i < fileDom[0].files.length; i++) {
+                            var file = fileDom[0].files[i];
+                            if (file.size > fileRules.size) {
+                                Message.debug('Resim dosya boyutu fazla (max. 2MB)');
+                                return false;
+                            }
+                            if (fileRules.extensions.indexOf(file.type) === -1) {
+                                Message.debug('Sadece resim formatları ekleyebilirsiniz');
+                                return false;
+                            }
+                            formData.append('image[]', file);
+                        }
+                    }
+                }
+
+                T_Button.dom = $('#newComment .saveComment');
+                T_Button.loadingText = LANG.get('waiting');
+                T_Button.lock();
+
+                axios.post('/srv/service/product-detail/comment/' + prId, formData).then(function (response) {
+                    var result = response.data;
+                    T_Button.unlock();
+
+                    console.log(result);
+
+                    if (result.status) {
+                        self.afterLoad(2);
+                    } else if (result.key != '') {
+                        if(typeof RecaptchaData !== 'undefined'){
+                            grecaptcha.reset();
+                        }
+                        var element = $('#newComment').find('#' + result.key);
+                        if (element.length > 0) {
+                            tooltip.show(element, result.statusText, 2000, 'btn-danger');
+                            var pos = element.offset().top - 100;
+                            $('html, body').animate({
+                                scrollTop: pos
+                            }, 800);
+                        }
+                    } else if (result.key == "") {
+                        notify.show(result.statusText, 3000, 'btn btn-danger');
+                    }
+                }).catch(function (error) {
+                    if(typeof RecaptchaData !== 'undefined'){
+                        grecaptcha.reset();
+                    }
+                    console.warn(error);
+                });
+            },
+            date: function (p, format) {
+                p = parseInt(p);
+
+                if (isNaN(p) || p < 1000000000) {
+                    p = 1000000000;
+                } else if (p < 9000000000) {
+                    p = p * 1000;
+                }
+
+                format = format.replace(/["']/g, '');
+
+                function pad(s) {
+                    return (s < 10) ? '0' + s : s;
+                }
+                var d = new Date(p);
+
+                format = format.replace(/y+/ig, d.getFullYear());
+                format = format.replace(/d+/ig, pad(d.getDate()));
+                format = format.replace(/m+/ig, pad(d.getMonth() + 1));
+                format = format.replace(/h+/ig, pad(d.getHours()));
+                format = format.replace(/i+/ig, pad(d.getMinutes()));
+                format = format.replace(/s+/ig, pad(d.getSeconds()));
+                return format;
+            },
+            voteComment: function (prId, id, vote) {
+                let self = this;
+                axios.post('/srv/service/product-detail/vote-comment/' + id + '/' + vote).then(function (response) {
+                    var result = response.data;
+                    if (result.status) {
+                        self.afterLoad(3);
+                    } else if (result.key != '') {
+                        var element = $('#newComment').find('#' + result.key);
+                        if (element.length > 0) {
+                            tooltip.show(element, result.statusText, 2000, 'btn-danger');
+                            var pos = element.offset().top - 100;
+                            $('html, body').animate({
+                                scrollTop: pos
+                            }, 800);
+                        }
+                    }
+                }).catch(function (error) {
+                    console.warn(error);
+                });
+            },
+            setPage: function (page) {
+                let self = this;
+                fetch(self.commentServiceUrl + self.productId + '?page=' + page).then(function (res) {
+                    return res.json();
+                }).then(function (res) {
+                    self.assignData(res);
+                });
+            }
+        },
+        created() {
+            let self = this;
+            fetch(self.commentServiceUrl + self.productId).then(function (res) {
+                return res.json();
+            }).then(function (res) {
+                self.translate = LANG.lang;
+                self.assignData(res);
+
+                $('#newComment #file').unbind('change');
+                setTimeout(function () {
+                    $('.comment-images a').lightbox();
+                }, 350);
+            });
+        }
+    });
+}
+
+bindProductComment();

@@ -1,0 +1,126 @@
+<div nz-row>
+  <div nz-col
+       style="padding:5px"
+       [nzXs]="24"
+       [nzMd]="6">
+    <div nz-row nzJustify="center">
+      <app-category-card nz-col
+                         [nzXs]="8"
+                         [nzSm]="6"
+                         [nzMd]="12"
+                         [nzLg]="8"
+                         *ngFor="let item of http.findCategoryInTree(this.category.Id).children" [data]="item.data"></app-category-card>
+
+      <app-category-tree nz-col [nzXs]="24"></app-category-tree>
+      <!--<nz-tree [nzExpandAll]="true" [nzData]="category.TreeNodes" nzBlockNode [nzTreeTemplate]="nzTreeTemplate">
+        <ng-template #nzTreeTemplate let-node let-origin="origin">
+          <div style="display:flex">
+            <span style="margin-left:10px;width:100px">{{ origin.name }}</span>
+            <container-element [ngSwitch]="origin.Type" style="width:100%">
+              <input *ngSwitchCase="'String'" nz-input />
+              <nz-select *ngSwitchCase="'Select'" nzAllowClear nzPlaceHolder="همه موارد">
+                <nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
+              </nz-select>
+              <nz-select *ngSwitchCase="'Boolean'" nzAllowClear nzPlaceHolder="همه موارد">
+                <nz-option nzValue="True" nzLabel="دارد"></nz-option>
+                <nz-option nzValue="False" nzLabel="ندارد"></nz-option>
+              </nz-select>
+              <input *ngSwitchDefault nz-input />
+            </container-element>
+          </div>
+        </ng-template>
+      </nz-tree>-->
+      <div class="roundborderr shadow" style="margin-top: 10px" nz-col [nzXs]="24">
+        <div class="customCard">
+          <div class="customerCardHeader">
+            <i nz-icon [innerHtml]="http.icons.magnify" style=" color: #B23CFD; "></i>
+            <span>
+              فیلتر جستجو
+            </span>
+          </div>
+        </div>
+        <div class="customerCardBody">
+
+
+          <div>
+            <div style="display:flex">
+              <span style="margin-left:10px;width:100px">قیمت(تومان)</span>
+              <div style="width:100%">
+                از 0 تومان تا 12 تومان
+                <nz-slider nzTooltipVisible="always" nzRange></nz-slider>
+              </div>
+            </div>
+            <div style="display:flex" *ngFor="let origin of category.Searchs">
+              <span style="margin-left:10px;width:100px">{{ origin.name }}</span>
+              <container-element [ngSwitch]="origin.Type" style="width:100%">
+                <input *ngSwitchCase="'String'" nz-input />
+                <nz-select *ngSwitchCase="'Select'" nzAllowClear nzPlaceHolder="همه موارد">
+                  <nz-option *ngFor="let s of origin.Items" [nzValue]="s" [nzLabel]="s"></nz-option>
+                </nz-select>
+                <nz-select *ngSwitchCase="'SelectT'" nzAllowClear nzPlaceHolder="همه موارد">
+                  <nz-option *ngFor="let s of origin.Items" [nzValue]="s" [nzLabel]="s"></nz-option>
+                </nz-select>
+                <nz-select *ngSwitchCase="'SelectH'" nzAllowClear nzPlaceHolder="همه موارد">
+                  <nz-option *ngFor="let s of origin.Items" [nzValue]="s" [nzLabel]="s"></nz-option>
+                </nz-select>
+                <nz-slider *ngSwitchCase="'Number'" [nzMin]="origin.Items[0]" [nzMax]="origin.Items[1]" nzRange></nz-slider>
+                <input *ngSwitchDefault nz-input />
+              </container-element>
+            </div>
+          </div>
+        </div>
+      </div>
+      <app-favorite nz-col [nzXs]="24"></app-favorite>
+      <app-basket nz-col [nzXs]="24"></app-basket>
+    </div>
+  </div>
+  <div nz-col
+       [nzXs]="24"
+       [nzMd]="18">
+    <div class="roundborderr" style="margin-right: 5px; margin-left: 5px; ">
+      <nz-radio-group [(ngModel)]="params.SortType" nzButtonStyle="solid">
+        <label nz-radio-button nzValue="A">پرفروش ترین</label>
+        <label nz-radio-button nzValue="B">جدید ترین</label>
+        <label nz-radio-button nzValue="C"> پربازدید ترین</label>
+        <label nz-radio-button nzValue="D">گرانترین</label>
+        <label nz-radio-button nzValue="E">ارزانترین</label>
+      </nz-radio-group>
+      <div style="float:left">
+        <i nz-icon style="font-size:24px" (click)="viewType = 1" [innerHtml]="http.icons['view-list']"></i>
+        <i nz-icon style="font-size:24px" (click)="viewType = 2" [innerHtml]="http.icons['view-module']"></i>
+        <i nz-icon style="font-size:24px" (click)="viewType = 3" [innerHtml]="http.icons['view-module']"></i>
+      </div>
+    </div>
+
+    <div nz-row *ngIf="viewType == 1">
+      <app-product-card1 *ngFor="let item of products"
+                         [product]="item"
+                         nz-col
+                         style="padding:5px"
+                         [nzXs]="8"
+                         [nzSm]="8"
+                         [nzMd]="8"
+                         [nzLg]="6"></app-product-card1>
+    </div>
+    <div nz-row *ngIf="viewType == 2">
+      <app-product-card2 *ngFor="let item of products"
+                         [product]="item"
+                         nz-col
+                         style="padding:5px"
+                         [nzXs]="24"
+                         [nzSm]="12"
+                         [nzMd]="12"
+                         [nzLg]="8"></app-product-card2>
+    </div>
+    <div nz-row *ngIf="viewType == 3">
+      <app-product-card3 *ngFor="let item of products"
+                         [product]="item"
+                         nz-col
+                         style="padding:5px"
+                         [nzXs]="8"
+                         [nzSm]="8"
+                         [nzMd]="8"
+                         [nzLg]="6"></app-product-card3>
+    </div>
+  </div>
+</div>

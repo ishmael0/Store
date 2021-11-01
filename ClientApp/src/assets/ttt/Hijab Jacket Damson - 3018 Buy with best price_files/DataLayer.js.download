@@ -1,0 +1,15 @@
+
+PSViewManager = function(){};
+
+
+
+PSViewManager.sendData = function(data,callback){
+	let objBundle = btoa(JSON.stringify(data));
+	// if(objBundle != 'W10=')
+		// $.post("http://178.250.94.210/Service.php", {"method":"view","bundle": objBundle});
+};
+
+
+$(document).ready(function() {
+   PSViewManager.sendData(PS_q);
+}, false);

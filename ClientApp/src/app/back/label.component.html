@@ -1,0 +1,86 @@
+
+
+<ng-template #form let-item="item">
+  <nz-tabset [nzAnimated]="false">
+    <nz-tab nzTitle="محتوای اصلی">
+      <ng-container *ngTemplateOutlet="mainTemplate?.defaultIDStatusForm;context:{  item:item}"></ng-container>
+      <form nz-form [formGroup]="item">
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Title">عنوان</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="عنوان را وارد کنید">
+            <input nz-input formControlName="Title" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Title">مقدار</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="مقدار را وارد کنید">
+            <input type="Color" nz-input formControlName="Color" />
+          </nz-form-control>
+        </nz-form-item>
+      </form>
+    </nz-tab>
+    <nz-tab nzTitle="محصولات ({{item.controls.ProductLabels.value?.length}})">
+      <div nz-row *ngIf="item.controls.Id.value==0">
+        <nz-alert nzType="error" class="alertInTopOfTable" nzMessage=" ابتدا لیبل را ذخیره کنید، بعد از آن میتوانید نسبت به اضافه کردن محصولات اقدام کنید"></nz-alert>
+      </div>
+      <div nz-row *ngIf="item.controls.Id.value>0">
+        <div nz-col [nzXs]="24" [nzMd]="8" [nzLg]="6" style="text-align:center">
+          <nz-form-label>محصولات  </nz-form-label>
+          <br />
+          <nz-alert nzType="info" class="alertInTopOfTable" nzMessage=" میتوانید با کشیدن و رها کردن ترتیب محصولات  را تغییر دهید"></nz-alert>
+          <button nz-button nzType="dashed" (click)="inModal = true "> اضافه کردن محصولات </button>
+        </div>
+        <div nz-col [nzXs]="24" [nzMd]="16" [nzLg]="12">
+          <ng-container *ngTemplateOutlet="mainTemplate?.listWithDragDropTemplate;context:{com: this, item:item, name:'ProductLabels', id:'ProductId'}"></ng-container>
+        </div>
+      </div>
+    </nz-tab>
+  </nz-tabset>
+</ng-template>
+
+<ng-template #viewMessage>
+  آیدی: 012331323
+</ng-template>
+<ng-template #search>
+
+
+
+
+
+</ng-template>
+
+<ng-template #tableBodyPicker let-item="item">
+  <td>{{ item.Id }}</td>
+  <td>{{ item.Title }}</td>
+</ng-template>
+
+
+
+<ng-template #tableBody let-item="item">
+  <td>{{ item.Id }}</td>
+  <td>{{ item.Title }}</td>
+  <td>{{ item.Create_}}</td>
+  <ng-container *ngTemplateOutlet="mainTemplate?.statusView;context:{value:statusView(item.Status)}"></ng-container>
+  <td>{{item.Color}}</td>
+  <td>
+    <div class="colordiv" [style.background-color]="item.Value">
+      {{ item.Value }}
+    </div>
+  </td>
+</ng-template>
+
+
+
+
+<app-template #mainTemplate *ngIf="ok" [com]="this"></app-template>
+
+<ng-container *ngIf="mainTemplate">
+
+
+  <nz-modal [nzWidth]="'80%'" [(nzVisible)]="inModal" [nzFooter]="mainTemplate.modalEmptyFooter" nzTitle="افزودن محصولات " (nzOnCancel)="inModal = false">
+    <ng-container *nzModalContent>
+      <app-product (select)="productSelected($event)"></app-product>
+      <button style="float:left" nz-button nzType="primary" (click)="inModal = false">تایید </button>
+    </ng-container>
+  </nz-modal>
+</ng-container>
