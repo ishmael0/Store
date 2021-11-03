@@ -173,7 +173,7 @@ https://www.iconpacks.net/search/?icon=man
 
   <nz-modal [(nzVisible)]="imageModal" [nzFooter]="mainTemplate.modalEmptyFooter" nzTitle="افزودن تصویر" (nzOnCancel)="imageModal = false">
     <ng-container *nzModalContent>
-      <app-image-uploader-card key="this" Id="1" (onOk)="addImage($event)"></app-image-uploader-card>
+      <app-image-uploader-card [key]="this.key()" Id="1" (onOk)="addImage($event)"></app-image-uploader-card>
     </ng-container>
   </nz-modal>
 </ng-container>
